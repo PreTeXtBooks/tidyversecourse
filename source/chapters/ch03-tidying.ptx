@@ -1,7 +1,2426 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <chapter xml:id="ch-tidying" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>Wrangling Data in the Tidyverse</title>
+<title>Wrangling Data in the Tidyverse</title>
 
-  <p>This chapter is a placeholder. Content will be added when converting from the RMD source.</p>
+<p>In the last course we spent a ton of time talking about all the most common ways data are stored and reviewed how to get them into a tibble (or data.frame) in R.</p>
+<p>So far we've discussed what tidy and untidy data are. We've (hopefully) convinced you that tidy data are the right type of data to work with. What we may not have made perfectly clear yet is that data are <em>not</em> always the tidiest when they come to you at the start of a project. An incredibly important skill of a data scientist is to be able to take data from an untidy format and get it into a tidy format. This process is often referred to as <term>data wrangling</term>. Generally, data wranglings skills are those that allow you to wrangle data from the format they're currently in into the tidy format you actually want them in.</p>
+<p>Beyond data wrangling, it's also important to make sure the data you have are accurate and what you need to answer your question of interest. After wrangling the data into a tidy format, there is often further work that has to be done to <term>clean</term> the data.</p>
+<section xml:id="about-this-course">
+<title>About This Course</title>
+<p>Data never arrive in the condition that you need them in order to do effective data analysis. Data need to be re-shaped, re-arranged, and re-formatted, so that they can be visualized or be inputted into a machine learning algorithm. This course addresses the problem of wrangling your data so that you can bring them under control and analyze them effectively. The key goal in data wrangling is transforming non-tidy data into tidy data.</p>
+<p>This course covers many of the critical details about handling tidy and non-tidy data in R such as converting from wide to long formats, manipulating tables with the <c>dplyr</c> package, understanding different R data types, processing text data with regular expressions, and conducting basic exploratory data analyses. Investing the time to learn these data wrangling techniques will make your analyses more efficient, more reproducible, and more understandable to your data science team.</p>
+<p>In this specialization we assume familiarity with the R programming language. If you are not yet familiar with R, we suggest you first complete <url href="https://www.coursera.org/learn/r-programming">R Programming</url> before returning to complete this course.</p>
+<figure>
+  <caption>Data wrangling example</caption>
+  <image source="images/gslides/085.png"/>
+</figure>
+</section>
+<section xml:id="tidy-data-review">
+<title>Tidy Data Review</title>
+<p>Before we move any further, let's review the requirements for a tidy dataset:</p>
+<ol>
+  <li><p>Each variable is stored in a column</p></li>
+  <li><p>Each observation is stored in a row</p></li>
+  <li><p>Each cell stores a single value</p></li>
+</ol>
+<p>We had four tidy data principles in an earlier lesson, where the fourth was that each table should store a single <em>type</em> of information. That's less critical here, as we'll be working at first with single datasets, so let's just keep those three tidy data principles at the front of our minds.</p>
+</section>
+<section xml:id="reshaping-data">
+<title>Reshaping Data</title>
+<p>Tidy data generally exist in two forms: wide data and long data. Both types of data are used and needed in data analysis, and fortunately, there are tools that can take you from wide-to-long format and from long-to-wide format. This makes it easy to work with any tidy dataset. We'll discuss the basics of what wide and long data are and how to go back and forth between the two in R. Getting data into the right format will be crucial later when summarizing data and visualizing it.</p>
+<subsection xml:id="wide-data">
+<title>Wide Data</title>
+<p>Wide data has a column for each variable and a row for each observation. Data are often entered and stored in this manner. This is because wide data are often easy to understand at a glance. For example, this is a wide dataset:</p>
+<figure>
+  <caption>Wide dataset</caption>
+  <image source="images/gslides/086.png"/>
+</figure>
+<p>Up until this point, we would have described this dataset as a rectangular, tidy dataset. With the additional information just introduced, we can also state that it is a <em>wide</em> dataset. Here, you can clearly see what measurements were taken for each individual and can get a sense of how many individuals are contained in the dataset.</p>
+<p>Specifically, each individual is in a different row with each variable in a different column. At a glance we can quickly see that we have information about four different people and that each person was measured in four different ways.</p>
+</subsection>
+<subsection xml:id="long-data">
+<title>Long Data</title>
+<p>Long data, on the other hand, has one column indicating the type of variable contained in that row and then a separate row for the value for that variable. Each row contains a single observation for a single variable. It's <em>still</em> a tidy datasets, but the information is stored in a long format:</p>
+<figure>
+  <caption>Long dataset</caption>
+  <image source="images/gslides/087.png"/>
+</figure>
+<p>This long dataset includes the exact same information as the previous wide dataset; it is just stored differently. It's harder to see visually how many different measurements were taken and on how many different people, but the same information is there.</p>
+<p>While long data formats are less readable than wide data at a glance, they are often a lot easier to work with during analysis. Most of the tools we'll be working with use long data. Thus, to go from how data are often stored (wide) to working with the data during analysis (long), we'll need to understand what tools are needed to do this and how to work with them.</p>
+</subsection>
+<subsection xml:id="reshaping-the-data">
+<title>Reshaping the Data</title>
+<p>Converting your data from wide-to-long or from long-to-wide data formats is referred to as <term>reshaping</term> your data.</p>
+<figure>
+  <caption>Reshaping data</caption>
+  <image source="images/gslides/088.png"/>
+</figure>
+<p>Within the tidyverse, <url href="https://tidyr.tidyverse.org/">tidyr</url> is the go-to package for accomplishing this task. Within the <c>tidyr</c> package, you'll have to become familiar with a number of functions. The two most pertinent to reshaping data are: <c>pivot_wider()</c> and <c>pivot_longer()</c>.</p>
+<p>For these examples, we'll work with the <c>airquality</c> dataset available in R. The data in this dataset includes "Daily air quality measurements in New York, May to September 1973." This is a wide dataset because each day is in a separate row and there are multiple columns with each including information about a different variable (ozone, solar.r, wind, temp, month, and day).</p>
+<p>We'll load in the tidyverse, so that we can convert this data.frame to a tibble <em>and</em> see the first few lines of this dataset using the following code:</p>
+<program language="r"><input><![CDATA[
+library(tidyverse)
+
+airquality <- as_tibble(airquality)
+airquality
+]]></input></program>
+<p>Again, wide data are easy to decipher at a glance. We can see that we have six different variables for each day, with each one of these variables (measurements) being stored in a separate column.</p>
+<subsubsection xml:id="tidyr">
+<title><c>tidyr</c></title>
+<p>The <c>tidyr</c> package is part of the tidyverse, so its functionality is available to you since you've loaded in the tidyverse. The two main functions we mentioned above will help you reshape your data in the following ways:</p>
+<ul>
+  <li><p><c>pivot_longer()</c>: go from wide data to long data</p></li>
+  <li><p><c>pivot_wider()</c>: go from long data to wide data</p></li>
+</ul>
+<p>To get started, you'll need to be sure that the <c>tidyr</c> package is installed and loaded into your RStudio session.</p>
+<paragraphs xml:id="pivot_longer">
+<title><c>pivot_longer()</c></title>
+<p>As data are often stored in wide formats, you'll likely use <c>pivot_longer()</c> a lot more frequently than you'll use <c>pivot_wider()</c>. This will allow you to get the data into a long format that will be easy to use for analysis.</p>
+<p>In <c>tidyr</c>, <c>pivot_longer()</c> will take the <c>airquality</c> dataset from wide to long, putting each column name into the first column and each corresponding value into the second column. Here, the first column will be called <c>name</c>. The second column will still be <c>value</c>.</p>
+<program language="r"><input><![CDATA[
+## use pivot_longer() to reshape from wide to long
+gathered <- airquality %>%
+  pivot_longer(everything())
+
+## take a look at first few rows of long data
+gathered
+]]></input></program>
+<figure>
+  <caption>Longer dataset</caption>
+  <image source="images/gslides/089.png"/>
+</figure>
+<p>However, it's very easy to change the names of these columns within <c>pivot_longer()</c>. To do so you specify what the <c>names_to</c> and <c>values_to</c> columns names should be within <c>pivot_longer()</c>:</p>
+<program language="r"><input><![CDATA[
+## to rename the column names that gather provides,
+## change key and value to what you want those column names to be
+gathered <- airquality %>%
+  pivot_longer(everything(), names_to = "variable", values_to = "value")
+
+## take a look at first few rows of long data
+gathered 
+]]></input></program>
+<figure>
+  <caption>gather column names changed</caption>
+  <image source="images/gslides/090.png"/>
+</figure>
+<p>However, you're likely not interested in your day and month variable being separated out into their own variables within the <c>variable</c> column. In fact, knowing the day and month associated with a particular data point helps identify that particular data point. To account for this, you can exclude <c>day</c> and <c>month</c> from the variables being included in the <c>variable</c> column by specifying all the variables that you <em>do</em> want included in the <c>variable</c> column.  Here, that means specifying <c>Ozone</c>, <c>Solar.R</c>, <c>Wind</c>, and <c>Temp</c>. This will keep <c>Day</c> and <c>Month</c> in their own columns, allowing each row to be identified by the specific day and month being discussed.</p>
+<program language="r"><input><![CDATA[
+## in pivot_longer(), you can specify which variables 
+## you want included in the long format
+## it will leave the other variables as is
+gathered <- airquality %>%
+  pivot_longer(c(Ozone, Solar.R, Wind, Temp), 
+               names_to = "variable", 
+               values_to = "value")
+
+## take a look at first few rows of long data
+gathered
+]]></input></program>
+<figure>
+  <caption>gather specifying which variables to include in long format</caption>
+  <image source="images/gslides/091.png"/>
+</figure>
+<p>Now, when you look at the top of this object, you'll see that <c>Month</c> and <c>Day</c> remain in the data frame and that variable combines information from the other columns in <c>airquality</c> (<c>Ozone</c>, <c>Solar.R</c>, <c>Wind</c>, <c>Temp</c>). This is still a long format dataset; however, it has used <c>Month</c> and <c>Day</c> as IDs when reshaping the data frame.</p>
+</paragraphs>
+<paragraphs xml:id="pivot_wider">
+<title><c>pivot_wider()</c></title>
+<p>To return your long data back to its original form, you can use <c>pivot_wider()</c>. Here you specify two columns: the column that contains the names of what your wide data columns should be (<c>names_from</c>) and the column that contains the values that should go in these columns (<c>values_from</c>). The data frame resulting from <c>pivot_wider()</c> will have the original information back in the wide format (again, the columns will be in a different order). But, we'll discuss how to rearrange data in the next lesson!</p>
+<program language="r"><input><![CDATA[
+## use pivot_wider() to reshape from long to wide
+spread_data <- gathered %>%
+  pivot_wider(names_from = "variable", 
+              values_from = "value")
+
+## take a look at the wide data
+spread_data
+
+## compare that back to the original
+airquality
+]]></input></program>
+<figure>
+  <caption>spread data</caption>
+  <image source="images/gslides/092.png"/>
+</figure>
+<p>While reshaping data may not <em>read</em> like the most exciting topic, having this skill will be indispensable as you start working with data. It's best to get these skills down pat early!</p>
+</paragraphs>
+</subsubsection>
+</subsection>
+</section>
+<section xml:id="data-wrangling">
+<title>Data Wrangling</title>
+<p>Once you've read your data into R and have it in the appropriately wide- or long-format, it's time to wrangle the data, so that it is in the appropriate format and includes the information you need.</p>
+<subsection xml:id="r-packages">
+<title>R Packages</title>
+<p>While there are <em>tons</em> of R packages out there to help you work with data, we're going to cover the packages and functions within those packages that you'll absolutely want and need to work with when working with data.</p>
+<subsubsection xml:id="dplyr">
+<title><c>dplyr</c></title>
+<p>There is a package specifically designed for helping you wrangle your data. This package is called <url href="https://dplyr.tidyverse.org/"><c>dplyr</c></url> and will allow you to easily accomplish many of the data wrangling tasks necessary. Like <c>tidyr</c>, this package is a core package within the tidyverse, and thus it was loaded in for you when you ran <c>library(tidyverse)</c> earlier. We will cover a number of functions that will help you wrangle data using <c>dplyr</c>:</p>
+<ul>
+  <li><p><c>%&gt;%</c> - pipe operator for chaining a sequence of operations</p></li>
+  <li><p><c>glimpse()</c> - get an overview of what's included in dataset</p></li>
+  <li><p><c>filter()</c> - filter rows</p></li>
+  <li><p><c>select()</c> - select, rename, and reorder columns</p></li>
+  <li><p><c>rename()</c> - rename columns</p></li>
+  <li><p><c>arrange()</c> - reorder rows</p></li>
+  <li><p><c>mutate()</c> - create a new column</p></li>
+  <li><p><c>group_by()</c> - group variables </p></li>
+  <li><p><c>summarize()</c> - summarize information within a dataset</p></li>
+  <li><p><c>left_join()</c> - combine data across data frame</p></li>
+  <li><p><c>tally()</c> - get overall sum of values of specified column(s) or the number of rows of tibble</p></li>
+  <li><p><c>count()</c> - get counts of unique values of specified column(s) (shortcut of <c>group_by()</c> and <c>tally()</c>)</p></li>
+  <li><p><c>add_count()</c> -  add values of <c>count()</c> as a new column </p></li>
+  <li><p><c>add_tally()</c> - add value(s) of <c>tally()</c> as a new column</p></li>
+</ul>
+</subsubsection>
+<subsubsection xml:id="tidyr-1">
+<title><c>tidyr</c></title>
+<p>We will also return to the <c>tidyr</c> package. The same package that we used to reshape our data will be helpful when wrangling data. The main functions we'll cover from <c>tidyr</c> are:</p>
+<ul>
+  <li><p><c>unite()</c> - combine contents of two or more columns into a single column</p></li>
+  <li><p><c>separate()</c> - separate contents of a column into two or more columns</p></li>
+</ul>
+</subsubsection>
+<subsubsection xml:id="janitor">
+<title><c>janitor</c></title>
+<p>The third package we'll include here is the <c>janitor</c> package. While not a core tidyverse package, this tidyverse-adjacent package provides tools for cleaning messy data. The main functions we'll cover from janitor are:</p>
+<ul>
+  <li><p><c>clean_names()</c> - clean names of a data frame</p></li>
+  <li><p><c>tabyl()</c> - get a helpful summary of a variable</p></li>
+  <li><p><c>get_dupes()</c> - identify duplicate observations</p></li>
+</ul>
+<p>If you have not already, you'll want to be sure this package is installed and loaded:</p>
+<program language="r"><input><![CDATA[
+#install.packages('janitor')
+library(janitor)
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="skimr">
+<title><c>skimr</c></title>
+<p>The final package we'll discuss here is the <c>skimr</c> package. This package provides a quick way to summarize a data.frame or tibble within the tidy data framework. We'll discuss its most useful function here:</p>
+<ul>
+  <li><p><c>skim()</c> - summarize a data frame</p></li>
+</ul>
+<p>If you have not already, you'll want to be sure this package is installed and loaded:</p>
+<program language="r"><input><![CDATA[
+#install.packages('skimr')
+library(skimr)
+]]></input></program>
+</subsubsection>
+</subsection>
+<subsection xml:id="the-pipe-operator">
+<title>The Pipe Operator</title>
+<p>Before we get into the important functions within <c>dplyr</c>, it will be very useful to discuss what is known as the <term>pipe operator</term>. The pipe operator looks like this in R: <c>%&gt;%</c>. Whenever you see the pipe <c>%&gt;%</c>, think of the word "then", so if you saw the sentence "I went to the the store and %&gt;% I went back to my house," you would read this as I went to the store and <em>then</em> I went back to my house. The pipe tells you to do one thing and <em>then</em> do another.</p>
+<p>Generally, the pipe operator allows you to string a number of different functions together in a particular order. If you wanted to take data frame A and carry out function B on it in R, you could depict this with an arrow pointing from A to B:</p>
+<p>A --&gt; B</p>
+<p>Here you are saying, "Take A and <em>then</em> feed it into function B."</p>
+<p>In base R syntax, what is depicted by the arrow above would be carried out by calling the function B on the data frame object A:</p>
+<program><input><![CDATA[
+B(A)
+]]></input></program>
+<p>Alternatively, you could use the pipe operator (<c>%&gt;%</c>):</p>
+<program><input><![CDATA[
+A %>% B
+]]></input></program>
+<p>However, often you are not performing just one action on a data frame, but rather you are looking to carry out multiple functions. We can again depict this with an arrow diagram.</p>
+<p>A --&gt; B --&gt; C --&gt; D</p>
+<p>Here you are saying that you want to take data frame A and carry out function B, <em>then</em> you want to take the output from that and <em>then</em> carry out function C. Subsequently you want to take the output of that and <em>then</em> carry out function D. In R syntax, we would first apply function B to data frame A, then apply function C to this output, then apply function D to this output. This results in the following syntax that is hard to read because multiple calls to functions are nested within each other:</p>
+<program><input><![CDATA[
+D(C(B(A)))
+]]></input></program>
+<p>Alternatively, you could use the pipe operator. Each time you want take the output of one function and carry out something new on that output, you will use the pipe operator:</p>
+<program><input><![CDATA[
+A %>% B %>% C %>% D
+]]></input></program>
+<p>And, even more readable is when each of these steps is separated out onto its own individual line of code:</p>
+<program><input><![CDATA[
+A %>% 
+  B %>% 
+    C %>%
+      D
+]]></input></program>
+<p>While both of the previous two code examples would provide the same output, the one below is more readable, which is a large part of why pipes are used. It makes your code more understandable to you and others.</p>
+<p>Below we'll use this pipe operator a lot. Remember, it takes output from the left hand side and feeds it into the function that comes after the pipe. You'll get a better understanding of how it works as you run the code below. But, when in doubt remember that the pipe operator should be read as <em>then</em>.</p>
+</subsection>
+<subsection xml:id="filtering-data">
+<title>Filtering Data</title>
+<p>When working with a large dataset, you're often interested in only working with a portion of the data at any one time. For example, if you had data on people from ages 0 to 100 years old, but you wanted to ask a question that only pertained to children, you would likely want to only work with data from those individuals who were less than 18 years old. To do this, you would want to <term>filter</term> your dataset to only include data from these select individuals. Filtering can be done by row or by column. We'll discuss the syntax in R for doing both. Please note that the examples in this lesson and the organization for this lesson were adapted from <url href="https://suzan.rbind.io/">Suzan Baert's</url> wonderful <c>dplyr</c> tutorials. Links to the all four tutorials can be found in the "Additional Resources" section at the bottom of this lesson.</p>
+<p>For the examples below, we'll be using a dataset from the <c>ggplot2</c> package called <c>msleep</c>. (You'll learn more about this package in a later course on data visualization. For now, it's a core tidyverse package so it's loaded in along with the other tidyverse packages using <c>library(tidyverse)</c>.) This dataset includes sleep times and weights from a number of different mammals. It has 83 rows, with each row including information about a different type of animal, and 11 variables. As each row is a different animal and each column includes information about that animal, this is a <term>wide</term> dataset.</p>
+<p>To get an idea of what variables are included in this data frame, you can use <c>glimpse()</c>. This function summarizes how many rows there are (<c>Observations</c>) and how many columns there are (<c>Variables</c>). Additionally, it gives you a glimpse into the type of data contained in each column. Specifically, in this dataset, we know that the first column is <c>name</c> and that it contains a character vector (<c>chr</c>) and that the first three entries are "Cheetah", "Owl monkey", and "Mountain beaver." It works similarly to the base R <c>summary()</c> function.</p>
+<program language="r"><input><![CDATA[
+## take a look at the data
+library(ggplot2)
+glimpse(msleep)
+]]></input></program>
+<figure>
+  <caption>Glimpse of msleep dataset</caption>
+  <image source="images/gslides/093.png"/>
+</figure>
+<subsubsection xml:id="filtering-rows">
+<title>Filtering Rows</title>
+<p>If you were only interested in learning more about the sleep times of "Primates," we could filter this dataset to include only data about those mammals that are also Primates. As we can see from <c>glimpse()</c>, this information is contained within the <c>order</c> variable. So to do this within R, we use the following syntax:</p>
+<program language="r"><input><![CDATA[
+# filter to only include primates
+msleep %>%
+  filter(order == "Primates")
+]]></input></program>
+<p>Note that we are using the equality <c>==</c> comparison operator that you learned about in the previous course. Also note that we have used the pipe operator to feed the <c>msleep</c> data frame into the <c>filter()</c> function.</p>
+<p>The above is shorthand for:</p>
+<program language="r"><input><![CDATA[
+filter(msleep, order == "Primates")
+]]></input></program>
+<p>The output is the same as above here, but the code is slightly less readable. This is why we use the pipe (<c>%&gt;%</c>)!</p>
+<figure>
+  <caption>Filtered to only include Primates</caption>
+  <image source="images/gslides/094.png"/>
+</figure>
+<p>Now, we have a smaller dataset of only 12 mammals (as opposed to the original 83) and we can see that the <c>order</c> variable column only includes "Primates."</p>
+<p>But, what if we were only interested in Primates who sleep more than 10 hours total per night? This information is in the <c>sleep_total</c> column. Fortunately, <c>filter()</c> also works on numeric variables. To accomplish this, you would use the following syntax, separating the multiple filters you want to apply with a comma:</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10)
+]]></input></program>
+<p>Note that we have used the "greater than" comparison operator with <c>sleep_total</c>.</p>
+<p>Now, we have a dataset focused in on only 5 mammals, all of which are primates who sleep for more than 10 hours a night total.</p>
+<figure>
+  <caption>Numerically filtered dataset</caption>
+  <image source="images/gslides/095.png"/>
+</figure>
+<p>We can obtain the same result with the AND <c>&amp;</c> logical operator instead of separating filtering conditions with a comma:</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates" & sleep_total > 10)
+]]></input></program>
+<p>Note that the number of columns hasn't changed. All 11 variables are still shown in columns because the function <c>filter()</c> filters on rows, not columns.</p>
+</subsubsection>
+<subsubsection xml:id="selecting-columns">
+<title>Selecting Columns</title>
+<p>While <c>filter()</c> operates on rows, it <em>is</em> possible to filter your dataset to only include the columns you're interested in. To select columns so that your dataset only includes variables you're interested in, you will use <c>select()</c>.</p>
+<p>Let's start with the code we just wrote to only include primates who sleep a lot. What if we only want to include the first column (the name of the mammal) and the sleep information (included in the columns <c>sleep_total</c>, <c>sleep_rem</c>, and <c>sleep_cycle</c>)? We would do this by starting with the code we just used, adding another pipe, and using the function <c>select()</c>. Within <c>select</c>, we specify which columns we want in our output.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10) %>%
+  select(name, sleep_total, sleep_rem, sleep_cycle)
+]]></input></program>
+<figure>
+  <caption>Data with selected columns</caption>
+  <image source="images/gslides/096.png"/>
+</figure>
+<p>Now, using <c>select()</c> we see that we still have the five rows we filtered to before, but we only have the four columns specified using <c>select()</c>. Here you can hopefully see the power of the pipe operator to chain together several commands in a row. Without the pipe operator, the full command would look like this:</p>
+<program language="r"><input><![CDATA[
+select(filter(msleep, order == "Primates", sleep_total > 10), name, sleep_total, sleep_rem, sleep_cycle)
+]]></input></program>
+<p>Yuck. Definitely harder to read. We'll stick with the above approach!</p>
+</subsubsection>
+<subsubsection xml:id="renaming-columns">
+<title>Renaming Columns</title>
+<p><c>select()</c> can also be used to rename columns. To do so, you use the syntax: <c>new_column_name = old_column_name</c> within <c>select</c>. For example, to select the same columns and rename them <c>total</c>, <c>rem</c> and <c>cycle</c>, you would use the following syntax:</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10) %>%
+  select(name, total = sleep_total, rem = sleep_rem, cycle = sleep_cycle)
+]]></input></program>
+<figure>
+  <caption>Data with renamed columns names with `select()`</caption>
+  <image source="images/gslides/097.png"/>
+</figure>
+<p>It's important to keep in mind that when using <c>select()</c> to rename columns, only the specified columns will be included and renamed in the output. If you, instead, want to change the names of a few columns but return <em>all</em> columns in your output, you'll want to use <c>rename()</c>. For example, the following, returns a data frame with all 11 columns, where the column names for three columns specified within <c>rename()</c> function have been renamed.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10) %>%
+  rename(total = sleep_total, rem = sleep_rem, cycle = sleep_cycle)
+]]></input></program>
+<figure>
+  <caption>Data with renamed columns names using `rename()`</caption>
+  <image source="images/gslides/098.png"/>
+</figure>
+</subsubsection>
+</subsection>
+<subsection xml:id="reordering">
+<title>Reordering</title>
+<p>In addition to filtering rows and columns, often, you'll want the data arranged in a particular order. It may order the columns in a logical way, or it could be to sort the data so that the data are sorted by value, with those having the smallest value in the first row and the largest value in the last row. All of this can be achieved with a few simple functions.</p>
+<subsubsection xml:id="reordering-columns">
+<title>Reordering Columns</title>
+<p>The <c>select()</c> function is powerful. Not only will it filter and rename columns, but it can also be used to reorder your columns. Using our example from above, if you wanted <c>sleep_rem</c> to be the first sleep column and <c>sleep_total</c> to be the last column, all you have to do is reorder them within <c>select()</c>. The output from <c>select()</c> would then be reordered to match the order specified within <c>select()</c>.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10) %>%
+  select(name, sleep_rem, sleep_cycle, sleep_total)
+]]></input></program>
+<p>Here we see that sleep_rem <c>name</c> is displayed first followed by <c>sleep_rem</c>, <c>sleep_cycle</c>, and <c>sleep_total</c>, just as it was specified within <c>select()</c>.</p>
+<figure>
+  <caption>Data with reordered columns names</caption>
+  <image source="images/gslides/099.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="reordering-rows">
+<title>Reordering Rows</title>
+<p>Rows can also be reordered. To reorder a variable in ascending order (from smallest to largest), you'll want to use <c>arrange()</c>. Continuing on from our example above, to now sort our rows by the amount of total sleep each mammal gets, we would use the following syntax:</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10) %>%
+  select(name, sleep_rem, sleep_cycle, sleep_total) %>%
+  arrange(sleep_total)
+]]></input></program>
+<figure>
+  <caption>Data arranged by total sleep in ascending order</caption>
+  <image source="images/gslides/100.png"/>
+</figure>
+<p>While <c>arrange</c> sorts variables in ascending order, it's also possible to sort in descending (largest to smallest) order. To do this you just use <c>desc()</c> with the following syntax:</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10) %>%
+  select(name, sleep_rem, sleep_cycle, sleep_total) %>%
+  arrange(desc(sleep_total))
+]]></input></program>
+<p>By putting <c>sleep_total</c> within <c>desc()</c>, <c>arrange()</c> will now sort your data from the primates with the longest total sleep to the shortest.</p>
+<figure>
+  <caption>Data arranged by total sleep in descending order</caption>
+  <image source="images/gslides/100.png"/>
+</figure>
+<p><c>arrange()</c> can also be used to order non-numeric variables. For example, <c>arrange()</c> will sort character vectors alphabetically.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10) %>%
+  select(name, sleep_rem, sleep_cycle, sleep_total) %>%
+  arrange(name)
+]]></input></program>
+<figure>
+  <caption>Data arranged alphabetically by name</caption>
+  <image source="images/gslides/102.png"/>
+</figure>
+<p>If you would like to reorder rows based on information in multiple columns, you can specify them separated by commas. This is useful if you have repeated labels in one column and want to sort within a category based on information in another column. In the example here, if there were repeated primates, this would sort the repeats based on their total sleep.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10) %>%
+  select(name, sleep_rem, sleep_cycle, sleep_total) %>%
+  arrange(name, sleep_total)
+]]></input></program>
+</subsubsection>
+</subsection>
+<subsection xml:id="creating-new-columns">
+<title>Creating New Columns</title>
+<p>You will often find when working with data that you need an additional column. For example, if you had two datasets you wanted to combine, you may want to make a new column in each dataset called <c>dataset</c>. In one dataset you may put <c>datasetA</c> in each row. In the second dataset, you could put <c>datasetB</c>. This way, once you combined the data, you would be able to keep track of which dataset each row came from originally. More often, however, you'll likely want to create a new column that calculates a new variable based on information in a column you already have. For example, in our mammal sleep dataset, <c>sleep_total</c> is in hours. What if you wanted to have that information in minutes? You could create a new column with this very information! The function <c>mutate()</c> was <em>made</em> for <term>all</term> of these new-column-creating situations. This function has a lot of capabilities. We'll cover the basics here.</p>
+<p>Returning to our <c>msleep</c> dataset, after filtering and re-ordering, we can create a new column with <c>mutate()</c>. Within <c>mutate()</c>, we will calculate the number of minutes each mammal sleeps by multiplying the number of hours each animal sleeps by 60 minutes.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  filter(order == "Primates", sleep_total > 10) %>%
+  select(name, sleep_rem, sleep_cycle, sleep_total) %>%
+  arrange(name) %>%
+  mutate(sleep_total_min = sleep_total * 60)
+]]></input></program>
+<figure>
+  <caption>Mutate to add new column to data</caption>
+  <image source="images/gslides/103.png"/>
+</figure>
+</subsection>
+<subsection xml:id="separating-columns">
+<title>Separating Columns</title>
+<p>Sometimes multiple pieces of information are merged within a single column even though it would be more useful during analysis to have those pieces of information in separate columns. To demonstrate, we'll now move from the <c>msleep</c> dataset to talking about another <url href="https://raw.githubusercontent.com/suzanbaert/RTutorials/master/Rmd_originals/conservation_explanation.csv">dataset</url> that includes information about conservation abbreviations in a single column.</p>
+<p>To read this file into R, we'll use the <c>readr</c> package.</p>
+<program language="r"><input><![CDATA[
+## download file 
+conservation <- read_csv("https://raw.githubusercontent.com/suzanbaert/Dplyr_Tutorials/master/conservation_explanation.csv")
+
+## take a look at this file
+conservation
+]]></input></program>
+<figure>
+  <caption>Conservation dataset</caption>
+  <image source="images/gslides/104.png"/>
+</figure>
+<p>In this dataset, we see that there is a single column that includes <em>both</em> the abbreviation for the conservation term as well as what that abbreviation means. Recall that this violates one of the tidy data principles covered in the first lesson: Put just one thing in a cell. To work with these data, you could imagine that you may want these two pieces of information (the abbreviation and the description) in two different columns. To accomplish this in R, you'll want to use <c>separate()</c> from <c>tidyr</c>.</p>
+<p>The <c>separate()</c> function requires the name of the existing column that you want to separate (<c>conservation abbreviation</c>), the desired column names of the resulting separated columns (<c>into = c("abbreviation", "description")</c>), and the characters that currently separate the pieces of information (<c>sep = " = "</c>). We have to put <c>conservation abbreviation</c> in back ticks in the code below because the column name contains a space. Without the back ticks, R would think that <c>conservation</c> and <c>abbreviation</c> were two separate things. This is another violation of tidy data! Variable names should have underscores, not spaces!</p>
+<program language="r"><input><![CDATA[
+conservation %>%
+  separate(`conservation abbreviation`, 
+           into = c("abbreviation", "description"), sep = " = ")
+]]></input></program>
+<p>The output of this code shows that we now have two separate columns with the information in the original column separated out into <c>abbreviation</c> and <c>description</c>.</p>
+<figure>
+  <caption>Output of separate()</caption>
+  <image source="images/gslides/105.png"/>
+</figure>
+</subsection>
+<subsection xml:id="merging-columns">
+<title>Merging Columns</title>
+<p>The opposite of <c>separate()</c> is <c>unite()</c>. So, if you have information in two or more different columns but wish it were in one single column, you'll want to use <c>unite()</c>. Using the code forming the two separate columns above, we can then add on an extra line of <c>unite()</c> code to re-join these separate columns, returning what we started with.</p>
+<program language="r"><input><![CDATA[
+conservation %>%
+  separate(`conservation abbreviation`, 
+           into = c("abbreviation", "description"), sep = " = ") %>%
+  unite(united_col, abbreviation, description, sep = " = ")
+]]></input></program>
+<figure>
+  <caption>Output of unite()</caption>
+  <image source="images/gslides/106.png"/>
+</figure>
+</subsection>
+<subsection xml:id="cleaning-column-names">
+<title>Cleaning Column Names</title>
+<p>While maybe not quite as important as some of the other functions mentioned in this lesson, a function that will likely prove very helpful as you start analyzing lots of different datasets is <c>clean_names()</c> from the <c>janitor</c> package. This function takes the existing column names of your dataset, converts them all to lowercase letters and numbers, and separates all words using the underscore character. For example, there is a space in the column name for conservation. The <c>clean_names()</c>function will convert <c>conservation abbreviation</c> to <c>conservation_abbreviation</c>. These cleaned up column names are a lot easier to work with when you have large datasets.</p>
+<p>So remember this is what the data first looked like:</p>
+<figure>
+  <caption>Conservation dataset</caption>
+  <image source="images/gslides/104.png"/>
+</figure>
+<p>And now with "clean names" it looks like this:</p>
+<program language="r"><input><![CDATA[
+conservation %>%
+  clean_names()
+]]></input></program>
+<figure>
+  <caption>clean_names() output</caption>
+  <image source="images/gslides/108.png"/>
+</figure>
+</subsection>
+<subsection xml:id="combining-data-across-data-frames">
+<title>Combining Data Across Data Frames</title>
+<p>There is often information stored in two separate data frames that you'll want in a single data frame. There are <em>many</em> different ways to join separate data frames. They are discussed in more detail in <url href="http://stat545.com/bit001_dplyr-cheatsheet.html">this tutorial</url> from <url href="https://www.stat.ubc.ca/~jenny/">Jenny Bryan</url>. Here, we'll demonstrate how the <c>left_join()</c> function works, as this is used frequently.</p>
+<p>Let's try to combine the information from the two different datasets we've used in this lesson. We have <c>msleep</c> and <c>conservation</c>. The <c>msleep</c>dataset contains a column called <c>conservation</c>. This column includes lowercase abbreviations that overlap with the uppercase abbreviations in the <c>abbreviation</c> column in the <c>conservation</c> dataset.</p>
+<p>To handle the fact that in one dataset the abbreviations are lowercase and the other they are uppercase, we'll use <c>mutate()</c> to take all the lowercase abbreviations to uppercase abbreviations using the function <c>toupper()</c>.</p>
+<p>We'll then use <c>left_join()</c> which takes all of the rows in the first dataset mentioned (<c>msleep</c>, below) and incorporates information from the second dataset mentioned (<c>conserve</c>, below), when information in the second dataset is available. The <c>by = </c> argument states what columns to join by in the first ("conservation") and second ("abbreviation") datasets. This join adds the <c>description</c> column from the <c>conserve</c> dataset onto the original dataset (<c>msleep</c>). Note that if there is no information in the second dataset that matches with the information in the first dataset, <c>left_join()</c> will add NA. Specifically, for rows where conservation is "DOMESTICATED" below, the <c>description</c> column will have NA because "DOMESTICATED"" is not an abbreviation in the <c>conserve</c> dataset.</p>
+<program language="r"><input><![CDATA[
+## take conservation dataset and separate information
+## into two columns
+## call that new object `conserve`
+conserve <- conservation %>%
+  separate(`conservation abbreviation`, 
+           into = c("abbreviation", "description"), sep = " = ")
+
+
+## now lets join the two datasets together
+msleep %>%
+  mutate(conservation = toupper(conservation)) %>%
+  left_join(conserve, by = c("conservation" = "abbreviation"))
+]]></input></program>
+<figure>
+  <caption>Data resulting from left_join</caption>
+  <image source="images/gslides/109.png"/>
+</figure>
+<p>It's important to note that there are many other ways to join data, which we covered earlier in a previous course and are covered in more detail on this <url href="http://stat545.com/bit001_dplyr-cheatsheet.html">dplyr join cheatsheet</url> from Jenny Bryan. For now, it's important to know that joining datasets is done easily in R using tools in <c>dplyr</c>. As you join data frames in your own work, it's a good idea to refer back to this cheatsheet for assistance.</p>
+</subsection>
+<subsection xml:id="grouping-data">
+<title>Grouping Data</title>
+<p>Often, data scientists will want to summarize information in their dataset. You may want to know how many people are in a dataset. However, more often, you'll want to know how many people there are within a group in your dataset. For example, you may want to know how many males and how many females there are. To do this, grouping your data is necessary. Rather than looking at the total number of individuals, to accomplish this, you first have to <term>group the data</term> by the gender of the individuals. Then, you count within those groups. Grouping by variables within <c>dplyr</c> is straightforward.</p>
+<subsubsection xml:id="group_by">
+<title><c>group_by()</c></title>
+<p>There is an incredibly helpful function within <c>dplyr</c> called <c>group_by()</c>. The <c>group_by()</c> function groups a dataset by one or more variables. On its own, it does not appear to change the dataset very much. The difference between the two outputs below is subtle:</p>
+<program language="r"><input><![CDATA[
+msleep
+
+msleep %>%
+  group_by(order)
+]]></input></program>
+<figure>
+  <caption>group_by() output</caption>
+  <image source="images/gslides/110.png"/>
+</figure>
+<p>In fact, the only aspect of the output that is different is that the number of different orders is now printed on your screen. However, in the next section, you'll see that the output from any further functions you carry out at this point will differ between the two datasets.</p>
+</subsubsection>
+</subsection>
+<subsection xml:id="summarizing-data">
+<title>Summarizing Data</title>
+<p>Throughout data cleaning and analysis it will be important to summarize information in your dataset. This may be for a formal report or for checking the results of a data tidying operation.</p>
+<subsubsection xml:id="summarize">
+<title><c>summarize()</c></title>
+<p>Continuing on from the previous examples, if you wanted to figure out how many samples are present in your dataset, you could use the <c>summarize()</c> function.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+# here we select the column called genus, any column would work
+  select(genus) %>%
+  summarize(N=n())
+]]></input></program>
+<program language="r"><input><![CDATA[
+msleep %>%
+# here we select the column called vore, any column would work
+  select(vore) %>%
+  summarize(N=n())
+]]></input></program>
+<p>This provides a summary of the data with the new column name we specified above (<c>N</c>) and the number of samples in the dataset. Note that we could also obtain the same information by directly obtaining the number of rows in the data frame with <c>nrow(msleep)</c>.</p>
+<figure>
+  <caption>Summarize with n()</caption>
+  <image source="images/gslides/111.png"/>
+</figure>
+<p>However, if you wanted to count how many of each different <c>order</c> of mammal you had. You would first <c>group_by(order)</c> and then use <c>summarize()</c>. This will summarize within group.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  group_by(order) %>% 
+  select(order) %>%
+  summarize(N=n())
+]]></input></program>
+<p>The output from this, like above, includes the column name we specified in summarize (<c>N</c>). However, it includes the number of samples in the group_by variable we specified (<c>order</c>).</p>
+<figure>
+  <caption>group_by() and summarize with n()</caption>
+  <image source="images/gslides/112.png"/>
+</figure>
+<p>There are other ways in which the data can be summarized using <c>summarize()</c>. In addition to using n() to count the number of samples within a group, you can also summarize using other helpful functions within R, such as <c>mean()</c>, <c>median()</c>, <c>min()</c>, and <c>max()</c>.</p>
+<p>For example, if we wanted to calculate the average (mean) total sleep each order of mammal got, we could use the following syntax:</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  group_by(order) %>% 
+  select(order, sleep_total) %>%
+  summarize(N=n(), mean_sleep=mean(sleep_total))
+]]></input></program>
+<figure>
+  <caption>summarize using mean()</caption>
+  <image source="images/gslides/113.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="tabyl">
+<title><c>tabyl()</c></title>
+<p>In addition to using <c>summarize()</c> from <c>dplyr</c>, the <c>tabyl()</c> function from the <c>janitor</c> package can be incredibly helpful for summarizing categorical variables quickly and discerning the output at a glance. It is similar to the <c>table()</c> function from base R, but is explicit about missing data, rather than ignoring missing values by default.</p>
+<p>Again returning to our <c>msleep</c> dataset, if we wanted to get a summary of how many samples are in each order category and what percent of the data fall into each category we could call tabyl on that variable. For example, if we use the following syntax, we easily get a quick snapshot of this variable.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  tabyl(order)
+]]></input></program>
+<figure>
+  <caption>summarize using tabyl() from janitor</caption>
+  <image source="images/gslides/114.png"/>
+</figure>
+<p>Note, that <c>tabyl</c> assumes categorical variables. If you want to summarize numeric variables <c>summary()</c> works well. For example, this code will summarize the values in <c>msleep$awake</c> for you.</p>
+<program language="r"><input><![CDATA[
+summary(msleep$awake)
+]]></input></program>
+<figure>
+  <caption>summarize numeric variables</caption>
+  <image source="images/gslides/115.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="tally">
+<title><c>tally()</c></title>
+<p>We can use the tally function to get the total number of samples in a tibble or the total number of rows very simply.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  tally()
+]]></input></program>
+<p>We can see that this is very similar to our previous use of summarize.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  # here we select the column called genus, any column would work
+  select(genus) %>% 
+  summarize(N=n())
+]]></input></program>
+<p>We can also use this function to get a sum of the values of a column (if the values are numeric).</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+tally(sleep_total)
+]]></input></program>
+<p>Thus overall, all the animals in the dataset sleep 866 hours in total.</p>
+<p>This is the equivalent to using the <c>sum()</c> function with the <c>summarize()</c> function.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  summarize(sum_sleep_total = sum(sleep_total))
+]]></input></program>
+<p>We could also use the <c>pull()</c> function of the <c>dplyr</c> package, to get the sum of just the <c>sleep_total</c> column, as the <c>pull()</c> function extracts or "pulls" the values of a column.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+pull(sleep_total)%>%
+  sum()
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="add_tally">
+<title><c>add_tally()</c></title>
+<p>We can quickly add our tally values to our tibble using <c>add_tally()</c>.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  add_tally() %>%
+  glimpse()
+]]></input></program>
+<p>Notice the new column called "n" that repeats the total number of samples for each row.</p>
+<p>Or we can add a column that repeats the total hours of sleep of all the animals.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  add_tally(sleep_total) %>%
+  glimpse()
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="count">
+<title><c>count()</c></title>
+<p>The <c>count()</c> function takes the <c>tally()</c> function a step further to determine the count of unique values for specified variable(s)/column(s).</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  count(vore)
+]]></input></program>
+<p>This is the same as using group_by() with tally()</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  group_by(vore) %>%
+  tally()
+]]></input></program>
+<p>Multiple variables can be specified with <c>count()</c>.</p>
+<p>This can be really useful when getting to know your data.</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  count(vore, order)
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="add_count">
+<title><c>add_count()</c></title>
+<p>The <c>add_count()</c> function is similar to the <c>add_tally()</c> function:</p>
+<program language="r"><input><![CDATA[
+msleep %>%
+  add_count(vore, order) %>%
+  glimpse()
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="get_dupes">
+<title><c>get_dupes()</c></title>
+<p>Another common issue in data wrangling is the presence of duplicate entries. Sometimes you <em>expect</em> multiple observations from the same individual in your dataset. Other times, the information has accidentally been added more than once. The <c>get_dupes()</c> function becomes very helpful in this situation. If you want to identify duplicate entries during data wrangling, you'll use this function and specify which columns you're looking for duplicates in.</p>
+<p>For example, in the <c>msleep</c> dataset, if you expected to only have one mammal representing each <c>genus</c> and <c>vore</c> you could double check this using <c>get_dupes()</c>.</p>
+<program language="r"><input><![CDATA[
+# identify observations that match in both genus and vore
+msleep %>% 
+  get_dupes(genus, vore)
+]]></input></program>
+<p>The output demonstrates there are 10 mammals that overlap in their genus and vore. Note that the third column of the output counts <em>how many</em> duplicate observations there are. This can be very helpful when you're checking your data!</p>
+</subsubsection>
+<subsubsection xml:id="skim">
+<title><c>skim()</c></title>
+<p>When you would rather get a snapshot of the entire dataset, rather than just one variable, the <c>skim()</c> function from the <c>skimr</c> package can be very helpful. The output from <c>skim()</c> breaks the data up by variable type. For example, the <c>msleep</c> dataset is broken up into <c>character</c> and <c>numeric</c> variable types. The data are then summarized in a meaningful way for each. This function provides a lot of information about the entire dataset. So, when you want a summarize a dataset and quickly get a sense of your data, <c>skim()</c> is a great option!</p>
+<program language="r"><input><![CDATA[
+# summarize dataset
+skim(msleep)
+]]></input></program>
+<figure>
+  <caption>summarize entire dataset using skim() from skimr</caption>
+  <image source="images/gslides/116.png"/>
+</figure>
+<p>Note that this function allows for you to specify which columns you'd like to summarize, if you're not interested in seeing a summary of the entire dataset:</p>
+<program language="r"><input><![CDATA[
+# see summary for specified columns
+skim(msleep, genus, vore, sleep_total)
+]]></input></program>
+<p>It is also possible to group data (using <c>dplyr</c>'s <c>group_by()</c>) before summarizing. Notice in the summary output that each variable specified (<c>genus</c> and <c>sleep_total</c>) are now broken down within each of the <c>vore</c> categories.</p>
+<program language="r"><input><![CDATA[
+msleep %>% 
+  group_by(vore) %>% 
+  skim(genus, sleep_total)
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="summary">
+<title><c>summary()</c></title>
+<p>While base R has a <c>summary()</c> function, this can be combined with the <c>skimr</c> package to provide you with a quick summary of the dataset at large.</p>
+<program language="r"><input><![CDATA[
+skim(msleep) %>% 
+  summary()
+]]></input></program>
+</subsubsection>
+</subsection>
+<subsection xml:id="operations-across-columns">
+<title>Operations Across Columns</title>
+<p>Sometimes it is valuable to apply a certain operation across the columns of a data frame. For example, it be necessary to compute the mean or some other summary statistics for each column in the data frame. In some cases, these operations can be done by a combination of <c>pivot_longer()</c> along with <c>group_by()</c> and <c>summarize()</c>. However, in other cases it is more straightforward to simply compute the statistic on each column.</p>
+<p>The <c>across()</c> function is needed to operate across the columns of a data frame. For example, in our <c>airquality</c> dataset, if we wanted to compute the mean of <c>Ozone</c>, <c>Solar.R</c>, <c>Wind</c>, and <c>Temp</c>, we could do:</p>
+<program language="r"><input><![CDATA[
+airquality %>%
+  summarize(across(Ozone:Temp, mean, na.rm = TRUE))
+]]></input></program>
+<p>The <c>across()</c> function can be used in conjunction with the <c>mutate()</c> and <c>filter()</c> functions to construct joint operations across different columns of a data frame. For example, suppose we wanted to filter the rows of the <c>airquality</c> data frame so that we only retain rows that do not have missing values for <c>Ozone</c> and <c>Solar.R</c>. Generally, we might use the <c>filter()</c> function for this, as follows:</p>
+<program language="r"><input><![CDATA[
+airquality %>%
+  filter(!is.na(Ozone),
+         !is.na(Solar.R))
+]]></input></program>
+<p>Because we are only filtering on two columns here, it's not too difficult to write out the expression. However, if we were filtering on many columns, it would become a challenge to write out every column. This is where the <c>across()</c> function comes in handy. With the <c>across()</c> function, we can specify columns in the same way that we use the <c>select()</c> function. This allows us to use short-hand notation to select a large set of columns.</p>
+<p>We can use the <c>across()</c> function in conjunction with <c>filter()</c> to achieve the same result as above.</p>
+<program language="r"><input><![CDATA[
+airquality %>%
+  filter(across(Ozone:Solar.R, ~ !is.na(.)))
+]]></input></program>
+<p>Here, the <c>~</c> in the call to <c>across()</c> indicates that we are passing an anonymous function (see the section on Functional Programming for more details) and the <c>.</c> is a stand-in for the name of the column.</p>
+<p>If we wanted to filter the data frame to remove rows with missing values in <c>Ozone</c>, <c>Solar.R</c>, <c>Wind</c>, and <c>Temp</c>, we only need to make a small change.</p>
+<program language="r"><input><![CDATA[
+airquality %>%
+  filter(across(Ozone:Temp, ~ !is.na(.)))
+]]></input></program>
+<p>The <c>across()</c> function can also be used with <c>mutate()</c> if we want to apply the same transformation to multiple columns. For example, suppose we want to cycle through each column and replace all missing values (<c>NA</c>s) with zeros. We could use <c>across()</c> to accomplish this.</p>
+<program language="r"><input><![CDATA[
+airquality %>%
+  mutate(across(Ozone:Temp, ~ replace_na(., 0)))
+]]></input></program>
+<p>Again, the <c>.</c> is used as a stand-in for the name of the column. This expression essentially applies the <c>replace_na()</c> function to each of the columns between <c>Ozone</c> and <c>Temp</c> in the data frame.</p>
+</subsection>
+</section>
+<section xml:id="working-with-factors">
+<title>Working With Factors</title>
+<p>In R, categorical data are handled as factors. By definition, categorical data are limited in that they have a set number of possible values they can take. For example, there are 12 months in a calendar year. In a month variable, each observation is limited to taking one of these twelve values. Thus, with a limited number of possible values, month is a categorical variable. Categorical data, which will be referred to as factors for the rest of this lesson, are regularly found in data. Learning how to work with this type of variable effectively will be incredibly helpful.</p>
+<p>To make working with factors simpler, we'll utilize the <c>forcats</c> package, a core tidyverse package. All functions within <c>forcats</c> begin with <c>fct_</c>, making them easier to look up and remember. As before, to see available functions you can type <c>?fct_</c> in your RStudio console. A drop-down menu will appear with all the possible forcats functions.</p>
+<figure>
+  <caption>fct_ output from RStudio</caption>
+  <image source="images/gslides/117.png"/>
+</figure>
+<subsection xml:id="factor-review">
+<title>Factor Review</title>
+<p>In R, factors are comprised of two components: the actual <term>values</term> of the data and the possible <term>levels</term> within the factor. Thus, to create a factor, you need to supply both these pieces of information.</p>
+<p>For example, if we were to create a character vector of the twelve months, we could certainly do that:</p>
+<program language="r"><input><![CDATA[
+## all 12 months
+all_months <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+## our data
+some_months <- c("Mar", "Dec", "Jan",  "Apr", "Jul")
+]]></input></program>
+<p>However, if we were to sort this vector, R would sort this vector alphabetically.</p>
+<program language="r"><input><![CDATA[
+# alphabetical sort
+sort(some_months)
+]]></input></program>
+<figure>
+  <caption>sort sorts variable alphabetically</caption>
+  <image source="images/gslides/118.png"/>
+</figure>
+<p>While you and I know that this is not how months should be ordered, we haven't yet told R that. To do so, we need to let R know that it's a factor variable and what the levels of that factor variable should be.</p>
+<program language="r"><input><![CDATA[
+# create factor
+mon <- factor(some_months, levels = all_months)
+
+# look at factor
+mon
+
+# look at sorted factor
+sort(mon)
+]]></input></program>
+<figure>
+  <caption>defining the factor levels sorts this variable sensibly</caption>
+  <image source="images/gslides/119.png"/>
+</figure>
+<p>Here, we specify all the possible values that the factor could take in the <c>levels = all_months</c> argument. So, even though not all twelve months are included in the some_months object, we've stated that all of the months are possible values. Further, when you sort this variable, it now sorts in the sensical way!</p>
+</subsection>
+<subsection xml:id="manually-changing-the-labels-of-factor-levels-fct_relevel">
+<title>Manually Changing the Labels of Factor Levels: <c>fct_relevel()</c></title>
+<p>What if you wanted your months to start with July first? That can be accomplished using <c>fct_relevel()</c>. To use this function, you simply need to state what you'd like to relevel (<c>mon</c>) followed by the levels you want to relevel. If you want these to be placed in the beginning, the after argument should be <c>after = 0</c>. You can play around with this setting to see how changing <c>after</c> affects the levels in your output.</p>
+<program language="r"><input><![CDATA[
+mon_relevel <- fct_relevel(mon, "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", after = 0)
+
+# releveled
+mon_relevel
+
+# releleveld and sorted
+sort(mon_relevel)
+]]></input></program>
+<figure>
+  <caption>fct_relevel enables you to change the order of your factor levels</caption>
+  <image source="images/gslides/120.png"/>
+</figure>
+<p>After re-leveling, when we sort this factor, we see that Jul is placed first, as specified by the level re-ordering.</p>
+</subsection>
+<subsection xml:id="keeping-the-order-of-the-factor-levels-fct_inorder">
+<title>Keeping the Order of the Factor Levels: <c>fct_inorder()</c></title>
+<p>Now, if you're not interested in the months being in calendar year order, you can always state that you want the levels to stay in the same order as the data you started with, you simply specify with <c>fct_inorder()</c>.</p>
+<program language="r"><input><![CDATA[
+# keep order of appearance
+mon_inorder <- fct_inorder(some_months)
+
+# output
+mon_inorder
+
+# sorted 
+sort(mon_inorder)
+]]></input></program>
+<figure>
+  <caption>fct_inorder() assigns levels in the same order the level is seen in the data</caption>
+  <image source="images/gslides/121.png"/>
+</figure>
+<p>We see now with <c>fct_inorder()</c> that even when we sort the output, it does not sort the factor alphabetically, nor does it put it in calendar order. In fact, it stays in the same order as the input, just as we specified.</p>
+</subsection>
+<subsection xml:id="advanced-factoring">
+<title>Advanced Factoring</title>
+<p>For the remainder of this lesson, we're going to return to using a dataset that's in R by default. We'll use the <c>chickwts</c> dataset for exploring the remaining advanced functions. This dataset includes data from an experiment that was looking to compare the "effectiveness of various feed supplements on the growth rate of chickens."</p>
+<figure>
+  <caption>chickwts dataset</caption>
+  <image source="images/gslides/122.png"/>
+</figure>
+</subsection>
+<subsection xml:id="re-ordering-factor-levels-by-frequency-fct_infreq">
+<title>Re-ordering Factor Levels by Frequency: <c>fct_infreq()</c></title>
+<p>To re-order factor levels by frequency of the value in the dataset, you'll want to use <c>fct_infreq()</c>. Below, we see from the output from <c>tabyl()</c> that 'soybean' is the most frequent feed in the dataset while 'horsebean' is the least frequent. Thus, when we order by frequency, we can expect these two feeds to be at opposite ends for our levels.</p>
+<program language="r"><input><![CDATA[
+## take a look at frequency of each level 
+## using tabyl() from `janitor` package
+tabyl(chickwts$feed)
+
+## order levels by frequency 
+fct_infreq(chickwts$feed) %>% head()
+]]></input></program>
+<figure>
+  <caption>fct_infreq orders levels based on frequency in dataset</caption>
+  <image source="images/gslides/123.png"/>
+</figure>
+<p>As expected, <c>soybean</c>, the most frequent level, appears as the first level and <c>horsebean</c>, the least frequent level, appears last. The rest of the levels are sorted by frequency.</p>
+</subsection>
+<subsection xml:id="reversing-order-levels-fct_rev">
+<title>Reversing Order Levels: <c>fct_rev()</c></title>
+<p>If we wanted to sort the levels from least frequent to most frequent, we could just put <c>fct_rev()</c> around the code we just used to reverse the factor level order.</p>
+<program language="r"><input><![CDATA[
+## reverse factor level order
+fct_rev(fct_infreq(chickwts$feed)) %>% head()
+]]></input></program>
+<figure>
+  <caption>fct_rev() reverses the factor level order</caption>
+  <image source="images/gslides/124.png"/>
+</figure>
+</subsection>
+<subsection xml:id="re-ordering-factor-levels-by-another-variable-fct_reorder">
+<title>Re-ordering Factor Levels by Another Variable: <c>fct_reorder()</c></title>
+<p>At times you may want to reorder levels of a factor by another variable in your dataset. This is often helpful when generating plots (which we'll get to in a future lesson!). To do this you specify the variable you want to reorder, followed by the numeric variable by which you'd like the factor to be re-leveled. Here, we see that we're re-leveling feed by the weight of the chickens.  While we haven't discussed plotting yet, the best way to demonstrate how this works is by plotting the feed against the weights. We can see that the order of the factor is such that those chickens with the lowest median weight (horsebean) are to the left, while those with the highest median weight (casein) are to the right.</p>
+<program language="r"><input><![CDATA[
+## order levels by a second numeric variable 
+chickwts %>%
+  mutate(newfeed = fct_reorder(feed, weight)) %>% 
+  ggplot(., aes(newfeed,weight)) +
+  geom_point()
+]]></input></program>
+<figure>
+  <caption>fct_reorder allows you to re-level a factor based on a secondary numeric variable</caption>
+  <image source="images/gslides/125.png"/>
+</figure>
+</subsection>
+<subsection xml:id="combining-several-levels-into-one-fct_recode">
+<title>Combining Several Levels into One: <c>fct_recode()</c></title>
+<p>To demonstrate how to combine several factor levels into a single level, we'll continue to use our 'chickwts' dataset. Now, I don't know much about chicken feed, and there's a good chance you know a lot more. However, let's <em>assume</em> (even if it doesn't make good sense with regards to chicken feed) you wanted to combine all the feeds with the name "bean" in it to a single category and you wanted to combine "linseed" and "sunflower"" into the category "seed". This can be simply accomplished with <c>fct_recode</c>. In fact, below, you see we can rename all the levels to a simpler term (the values on the left side of the equals sign) by re-naming the original level names (the right side of the equals sign). This code will create a new column, called <c>feed_recode</c> (accomplished with <c>mutate()</c>). This new column will combine "horsebean" and "soybean feeds", grouping them both into the larger level "bean". It will similarly group "sunflower" and "linseed" into the larger level "seed." All other feed types will also be renamed. When we look at the summary of this new column by using <c>tabyl()</c>, we see that all of the feeds have been recoded, just as we specified! We now have four different feed types, rather than the original six.</p>
+<program language="r"><input><![CDATA[
+## we can use mutate to create a new column
+## and fct_recode() to:
+## 1. group horsebean and soybean into a single level
+## 2. rename all the other levels.
+chickwts %>%
+  mutate(feed_recode = fct_recode(feed,
+    "seed"    =   "linseed",
+    "bean"    =   "horsebean",
+    "bean"    =   "soybean",
+    "meal"    =   "meatmeal",
+    "seed"    =   "sunflower",
+    "casein"  =   "casein"
+  )) %>%
+  tabyl(feed_recode)
+]]></input></program>
+<figure>
+  <caption>fct_recode() can be used to group multiple levels into a single level and/or to rename levels</caption>
+  <image source="images/gslides/126.png"/>
+</figure>
+</subsection>
+<subsection xml:id="converting-numeric-levels-to-factors-ifelse-factor">
+<title>Converting Numeric Levels to Factors: <c>ifelse()</c> + <c>factor()</c></title>
+<p>Finally, when working with factors, there are times when you want to convert a numeric variable into a factor. For example, if you were talking about a dataset with BMI for a number of individuals, you may want to categorize people based on whether or not they are underweight (BMI &lt; 18.5), of a healthy weight (BMI between 18.5 and 29.9), or obese (BMI &gt;= 30). When you want to take a numeric variable and turn it into a categorical factor variable, you can accomplish this easily by using <c>ifelse()</c> statements. Within a single statement we provide R with a condition: <c>weight &lt;= 200</c>. With this, we are stating that the condition is if a chicken's weight is less than or equal to 200 grams. Then, if that condition is true, meaning if a chicken's weight is less than or equal to 200 grams, let's assign that chicken to the category <c>low</c>. Otherwise, and this is the <c>else{}</c> part of the <c>ifelse()</c> function, assign that chicken to the category <c>high</c>. Finally, we have to let R know that weight_recode is a factor variable, so we call factor() on this new column. This way we take a numeric variable (<c>weight</c>), and turn it into a factor variable (<c>weight_recode</c>).</p>
+<program language="r"><input><![CDATA[
+## convert numeric variable to factor
+chickwts %>%
+    mutate(weight_recode = ifelse(weight <= 200, "low", "high"), 
+           weight_recode = factor(weight_recode)) %>%
+    tabyl(weight_recode)
+]]></input></program>
+<figure>
+  <caption>converting a numeric type variable to a factor</caption>
+  <image source="images/gslides/127.png"/>
+</figure>
+</subsection>
+</section>
+<section xml:id="working-with-dates-and-times">
+<title>Working With Dates and Times</title>
+<p>In earlier lessons, you were introduced to different types of objects in R, such as characters and numeric. Then we covered how to work with  factors in detail. A remaining type of variable we haven't yet covered is how to work with dates and time in R.</p>
+<p>As with strings and factors, there is a tidyverse package to help you work with dates more easily. The <c>lubridate</c> package is not part of the core tidyverse packages, so it will have to be loaded individually. This package will make working with dates and times easier. Before working through this lesson, you'll want to be sure that <c>lubridate</c> has been installed and loaded in:</p>
+<program language="r"><input><![CDATA[
+#install.packages('lubridate')
+library(lubridate)
+]]></input></program>
+<subsection xml:id="dates-and-times-basics">
+<title>Dates and Times Basics</title>
+<p>When working with dates and times in R, you can consider either <term>dates</term>, <term>times</term>, or <term>date-times</term>. Date-times refer to dates plus times, specifying an exact moment in time. It's always best to work with the simplest possible object for your needs. So, if you don't need to refer to date-times specifically, it's best to work with dates.</p>
+</subsection>
+<subsection xml:id="creating-dates-and-date-time-objects">
+<title>Creating Dates and Date-Time Objects</title>
+<p>To get objects into dates and date-times that can be more easily worked with in R, you'll want to get comfortable with a number of functions from the <c>lubridate</c> package. Below we'll discuss how to create date and date-time objects from (1) strings and (2) individual parts.</p>
+<subsubsection xml:id="from-strings">
+<title>From strings</title>
+<p>Date information is often provided as a string. The functions within the <c>lubridate</c> package can effectively handle this information. To use them to generate date objects, you can call a function using <c>y</c>, <c>m</c>, and <c>d</c> in the order in which the year (<c>y</c>), month (<c>m</c>), and date (<c>d</c>) appear in your data. The code below produces identical output for the date September 29th, 1988, despite the three distinct input formats. This uniform output makes working with dates much easier in R.</p>
+<program language="r"><input><![CDATA[
+# year-month-date
+ymd("1988-09-29")
+
+#month-day-year
+mdy("September 29th, 1988")
+
+#day-month-year
+dmy("29-Sep-1988")
+]]></input></program>
+<figure>
+  <caption>creating date and date-time objects</caption>
+  <image source="images/gslides/128.png"/>
+</figure>
+<p>However, this has only covered working with date objects. To work with date-time objects, you have to further include hour (<c>h</c>), minute(<c>m</c>), and second (<c>s</c>) into the function. For example, in the code below, you can see that the output contains time information in addition to the date information generated in the functions above:</p>
+<program language="r"><input><![CDATA[
+ymd_hms("1988-09-29 20:11:59")
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="from-individual-parts">
+<title>From individual parts</title>
+<p>If you have a dataset where month, date, year, and/or time information are included in separate columns, the functions within <c>lubridate</c> can take this separate information and create a date or date-time object. To work through examples using the functions <c>make_date()</c> and <c>make_timedate()</c>, we'll use a dataset called <c>nycflights13</c>. As this dataset is <em>not</em> included with the R by default, you'll have to install and load it in directly:</p>
+<program language="r"><input><![CDATA[
+#install.packages('nycflights13')
+library(nycflights13)
+]]></input></program>
+<p>Loading this package makes a data frame called <c>flights</c>, which includes "on-time data for all flights that departed NYC in 2013," available. We will work with this dataset to demonstrate how to create a date and date-time object from a dataset where the information is spread across multiple columns.</p>
+<p>First, to create a new column, as we've done throughout the lessons in this course, we will use <c>mutate()</c>. To create a <c>date</c> object, we'll use the function <c>make_date()</c>. We just then need to supply the names of the columns containing the year, month, and day information to this function.</p>
+<program language="r"><input><![CDATA[
+## make_date() creates a date object 
+## from information in separate columns
+flights %>% 
+  select(year, month, day) %>% 
+  mutate(departure = make_date(year, month, day))
+]]></input></program>
+<figure>
+  <caption>mutate() and make_date() create a new column -- departure -- with a date object</caption>
+  <image source="images/gslides/129.png"/>
+</figure>
+<p>A similar procedure is used to create a date-time object; however, this requires the function <c>make_datetime()</c> and requires columns with information about time be specified. Below, <c>hour</c> and <c>minute</c> are included to the function's input.</p>
+<program language="r"><input><![CDATA[
+## make_datetime() creates a date-time object 
+## from information in separate columns
+flights %>% 
+  select(year, month, day, hour, minute) %>% 
+  mutate(departure = make_datetime(year, month, day, hour, minute))
+]]></input></program>
+<figure>
+  <caption>mutate() and make_datetime() create a new column -- departure -- with a date-time object</caption>
+  <image source="images/gslides/130.png"/>
+</figure>
+</subsubsection>
+</subsection>
+<subsection xml:id="working-with-dates">
+<title>Working with Dates</title>
+<p>The reason we've dedicated an entire lesson to working with dates and have shown you how to create date and date-time objects in this lesson is because you often want to plot data over time or calculate how long something has taken. Being able to accomplish these tasks is an important job for a data scientist. So, now that you know how to create date and date-time objects, we'll work through a few examples of how to work with these objects.</p>
+<subsubsection xml:id="getting-components-of-dates">
+<title>Getting components of dates</title>
+<p>Often you're most interested in grouping your data by year, or just looking at monthly or weekly trends. To accomplish this, you have to be able to extract just a component of your date object. You can do this with the functions: <c>year()</c>, <c>month()</c>, <c>mday()</c>,<c>wday()</c>, <c>hour()</c>, <c>minute()</c> and <c>second()</c>. Each will extract the specified piece of information from the date or date-time object.</p>
+<program language="r"><input><![CDATA[
+mydate <- ymd("1988-09-29")
+
+## extract year information
+year(mydate)
+
+## extract day of the month
+mday(mydate)
+
+## extract weekday information
+wday(mydate)
+
+## label with actual day of the week
+wday(mydate, label = TRUE)
+]]></input></program>
+<figure>
+  <caption>lubridate has specific functions to extract components from date and date-time objects</caption>
+  <image source="images/gslides/131.png"/>
+</figure>
+</subsubsection>
+</subsection>
+<subsection xml:id="time-spans">
+<title>Time Spans</title>
+<p>In addition to being able to look at trends by month or year, which requires being able to extract that component from a date or date-time object, it's also important to be able to operate over dates.  If I give you a date of birth and ask you how old that person is today, you'll want to be able to calculate that. This is possible when working with date objects. By subtracting this birth date from today's date, you'll learn now many days old this person is. By specifying this object using <c>as.duration()</c>, you'll be able to extract how old this person is in years.</p>
+<program language="r"><input><![CDATA[
+## how old is someone born on Sept 29, 1988
+mydate <- ymd("1988-09-29")
+
+## subtract birthday from todays date
+age <- today() - mydate
+age
+
+## a duration object can get this information in years
+as.duration(age)
+]]></input></program>
+<figure>
+  <caption>dates and date-times can be operated upon</caption>
+  <image source="images/gslides/132.png"/>
+</figure>
+<p>Using addition, subtraction, multiplication, and division is possible with date objects, and accurately takes into account things like leap years and different number of days each month. This capability and the additional functions that exist within <c>lubridate</c> can be enormously helpful when working with dates and date-time objects.</p>
+</subsection>
+</section>
+<section xml:id="working-with-strings">
+<title>Working With Strings</title>
+<p>You're likely familiar with strings generally; however, to review briefly here:</p>
+<blockquote><p>A string is a sequence of characters, letters, numbers or symbols.</p></blockquote>
+<p>So within R, you could create a string using this syntax. Note that the string begins and ends with quotation marks:</p>
+<program language="r"><input><![CDATA[
+stringA <- "This sentence is a string."
+]]></input></program>
+<p>Multiple strings can be stored within vectors. So, if you have multiple vectors that you want to store in a single object, you could do so by using c() around the strings you want to store and commas to separate each individual string:</p>
+<program language="r"><input><![CDATA[
+objectA <- c( "This sentence is a string.", "Short String", "Third string" )
+]]></input></program>
+<subsection xml:id="stringr">
+<title><c>stringr</c></title>
+<p><url href="http://stringr.tidyverse.org/">stringr</url> is a core tidyverse package specifically designed to help make your life easier when working with strings. Similar to what we saw with <c>forcats</c> functions starting with <c>fct_</c>, all functions within this package start with <c>str_</c>, as you'll see below. There are <em>many</em> helpful functions within the <c>stringr</c> package. We'll only review the basics here, but if you're looking to accomplish something with a string and aren't sure how to approach it, the <c>stringr</c> package is a good first place to look.</p>
+<p>The best way to work through this lesson is to copy and paste every line of code into your RStudio window and see if the output makes sense to you. Working with strings and regular expressions is best learned by practice.</p>
+<subsubsection xml:id="available-functions">
+<title>Available functions</title>
+<p>As we'll only cover a few of the functions within <c>stringr</c> in this lesson, it's important to remember that if you start typing "str_" within RStudio, a list of the many options will show up.</p>
+<figure>
+  <caption>str_ image</caption>
+  <image source="images/gslides/133.png"/>
+</figure>
+</subsubsection>
+</subsection>
+<subsection xml:id="string-basics">
+<title>String Basics</title>
+<p>When working with strings, some of the most frequent tasks you'll need to complete are to:</p>
+<ul>
+  <li><p>determine the length of a string   </p></li>
+  <li><p>combine strings together  </p></li>
+  <li><p>subset strings  </p></li>
+</ul>
+<subsubsection xml:id="string-length">
+<title>String length</title>
+<p>Returning to our object with three strings from earlier in the lesson, we can determine the length of each string in the vector.</p>
+<program language="r"><input><![CDATA[
+objectA <- c( "This sentence is a string.", "Short String", "Third string" )
+
+str_length(objectA)
+]]></input></program>
+<figure>
+  <caption>`str_length()` output</caption>
+  <image source="images/gslides/134.png"/>
+</figure>
+<p>Here we see that the first string has a length of 26. If you were to go back and count the characters in the first string, you would see that this 26 includes each letter, space, and period in that string. The length of a string does not just could the letters in its length. The length includes every character. The second and third strings each have length 12.</p>
+</subsubsection>
+<subsubsection xml:id="combining-strings-str_c">
+<title>Combining strings: <c>str_c()</c></title>
+<p>If you were interested in combining strings, you'd want to use <c>str_c</c>.</p>
+<program language="r"><input><![CDATA[
+str_c( "Good", "Morning")
+]]></input></program>
+<figure>
+  <caption>`str_c()`</caption>
+  <image source="images/gslides/135.png"/>
+</figure>
+<p>However, the output from this doesn't look quite right. You may want a space between these two words when you combine the two strings. That can be controlled with the <c>sep</c> argument.</p>
+<program language="r"><input><![CDATA[
+str_c( "Good", "Morning", sep=" ")
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="subsetting-strings-str_sub">
+<title>Subsetting strings: <c>str_sub()</c></title>
+<p>Often, it's important to get part of a string out. To do this, you'll want to subset the string using the <c>str_sub()</c> function. For example, if you wanted only the first three characters in the string below, you would specify that within <c>str_sub()</c>.</p>
+<program language="r"><input><![CDATA[
+object <- c( "Good", "Morning")
+
+str_sub(object, 1, 3)
+]]></input></program>
+<figure>
+  <caption>`str_sub()` output</caption>
+  <image source="images/gslides/136.png"/>
+</figure>
+<p>You can also use negative numbers to count from the end of the string. For example, below we see code that returns the last three positions in the string.</p>
+<program language="r"><input><![CDATA[
+object <- c( "Good", "Morning")
+
+str_sub(object, -3, -1)
+]]></input></program>
+<figure>
+  <caption>`str_sub()` output counting from end of string</caption>
+  <image source="images/gslides/137.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="string-sorting-str_sort">
+<title>String sorting: <c>str_sort()</c></title>
+<p>Finally, if you wanted to sort a string alphabetically, <c>str_sort()</c> can help you accomplish that.</p>
+<program language="r"><input><![CDATA[
+names <- c("Keisha", "Mohammed", "Jane")
+
+str_sort(names)
+]]></input></program>
+<figure>
+  <caption>`str_sort()` output sorts strings</caption>
+  <image source="images/gslides/138.png"/>
+</figure>
+</subsubsection>
+</subsection>
+<subsection xml:id="regular-expressions">
+<title>Regular Expressions</title>
+<p>Above we discussed the basics of working with strings within <c>stringr</c>. However, working with strings becomes infinitely easier with an understanding of regular expressions. Regular expressions (regexps) are used to <term>describe patterns within strings</term>. They can take a little while to get the hang of but become very helpful once you do. With regexps, instead of specifying that you want to extract the first three letters of a string (as we did above), you could more generally specify that you wanted to extract all strings that start with a specific letter or that contain a specific word somewhere in the string using regexps. We'll explore the basics of regexps here.</p>
+<p>The use them in <c>stringr</c>, the general format is <c>function(string , pattern = regexp)</c>, which you'll see used in practice below.</p>
+<p>We'll cover a number of helpful <c>stringr</c> functions:</p>
+<ul>
+  <li><p><term><c>str_view()</c></term> - View the first occurrence in a string that matches the regex</p></li>
+  <li><p><term><c>str_view_all()</c></term> - View all occurrences in a string that match the regex</p></li>
+  <li><p><term><c>str_count()</c></term> - count the number of times a regex matches within a string</p></li>
+  <li><p><term><c>str_detect()</c></term> - determine if regex is found within string</p></li>
+  <li><p><term><c>str_subset()</c></term> - return subset of strings that match the regex</p></li>
+  <li><p><term><c>str_extract()</c></term> - return portion of each string that matches the regex</p></li>
+  <li><p><term><c>str_replace()</c></term> - replace portion of string that matches the regex with something else</p></li>
+</ul>
+<subsubsection xml:id="anchors">
+<title>Anchors</title>
+<p>If interested in finding a pattern at the beginning (<c>^</c>) or end (<c>$</c>) of a string, you can specify that using a regexp. For example, if you wanted to only look at names that started with the letter "M", you would specify that using a regexp. The pattern you would include would be <c>"^M"</c> to identify all strings that start with the letter M. To specify those strings that end with a capital M, you would specify the pattern <c>"$M"</c>.</p>
+</subsubsection>
+<subsubsection xml:id="show-matches-str_view">
+<title>Show matches: <c>str_view()</c></title>
+<p>To get comfortable with using regexps with strings, <c>str_view()</c> can be very helpful. The output from <c>str_view()</c> highlights what portion of your string match the pattern specified in your regexp with a gray box. For example, to we'll start using anchors and <c>str_view()</c> below:</p>
+<program language="r"><input><![CDATA[
+names <- c("Keisha", "Mohammed", "Jane", "Mathieu")
+
+## identify strings that start with "M"
+str_view(names, "^M")
+]]></input></program>
+<figure>
+  <caption>`str_view()` identifies names that start with M</caption>
+  <image source="images/gslides/139.png"/>
+</figure>
+<p>In this first example we see in the Viewer Panel that <c>str_view()</c> has identified the names that start with the letter "M".</p>
+<p>However, if you try to match strings that end with the letter "M", no match is found.</p>
+<program language="r"><input><![CDATA[
+## identify strings that end with "M"
+str_view(names, "M$")
+]]></input></program>
+<figure>
+  <caption>`str_view()` does not identify any names that end with M</caption>
+  <image source="images/gslides/140.png"/>
+</figure>
+<p>To identify names by that end with the letter "a", you would use the following.</p>
+<program language="r"><input><![CDATA[
+## identify strings that end with "a"
+str_view(names, "a$")
+]]></input></program>
+<figure>
+  <caption>`str_view()` identifies names that end with a</caption>
+  <image source="images/gslides/141.png"/>
+</figure>
+<p>Note, however, that regexps are case sensitive. To match patterns, you have to consider that "A" and "a" are different characters.</p>
+<program language="r"><input><![CDATA[
+## identify strings that end with "A"
+str_view(names, "A$")
+]]></input></program>
+<figure>
+  <caption>`str_view()` does not identify any names that end with A</caption>
+  <image source="images/gslides/142.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="count-matches-str_count">
+<title>Count matches: <c>str_count()</c></title>
+<p>To count the number of matches within your strings, you would use <c>str_count()</c>. Below, using the names vector we've been using, we see that <c>str_count()</c> produces a 1 for those names that start with "M" and a 0 otherwise.</p>
+<program language="r"><input><![CDATA[
+## identify strings that start with "M"
+## return count of the number of times string matches pattern
+str_count(names, "^M")
+]]></input></program>
+<figure>
+  <caption>`str_count()` strings that start with "M"</caption>
+  <image source="images/gslides/143.png"/>
+</figure>
+<p>However, if we instead wanted a count of the numbers of lowercase "m"s, we could still use <c>str_count()</c> to accomplish that. Notice below we've removed the specification to just look at the beginning of the string. Here, we're looking for lowercase m's anywhere in the string and counting them:</p>
+<program language="r"><input><![CDATA[
+## identify strings that have a lowercase "m"
+## return count of the number of times string matches pattern
+str_count(names, "m")
+]]></input></program>
+<figure>
+  <caption>`str_count()` strings that have an m in them</caption>
+  <image source="images/gslides/144.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="detect-matches-str_detect">
+<title>Detect matches: <c>str_detect()</c></title>
+<p>Instead of returning a count, at times you're just interested in knowing which strings match the pattern you're searching for. In these cases you'll want to use <c>str_detect()</c>. This function simply returns a TRUE if the string matches the pattern specified and FALSE otherwise.</p>
+<program language="r"><input><![CDATA[
+## identify strings that start with "M"
+## return TRUE if they do; FALSE otherwise
+str_detect(names, "^M")
+]]></input></program>
+<figure>
+  <caption>str_detect() returns TRUE for strings that match the specified pattern; FALSE otherwise</caption>
+  <image source="images/gslides/145.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="subset-matches-str_subset">
+<title>Subset matches: <c>str_subset()</c></title>
+<p>To return the actual string that matches the specified pattern, rather than a TRUE/FALSE, you'll look to <c>str_subset()</c>. This function pulls out those strings that match the specified pattern. For example, to obtain the subset of names whose values start with the capital letter "M", you would use the following:</p>
+<program language="r"><input><![CDATA[
+## identify strings that start with "M"
+## return whole string
+str_subset(names, "^M")
+]]></input></program>
+<figure>
+  <caption>`str_subset()` returns the strings that match the pattern specified</caption>
+  <image source="images/gslides/146.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="extract-matches-str_extract">
+<title>Extract matches: <c>str_extract()</c></title>
+<p>To extract only the portions of the string that match the specified pattern, you would use <c>str_extract()</c>. This function returns the pattern specified for strings where it is found and NA otherwise. For example, by searching for names that start with M, below, we see that the second and fourth strings in our vector return the pattern specified ("M") and that the first and third strings in the vector return NA, as they do not start with a capital "M".</p>
+<program language="r"><input><![CDATA[
+## return "M" from strings that start with "M"
+## otherwise, return NA
+str_extract(names, "^M")
+]]></input></program>
+<figure>
+  <caption>`str_extract()` returns the portions of the strings that match the pattern specified</caption>
+  <image source="images/gslides/147.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="replace-matches-str_replace">
+<title>Replace matches: <c>str_replace()</c></title>
+<p>The final basic function from <c>stringr</c> that we'll discuss is <c>str_replace()</c>. This function identifies a regex and replaces each occurrence with whatever replacement the user specifies. For example, below we search for strings that start with the capital letter "M" and replace each of them with a question mark. All strings that do <em>not</em> match the regex are returned unchanged.</p>
+<program language="r"><input><![CDATA[
+## replace capital M with a question mark
+str_replace(names, "^M", "?")
+]]></input></program>
+<figure>
+  <caption>`str_replace()` replaces regex with specified characters</caption>
+  <image source="images/gslides/148.png"/>
+</figure>
+</subsubsection>
+<subsubsection xml:id="common-regular-expressions">
+<title>Common regular expressions</title>
+<p>Above we discuss two common patterns searched for using regular expressions: starts with (<c>^</c>) and ends with (<c>$</c>). However, there are a number of additional common ways to match patterns. They are listed here, and we'll discuss each one in slightly more detail below.</p>
+<paragraphs xml:id="searching-for-characters">
+<title>Searching for characters</title>
+<p>To search for a set of characters, you place these characters within brackets. Below, this will identify anywhere in the strings where you have a lowercase vowel. Note, that we're now using <c>str_view_all()</c> to identify all occurrences of these characters, rather than <c>str_view()</c>, which only identifies the first occurrence in each string.</p>
+<program language="r"><input><![CDATA[
+## identify all lowercase vowels
+str_view_all(names, "[aeiou]")
+]]></input></program>
+<figure>
+  <caption>brackets specify which characters to search for</caption>
+  <image source="images/gslides/149.png"/>
+</figure>
+</paragraphs>
+<paragraphs xml:id="searching-for-anything-other-than-a-set-of-characters">
+<title>Searching for anything <em>other</em> than a set of characters</title>
+<p>By adding a caret (<c>^</c>) before the vowels within the brackets, this regular expressions specifies that you are searching for any character that is not a lowercase vowel within your strings.</p>
+<program language="r"><input><![CDATA[
+## identify anything that's NOT a lowercase vowel
+str_view_all(names, "[^aeiou]")
+]]></input></program>
+<figure>
+  <caption>brackets with a caret first specify which characters NOT to search for</caption>
+  <image source="images/gslides/150.png"/>
+</figure>
+</paragraphs>
+<paragraphs xml:id="search-for-digits">
+<title>Search for digits</title>
+<p>To search for digits (numeric variable between 0 and 9) in a string you use "\d"; however, backslashes are protected characters in R. This means that you have to escape this character first with an additional backslash (<c>\</c>), to let R know that you want to search for the regular expression "\d".</p>
+<program language="r"><input><![CDATA[
+addresses <- c("1234 Main Street", "1600 Pennsylvania Ave", "Brick Building")
+
+## identify anything that's a digit
+str_view_all(addresses, "\\d")
+]]></input></program>
+<figure>
+  <caption>`\d` searches for digits</caption>
+  <image source="images/gslides/151.png"/>
+</figure>
+</paragraphs>
+<paragraphs xml:id="search-for-whitespace">
+<title>Search for whitespace</title>
+<p>Identifying whitespace in R identifies any spaces, tabs or newlines. Note that again we have to escape the "\s" with a backslash for R to recognize the regular expression.</p>
+<program language="r"><input><![CDATA[
+## identify any whitespace
+str_view_all(addresses, "\\s")
+]]></input></program>
+<figure>
+  <caption>`\s` searches for whitespace</caption>
+  <image source="images/gslides/152.png"/>
+</figure>
+</paragraphs>
+<paragraphs xml:id="identify-any-character-except-newline">
+<title>Identify any character (except newline)</title>
+<p>To identify any character except for a newline you'll use <c>"."</c>. Notice in our addresses example that there are no newlines, so this pattern will match with the entire string.</p>
+<program language="r"><input><![CDATA[
+## identify any character
+str_view_all(addresses, ".")
+]]></input></program>
+<figure>
+  <caption>. searches for any character</caption>
+  <image source="images/gslides/153.png"/>
+</figure>
+</paragraphs>
+</subsubsection>
+<subsubsection xml:id="repetition-within-regular-expressions">
+<title>Repetition within regular expressions</title>
+<p>Searches for regular expressions allow you to specify how many times a pattern should be found within the string. To do so, you use the following:</p>
+<ul>
+  <li><p><c>?</c> : 0 or 1</p></li>
+  <li><p><c>+</c> : 1 or more</p></li>
+  <li><p><c>\\*</c> : 0 or more</p></li>
+</ul>
+<ul>
+  <li><p><c>{n}</c> : exactly n times</p></li>
+  <li><p><c>{n,}</c> : n or more times</p></li>
+  <li><p><c>{n,m}</c> : between n and m times</p></li>
+</ul>
+<paragraphs xml:id="examples-of-repetition-within-regular-expressions">
+<title>Examples of repetition within regular expressions</title>
+<p>Using the definitions above, we can see that the following code will identify patterns within the addresses vector where n shows up one more more times in a string.</p>
+<program language="r"><input><![CDATA[
+## identify any time n shows up one or more times
+str_view_all(addresses, "n+")
+]]></input></program>
+<figure>
+  <caption>+ specifies to match the pattern one or more times</caption>
+  <image source="images/gslides/154.png"/>
+</figure>
+<p>While the difference is slight in the output here, we're identifying portions of the string where n shows up exactly once. So, instead of the 'nn' in Pennsylvania matching together, the code here splits these up, due to the fact that we're specifying the pattern match 'n' exactly one time:</p>
+<program language="r"><input><![CDATA[
+## identify any time n shows up
+str_view_all(addresses, "n{1}")
+]]></input></program>
+<figure>
+  <caption>{#} looks to match the pattern exactly the number of times within the curly braces</caption>
+  <image source="images/gslides/155.png"/>
+</figure>
+<p>If you only wanted to match strings where n showed up twice in a row, you could specify that in this way:</p>
+<program language="r"><input><![CDATA[
+## identify any time n shows up exactly two times in a row
+str_view_all(addresses, "n{2}")
+]]></input></program>
+<figure>
+  <caption>{2} specifies that the pattern must be found exactly twice</caption>
+  <image source="images/gslides/156.png"/>
+</figure>
+<p>This could similarly be achieved by specifying to search for the pattern 'nn' one or more times (<c>+</c>):</p>
+<program language="r"><input><![CDATA[
+## identify any time 'nn' shows up one or more times 
+str_view_all(addresses, "nn+")
+]]></input></program>
+<figure>
+  <caption>nn+ searches for double n one or more times in a string</caption>
+  <image source="images/gslides/157.png"/>
+</figure>
+<p>You can also specify a range of the number of times to search for a pattern within your string. Below, we see that if we specify n be searched for at least two and at most 3 times, the pattern matches within our string. However, if we increase that to between three and four times, no pattern matching occurs, as there are never three or four n's in a row in our strings.</p>
+<program language="r"><input><![CDATA[
+## identify any time n shows up two or three times 
+str_view_all(addresses, "n{2,3}")
+
+## identify any time n shows up three or four times 
+str_view_all(addresses, "n{3,4}")
+]]></input></program>
+<figure>
+  <caption>{n,m} looks to pattern match between n and m times</caption>
+  <image source="images/gslides/158.png"/>
+</figure>
+</paragraphs>
+</subsubsection>
+</subsection>
+<subsection xml:id="glue">
+<title><c>glue</c></title>
+<p>Beyond using <c>stringr</c> to work with strings, there's an additional helpful package called <url href="https://glue.tidyverse.org/"><c>glue</c></url>. According to the <c>glue</c> website:</p>
+<blockquote><p>Glue offers interpreted string literals that are small, fast, and dependency-free. Glue does this by embedding R expressions in curly braces which are then evaluated and inserted into the argument string.</p></blockquote>
+<p>To get started with this package, it will have to be installed and loaded in, as it is not a core tidyverse package.</p>
+<program language="r"><input><![CDATA[
+# install.packages("glue")
+library(glue)
+]]></input></program>
+<p>So, if you want to pass an R variable directly into a string, that becomes simpler with <c>glue</c>.</p>
+<p>For example:</p>
+<program language="r"><input><![CDATA[
+# use glue to interpret string literal
+topic <- 'tidyverse'
+glue('My favorite thing to learn about is the {topic}!')
+]]></input></program>
+<p>Note that the code above interprets the variable <c>topic</c> within the string specified in the <c>glue()</c> function. The variable is specified within curly braces: <c>{}</c>.</p>
+<p>This becomes particularly helpful when combining information within a data frame.</p>
+<p>For example, if we return to the <c>msleep</c> dataset with information about mammalian sleep, we could use <c>mutate()</c> to add a column summarizing the name of the animal, how many minutes the animal spends asleep and how many awake. Note that these columns are currently in hours, so we're going to convert that to minutes within the glue statement here:</p>
+<program language="r"><input><![CDATA[
+# add a description column using glue
+msleep %>%
+  mutate(description = glue("The {name} typically sleeps for {sleep_total * 60} minutes and is awake for {awake * 60} minutes each day.")) %>% 
+  select(name, sleep_total, awake, description)
+]]></input></program>
+<p>Note that we've selected the four columns used in this example with <c>select()</c> to focus on the output created using <c>glue()</c> in the <c>description</c> column. For each observation the information in description utilizes the appropriate information for that observation and the columns specified within the curly braces within the <c>glue()</c> function.</p>
+</subsection>
+</section>
+<section xml:id="working-with-text">
+<title>Working With Text</title>
+<p>Beyond working with single strings and string literals, sometimes the information you're analyzing is a whole body of text. This could be a speech, a novel, an article, or any other written document. In text analysis, the document(s) you've set out to analyze are referred to as a <term>corpus</term>. Linguists frequently analyze such types of data and doing so within R in a tidy data format has become simpler thanks to the <url href="https://juliasilge.github.io/tidytext/"><c>tidytext</c></url> package and the package-accompanying book <url href="https://www.tidytextmining.com/"><em>Text Mining with R</em></url>.</p>
+<p>To get started, the package must be installed and loaded in:</p>
+<program language="r"><input><![CDATA[
+# install.packages("tidytext")
+library(tidytext)
+]]></input></program>
+<subsection xml:id="tidy-text-format">
+<title>Tidy Text Format</title>
+<p>If we're thinking about all the text in a novel, it's pretty clear that it is not in a format that is easy to analyze computationally. To analyze the text in the novel computationally and say, determine what words are used most frequently, or what topics are discussed, we need to convert the text in the novel into a format that a computer can interpret. And, as with all types of data discussed in these courses, we want this to be a tidy format where (1) each observation is a row (2) each variable is a column, and (3) each observational unit is a table. So, how do we take text from a novel and store the information in a tidy format?</p>
+<p>The tidy text format requires that the data frame will store one <term>token</term> per row. This requires knowing that a <term>token</term> is a meaningful unit of text. How you define that unit is up to you, the analyst and is driven by the question you're asking. If you're looking to identify the words used most frequently in this analysis, the unit of your token would be individual words. You would then utilize your computer to generate a data frame with each row containing data about a single word. However, your token could be two words (a <term>bigram</term>), a sentence, or a paragraph. Whatever you decide is meaningful for your analysis will be the unit for your token. Each row will contain a separate token.</p>
+<subsubsection xml:id="tokenization">
+<title>Tokenization</title>
+<p>After determining what level of information you're most interested in, you need a way to go from a wall of text (say, all the text in a novel) to a data frame of tokens (say, individual words). To do this, the <c>unnest_tokens()</c> function is incredibly useful.</p>
+<p>We'll use a bare bones example to demonstrate how it works. Below is text from the Shel Silverstein poem "Carrots" stored as a character vector:</p>
+<program language="r"><input><![CDATA[
+carrots <- c("They say that carrots are good for your eyes",
+          "They swear that they improve your sight",
+          "But I'm seein' worse than I did last night -",
+          "You think maybe I ain't usin' em right?")
+
+carrots
+]]></input></program>
+<p>For analysis, we'd need to get this into a tidy data format. So, first things first, let's get it into a data frame:</p>
+<program language="r"><input><![CDATA[
+library(tibble)
+text_df <- tibble(line = 1:4, text = carrots)
+
+text_df
+]]></input></program>
+<p>At this point we have a tibble with each line of the poem in a separate row. Now, we want to convert this using <c>unnest_tokens()</c> so that each row contains a single token, where, for this example, our token will be an individual word. This process is known as <em>tokenization</em>.</p>
+<program language="r"><input><![CDATA[
+text_df %>% 
+  unnest_tokens(word, text)
+]]></input></program>
+<p>Notice that the two arguments to the <c>unnest_tokens()</c> function. The first (<c>word</c> in our example) is the name of the token column in the output. The second (<c>text</c> in our example) is the name of the column in the input data frame (<c>text_df</c>) that should be used for tokenization.</p>
+<p>In the output we see that there is a single word (token) in each row, so our data are now in a tidy format, which makes further analysis simpler.</p>
+<p>Finally, note that, by default <c>unnest_tokens()</c> strips punctuation and converts the tokens to lowercase.</p>
+</subsubsection>
+</subsection>
+<subsection xml:id="sentiment-analysis">
+<title>Sentiment Analysis</title>
+<p>Often, once you've tokenized your dataset, there is an analysis you want to do - a question you want to answer. Sometimes, this involves wanting to measure the sentiment of a piece by looking at the emotional content of the words in that piece.</p>
+<p>To do this, the analyst must have access to or create a <em>lexicon</em>, a dictionary with the sentiment of common words. There are three single word-based lexicons available within the <c>tidytext</c> package: <url href="http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010"><c>afinn</c></url>, <url href="https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html"><c>bing</c></url>, <url href="https://sraf.nd.edu/"><c>loughran</c></url> and <url href="http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm"><c>nrc</c></url>. Each differs in how they categorize sentiment, and to get a sense of how words are categorized in any of these lexicon, you can use the <c>get_sentiments()</c> function.</p>
+<p>However, this requires an additional package: <c>textdata</c>. Be sure this has been installed before using the <c>get_sentiments()</c> function.</p>
+<program language="r"><input><![CDATA[
+library(textdata)
+# be sure textdata is installed
+#install.packages("textdata", repos = 'http://cran.us.r-project.org')
+
+# see information stored in NRC lexicon
+get_sentiments('nrc')
+]]></input></program>
+<p>Note: The first time you use this function R will prompt you to verify that you want to download the lexicon.</p>
+<p>In the output you'll see words in the first column and the sentiment attached to each word in the <c>sentiment</c> column. Notice that the same word can have multiple sentiments attached to it. All told, there are more than 13,000 word-sentiment pairs in this lexicon.</p>
+<p>Let's quantify the sentiment in the "Carrots" poem from above:</p>
+<program language="r"><input><![CDATA[
+text_df %>% 
+  unnest_tokens(word, text) %>% 
+  inner_join(get_sentiments('nrc'))
+]]></input></program>
+<p>Notice that the sentiments applied to each word are dependent upon the sentiments defined within the lexicon. Words that are missing or that are used differently than anticipated by those who generated the lexicon <em>could</em> be misclassified. Additionally, since we're using single word tokens, qualifiers are removed from context. So in the carrots poem, the word good in "are good for your eyes" would be given the same sentiment as good if the phrase were "are <em>not</em> good for your eyes." Thus, a lot context and nuance is lost in this approach. It's always important to consider the limitations of your analytical approach!</p>
+<p>Above we found the sentiments for each token, but let's summarize that by counting the number of times each sentiment appears.</p>
+<program language="r"><input><![CDATA[
+text_df %>%
+  unnest_tokens(word, text) %>%
+  inner_join(get_sentiments('nrc')) %>%
+  count(sentiment, sort = TRUE)
+]]></input></program>
+<p>As we're analyzing a short poem, we see that only a few sentiments show up multiple times; however, using sentiment analysis on this poem suggests that the poem is generally positive, including words that convey trust, anticipation, and joy.</p>
+<p>Analyzing a four line poem, however, is not typically what one would do. They would instead analyze the text across chapters in a book or across multiple books. Here, we've just demonstrated the concepts behind how you would go about carrying out sentiment analysis.</p>
+</subsection>
+<subsection xml:id="word-and-document-frequency">
+<title>Word and Document Frequency</title>
+<p>Beyond sentiment analysis, analysts of text are often interested in quantifying what a document is <em>about.</em> One could start by quantifying term frequency and looking at which terms occur most often; however, common words, such as the and and, are likely to appear most often. Those aren't unique to the work and hardly explain the text's topic. Often, these words, referred to as <term>stop words</term> are removed from analysis; however, these words are more important to some works relative to others. So, analysts tend to take a different approach: <em><term>inverse document frequency</term></em> (idf).</p>
+<p>A document's <em><term>inverse document frequency</term></em> (idf) weights each term by its frequency in a collection of documents. Those words that are quite common in a set of documents are down-weighted. The weights for words that are less common are increased. By combining idf with term frequency (tf) (through multiplication), words that are common <em>and</em> unique to that document (relative to the collection of documents) stand out.</p>
+<p>To see an example of this, we'll need a few more poems from Shel Silverstein for analysis. Here is <em>Invitation</em>:</p>
+<program language="r"><input><![CDATA[
+library(tibble)
+invitation <- c("If you are a dreamer, come in,",
+  "If you are a dreamer, a wisher, a liar", 
+  "A hope-er, a pray-er, a magic bean buyer…",
+  "If you’re a pretender, come sit by my fire",
+  "For we have some flax-golden tales to spin.",
+  "Come in!",
+  "Come in!")
+
+invitation <- tibble(line = 1:7, text = invitation, title = "Invitation")
+
+invitation
+]]></input></program>
+<p>And, here is masks:</p>
+<program language="r"><input><![CDATA[
+masks <- c("She had blue skin.", 
+           "And so did he.", 
+           "He kept it hid", 
+           "And so did she.", 
+           "They searched for blue", 
+           "Their whole life through",
+           "Then passed right by—", 
+           "And never knew")
+
+masks <- tibble(line = 1:8, text = masks, title = "Masks")
+
+masks
+]]></input></program>
+<p>We'll combine all three poems into a single data frame for TF-IDF analysis. To do so, we'll first add a column to our carrots example from above so that it has a column for <c>title</c>:</p>
+<program language="r"><input><![CDATA[
+# add title to carrots poem
+carrots <- text_df %>% mutate(title = "Carrots")
+
+# combine all three poems into a tidy data frame
+poems <- bind_rows(carrots, invitation, masks)
+]]></input></program>
+<p>Now that we have our three documents (poems) in a single data frame, we can tokenize the text by word and calculate each tokens frequency within the document (poem).</p>
+<program language="r"><input><![CDATA[
+# count number of times word appwars within each text
+poem_words <- poems %>%
+  unnest_tokens(word, text) %>%
+  count(title, word, sort = TRUE)
+
+# count total number of words in each poem
+total_words <- poem_words %>% 
+  group_by(title) %>% 
+  summarize(total = sum(n))
+
+# combine data frames
+poem_words <- left_join(poem_words, total_words)
+poem_words
+]]></input></program>
+<p>Note that there are a different number of total words in each document, which is important to consider when you're comparing relative frequency between documents.</p>
+<p>We could visualize the number of times a word appears relative to document length as follows:</p>
+<program language="r"><input><![CDATA[
+library(ggplot2)
+# visualize frequency / total words in poem
+ggplot(poem_words, aes(n/total, fill = title)) +
+  geom_histogram(show.legend = FALSE, bins = 5) +
+  facet_wrap(~title, ncol = 3, scales = "free_y")
+]]></input></program>
+<p>With most documents there are only a few words that show up infrequently in the tail off to the right (rare words), while most words show up a whole bunch of times.</p>
+<p>What we've just visualized is term frequency. We can add this quantity to our data frame:</p>
+<program language="r"><input><![CDATA[
+freq_by_rank <- poem_words %>% 
+  group_by(title) %>% 
+  mutate(rank = row_number(), 
+         `term frequency` = n/total)
+]]></input></program>
+<p>Notice that words that appear most frequently will have the largest term frequency. However, we're not just interested in word frequency, as stop words (such as "a") have the highest term frequency. Rather, we're interested in tf-idf - those words in a document that are unique relative to the other documents being analyzed.</p>
+<p>To calculate tf-idf, we can use <c>bind_tf_idf()</c>, specifying three arguments: the column including the token (<c>word</c>), the column specifying the document from which the token originated (<c>title</c>), and the column including the number of times the word appears (<c>n</c>):</p>
+<program language="r"><input><![CDATA[
+poem_words <- poem_words %>%
+  bind_tf_idf(word, title, n)
+
+# sort ascending
+poem_words %>%
+  arrange(tf_idf)
+]]></input></program>
+<p>If we sort this output in ascending order by <c>tf_idf</c>, you'll notice that the word "for" has a <c>tf_idf</c> of 0. The data indicates that this word shows up with equal frequency across all three poems. It is <em>not</em> a word unique to any one poem.</p>
+<program language="r"><input><![CDATA[
+# sort descending
+poem_words %>%
+  arrange(desc(tf_idf))
+]]></input></program>
+<p>Alternatively, here we see the words most unique to the individual poems. "a" and "come" are most unique to <em>Invitation</em>, while "and" and "blue" are most unique to <em>Masks</em>. If we had removed stop words, we would have lost the fact that some common words are really unique in one of these poems relative to the others.</p>
+<p>Again, we're looking at a limited amount of text here, but this analysis can be applied to novels, works by different authors, or articles written in a newspaper.</p>
+<p>We can summarize these tf-idf results by visualizing the words with the highest tf-idf in each of these poems:</p>
+<program language="r"><input><![CDATA[
+poem_words %>%
+  arrange(desc(tf_idf)) %>%
+  mutate(word = factor(word, levels = rev(unique(word)))) %>% 
+  group_by(title) %>% 
+  top_n(3) %>% 
+  ungroup() %>%
+  ggplot(aes(word, tf_idf, fill = title)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = NULL, y = "tf-idf") +
+  facet_wrap(~title, ncol = 3, scales = "free") +
+  coord_flip()
+]]></input></program>
+</subsection>
+</section>
+<section xml:id="functional-programming">
+<title>Functional Programming</title>
+<p><term>Functional programming</term> is an approach to programming in which the code evaluated is treated as a mathematical function. It is <em>declarative</em>, so expressions (or declarations) are used instead of statements. Functional programming is often touted and used due to the fact that cleaner, shorter code can be written. In this shorter code, functional programming allows for code that is elegant but also understandable. Ultimately, the goal is to have simpler code that minimizes time required for debugging, testing, and maintaining.</p>
+<p>R at its core is a functional programming language. If you're familiar with the <c>apply()</c> family of functions in base R, you've carried out some functional programming! Here, we'll discuss functional programming and utilize the <c>purrr</c> package, designed to enhance functional programming in R.</p>
+<p>By utilizing functional programming, you'll be able to minimize redundancy within your code. The way this happens in reality is by determining what small building blocks your code needs. These will each be a function. These small building block functions are then combined into more complex structures to be your final program.</p>
+<subsection xml:id="for-loops-vs-functionals">
+<title>For Loops vs. Functionals</title>
+<p>In base R, you likely found yourself writing for loops for iteration. For example, if you wanted to carry out an operation on every row of a data frame, you've likely written a for loop to do so that loops through each row of the data frame and carries out what you want to do. However, you also may have heard people bemoan this approach, arguing that it's slow and unnecessary. This is because R is a functional programming language. You can wrap for loops into a function and call the function instead of using the for loop.</p>
+<p>Let's use an example to demonstrate what we mean by this. What if you had a data frame and wanted the median value for each column in the data frame? To see how you could approach this, we'll use the <c>trees</c> dataset available by default from R:</p>
+<program language="r"><input><![CDATA[
+# see dataset
+trees <- as_tibble(trees)
+trees
+]]></input></program>
+<p>The dataset contains the diameter, height, and volume of 31 Black Cherry trees.</p>
+<subsubsection xml:id="copy-paste-approach">
+<title>Copy + Paste Approach</title>
+<p>To calculate the median for each column, you could do the following:</p>
+<program language="r"><input><![CDATA[
+# calculate median of each column
+median(trees$Girth)
+
+median(trees$Height)
+
+median(trees$Volume)
+]]></input></program>
+<p>This would get you your answer; however, this breaks the programming rule that you shouldn't copy and paste more than once. And, you could imagine that if you had more than three columns, this would be a <em>huge</em> pain and involve a whole lot of copy and pasting and editing.</p>
+</subsubsection>
+<subsubsection xml:id="for-loop-approach">
+<title>For Loop Approach</title>
+<p>A second approach would be to use a for loop. You would loop through all the columns in the data frame, calculate the median, record that value and store that information in a variable.</p>
+<program language="r"><input><![CDATA[
+# create output vector
+output <- vector("double", ncol(trees)) 
+
+# loop through columns
+for (i in seq_along(trees)) {          
+  output[[i]] <- median(trees[[i]])      
+}
+output
+]]></input></program>
+<p>This allows us to obtain the same information as the copy + paste method; however, it scales better if there are more than three columns in your data frame, making it a better option than the copy + paste method.</p>
+<p>But, what if you frequently want to take the median of the columns in your data frame? What if you want to do this more than once? You would have to go in, copy + paste this code and change the name of the data frame each time. This would break the don't copy + paste more than once rule.</p>
+</subsubsection>
+<subsubsection xml:id="function-approach">
+<title>Function Approach</title>
+<p>This brings us to the function approach. Here, we wrap the for loop into a function so that we can execute a function on our data. frame whenever we want to accomplish the task of calculating the median for each column:</p>
+<program language="r"><input><![CDATA[
+# create function
+col_median <- function(df) {
+  output <- vector("double", length(df))
+  for (i in seq_along(df)) {
+    output[i] <- median(df[[i]])
+  }
+  output
+}
+
+# execute function
+col_median(trees)
+]]></input></program>
+<p>Again, the output information from trees is the same for this specific example, but now we see that we could use the <c>col_median()</c> function any time we want to calculate the medians across columns within a data frame!</p>
+<p>This is a much better approach as it allows you to generalize your code, <em>but</em> the above solution still requires you to loop through each column, making the code harder to read and understand at a glance. It fails to take advantage of R's functional programming capabilities.</p>
+</subsubsection>
+<subsubsection xml:id="purrr-approach">
+<title><c>purrr</c> Approach</title>
+<p>To really optimize this solution, we'll turn to <c>purrr</c>. Using <c>purrr</c> requires you to determine how to carry out your operation of interest for a single occurrence (i.e. calculate the median for a single column in your data frame). Then <c>purrr</c> takes care of carrying out that operation across your data frame. Further, once you break your problem down into smaller building blocks, <c>purrr</c> also helps you combine those smaller pieces into a functional program.</p>
+<p>Let's use <c>purrr</c> (a core tidyverse package) to solve our calculate median for each column task. But, before we do that specifically, let's first introduce the general <c>map()</c> function.</p>
+<p><term><c>map</c></term></p>
+<p>We'll see usage of <c>map()</c> functions in just a second to accomplish our median for each column task, but before doing so, let's take a second to look at the generic usage for the family of <c>map</c> functions:</p>
+<program><input><![CDATA[
+map(.x, .f, ...)
+map(INPUT, FUNCTION_TO_APPLY, OPTIONAL_OTHER_STUFF)
+]]></input></program>
+<p>Note that the input to a <c>map</c> function requires you to first specify a vector input followed by the function you'd like to apply. Any other arguments to the function you want to pass follow at the end of the call.</p>
+<p>When it comes to our specific task, this is implemented as follows using <c>map_dbl()</c>:</p>
+<program language="r"><input><![CDATA[
+library(purrr)
+# use purrr to calculate median
+map_dbl(trees, median)
+]]></input></program>
+<p>Here, we use the <c>map_dbl()</c> function from <c>purrr</c> to iterate over the columns of trees and calculate the median. And, it even displays the variable name in the output for us - all in a single function call.</p>
+<p>Note the flexibility! We've just passed the <c>median()</c> function <em>into</em> another function: <c>map_dbl</c>. This means that if we changed our minds and wanted mean instead, we could accomplish that with ease:</p>
+<program language="r"><input><![CDATA[
+# use purrr to calculate mean
+map_dbl(trees, mean)
+]]></input></program>
+<p>This function exists because looping to do something to each element and saving the results is such a common task, that there is  family of functions (one of which is <c>map_dbl</c>) to do it for you to accomplish such tasks in <c>purrr</c>.</p>
+<p>We'll note here that <c>purrr</c>'s functions are all implemented in the C programming language, making them faster than the function we generated previously.</p>
+<p>In the example above <c>mean</c> could have been any function, denoted in the <c>purrr</c> documentation as <c>.f</c>. This specifies the function you'd like to apply to the vector you've specified.</p>
+<p>After <c>.f</c> in <c>purrr</c> functions, you can pass additional arguments. These go <em>after</em> the specified function. For example, below, we specify that we'd like to remove NAs, by specifying an argument to be passed to the <c>mean()</c> function after the function call (<c>mean</c>):</p>
+<program language="r"><input><![CDATA[
+# use purrr to calculate mean
+map_dbl(trees, mean, na.rm = TRUE)
+]]></input></program>
+</subsubsection>
+</subsection>
+<subsection xml:id="map-functions">
+<title><c>map</c> Functions</title>
+<p>The <c>map</c> family of functions from the <c>purrr</c> package are analogous to the <c>apply()</c> family of functions from base R. If you're familiar with <c>lapply()</c>, <c>vapply()</c>, <c>tapply</c>, and <c>sappy()</c>, the thinking will similar; however, <c>purrr</c> provides a much more consistent syntax and are much easier to learn and implement consistently.</p>
+<p>As you saw in the median example above, <c>map</c> functions carry out an operation repeatedly and store the output of that operation for you. There are a number of different <c>map</c> functions. To determine which to use, consider the output you want to obtain from your operation. Above, we wanted a double vector, so we used <c>map_dbl</c>. However, you can return a number of different outputs from the map functions. A few are listed here and we'll introduce even more shortly:</p>
+<ul>
+  <li><p><c>map()</c> - returns a list</p></li>
+  <li><p><c>map_lgl()</c> - returns a logical vector</p></li>
+  <li><p><c>map_int()</c> - returns an integer vector</p></li>
+  <li><p><c>map_dbl()</c> - returns a double vector</p></li>
+  <li><p><c>map_chr()</c> - returns a character vector</p></li>
+</ul>
+<p>These all take vector and a function as an input. The function is applied to the vector and a new vector (of the same length &amp; with the same names) is returned of the type specified in the map function call.</p>
+<p>There are also the variations <c>map_df</c>, <c>map_dfr</c> and <c>map_dfc</c>, which will create a dataframe (the tidyverse version called a tibble) from the output by either combining the data by rows with <c>map_df()</c> and <c>map_dfr()</c> or by column with <c>map_dfc()</c>.</p>
+<program language="r"><input><![CDATA[
+# use map_dfr to calculate mean and create a dataframe
+map_dfr(trees, mean, na.rm = TRUE)
+]]></input></program>
+</subsection>
+<subsection xml:id="multiple-vectors">
+<title>Multiple Vectors</title>
+<p>So far, we've only looked at iterating over a single vector at a time; however in analysis, you'll often find that you need to iterate over more than one vector at a time. The <c>purrr</c> package has two functions that simplify this process for you: <c>map2</c> and <c>pmap</c>.</p>
+<subsubsection xml:id="map2">
+<title><c>map2</c></title>
+<p><term><c>map2()</c></term> allows you to iterate over two vectors at the same time. The two vectors you want to iterate over are first specified within the <c>map2()</c> function call, followed by the function to execute. Any arguments after the function you'd like <c>map2()</c> to apply are specified at the end of the <c>map2()</c> call.</p>
+<p>The generic usage for <c>map2()</c> is:</p>
+<program><input><![CDATA[
+map2(.x, .y, .f, ...)
+map(INPUT_ONE, INPUT_TWO, FUNCTION_TO_APPLY, OPTIONAL_OTHER_STUFF)
+]]></input></program>
+<p>What if we wanted to calculate the volume of each tree? There is a column for volume, but let's see if we can't use a little geometry to calculate it on our own.</p>
+<p>If we assume that each tree is a cylinder, the volume of a cylinder is <m>V = \pi r^2 h</m>, where <m>r</m> is half the diameter. In the trees dataset, the diameter is stored in the <c>Girth</c> column, in <em>inches</em>. <m>h</m> is the height of the cylinder, which is stored in the <c>Height</c> column, in <em>feet</em>.</p>
+<p>Thus, we have two vectors we want to operate over, <c>Girth</c> and <c>Height</c>, so we'll use <c>map2()</c>.</p>
+<p>Let's first generate a function that will calculate volume for us from the information in our <c>trees</c> dataset:</p>
+<program language="r"><input><![CDATA[
+# generate volume function
+volume <- function(diameter, height){
+  # convert diameter in inches to raidus in feet
+  radius_ft <- (diameter/2)/12
+  # calculate volume
+  output <- pi * radius_ft^2 * height
+  return(output)
+}
+]]></input></program>
+<p>Now, we can utilize <c>map2</c> then to calculate the volume from these two input vectors:</p>
+<program language="r"><input><![CDATA[
+# calculate volume
+map2_dbl(trees$Girth, trees$Height, volume)
+]]></input></program>
+<p>Here the output is on the same order as the <c>Volume</c> column from the dataset, but the numbers are off, suggesting that the dataset calculated volume of the tree differently than we did in our approach.</p>
+<program language="r"><input><![CDATA[
+trees$Volume
+]]></input></program>
+<p>Note that there are all the same variations that exist for <c>map_</c> exist for <c>map2()</c>, so you're able to use <c>map2_chr()</c> and <c>map2_dbl()</c>, etc.</p>
+<p>Additionally, the <c>map</c> functions work well within our <c>dplyr</c> approach to working with data. Here, we add the output for our volume calculation to the trees dataset as well as a column (<c>volume_diff</c>) that displays the difference between our volume calculation and that reported in the dataset:</p>
+<program language="r"><input><![CDATA[
+# calculate volume
+trees %>%
+  mutate(volume_cylinder = map2_dbl(trees$Girth, trees$Height, volume),
+         volume_diff = Volume - volume_cylinder)
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="pmap">
+<title><c>pmap</c></title>
+<p>While <c>map()</c> allows for iteration over a single vector, and <c>map2()</c> allows for iteration over <em>two</em> vectors, there is no <c>map3()</c>, <c>map4()</c>, or <c>map5()</c> because that would get too unwieldy. Instead, there is a single and more general <c>pmap()</c> - which stands for parallel map - function. The <c>pmap()</c> function takes a list of arguments over which you'd like to iterate:</p>
+<p>The generic usage for this function is:</p>
+<program><input><![CDATA[
+pmap(.l, .f, ...)
+pmap(LIST_OF_INPUT_LISTS, FUNCTION_TO_APPLY, OPTIONAL_OTHER_STUFF)
+]]></input></program>
+<p>Note that <c>.l</c> is a list of all the input vectors, so you are no longer specifying <c>.x</c> or <c>.y</c> individually. The rest of the syntax remains the same.</p>
+</subsubsection>
+</subsection>
+<subsection xml:id="anonymous-functions">
+<title>Anonymous Functions</title>
+<p>In our <c>map2()</c> example we created a separate function to calculate volume; however, as this is a specific scenario for volume calculation, we likely won't need that function again later. In such scenarios, it can be helpful to utilize an <term>anonymous function</term>. This is a function that is not given a name but that is utilized within our <c>map</c> call. We are <em>not</em> able to refer back to this function later, but we <em>are</em> able to use it within our <c>map</c> call:</p>
+<program language="r"><input><![CDATA[
+map2_dbl(trees$Girth, trees$Height, function(x,y){ pi * ((x/2)/12)^2 * y})
+]]></input></program>
+<p>In this example, we create the anonymous function within the <c>map2_dbl()</c> call. This allows volume to be calculated as before, but does so without having to define a function.</p>
+<p>This becomes particularly helpful within <c>purrr</c> if you want to refer to the individual elements of your <c>map</c> call directly. This is done by specifying <c>.x</c> and <c>.y</c> to refer to the first and second input vectors, respectively:</p>
+<program language="r"><input><![CDATA[
+map2_dbl(trees$Girth, trees$Height, ~ pi * ((.x/2)/12)^2 * .y)
+]]></input></program>
+<p>Here, we see the same output; however, the syntax defines an anonymous function using the formula syntax.</p>
+</subsection>
+</section>
+<section xml:id="exploratory-data-analysis">
+<title>Exploratory Data Analysis</title>
+<p>The goal of an exploratory analysis is to examine, or <term>explore</term> the data and find <term>relationships</term> that weren't previously known. Exploratory analyses explore how different measures might be related to each other but do not confirm that relationship as causal, i.e., one variable causing another. You've probably heard the phrase "Correlation does not imply causation," and exploratory analyses lie at the root of this saying. Just because you observe a relationship between two variables during exploratory analysis, it does not mean that one necessarily causes the other.</p>
+<p>Because of this, exploratory analyses, while useful for discovering new connections, should not be the final say in answering a question! It can allow you to formulate hypotheses and drive the design of future studies and data collection, but exploratory analysis alone should never be used as the final say on why or how data might be related to each other. In short, exploratory analysis helps us ask better questions, but it does not answer questions. More specifically, we explore data in order to:</p>
+<ul>
+  <li><p>Understand data properties such as nonlinear relationships, the existence of missing values, the existence of outliers, etc.</p></li>
+  <li><p>Find patterns in data such as associations, group differences, confounders, etc.</p></li>
+  <li><p>Suggest modeling strategies such as linear vs. nonlinear models, transformation</p></li>
+  <li><p>"Debug" analyses</p></li>
+  <li><p>Communicate results</p></li>
+</ul>
+<subsection xml:id="general-principles-of-eda">
+<title>General Principles of EDA</title>
+<p>We can summarize the general principles of exploratory analysis as follows:</p>
+<ul>
+  <li><p>Look for missing values</p></li>
+  <li><p>Look for outlier values</p></li>
+  <li><p>Use plots to explore relationships</p></li>
+  <li><p>Use tables to explore relationships</p></li>
+  <li><p>If necessary, transform variables</p></li>
+</ul>
+<p>These principles may be more clear in an example. We will use a dataset from <url href="www.kaggle.com">Kaggle.com</url> that contains 120 years of Olympics history on athletes and results. If you don't have an account on Kaggle, create one and go to the link https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results and under "Data Sources" download the <c>athlete_events.csv</c> to your computer.</p>
+<figure>
+  <caption>Dataset on 120 years of Olympics history on athletes and results</caption>
+  <image source="images/gslides/159.png"/>
+</figure>
+<p>Upload the data in R and import the CSV file using the commands you have learned. Unfortunately, you cannot download the CSV file directly from the web address since downloading datasets on Kaggle requires logging in.</p>
+<figure>
+  <caption>Importing data using `read_csv()`</caption>
+  <image source="images/gslides/160.png"/>
+</figure>
+<p>As we learned before, we can use the package <c>skimr</c> to take a look at the data.</p>
+<figure>
+  <caption>Using the skimr package to have a summary of the data</caption>
+  <image source="images/gslides/161.png"/>
+</figure>
+<p>We see that the dataset contains 15 variables and 271,116 observations. Some of the variables are of factor type and others are of integer or numeric type. The dataset includes variables on athletes such as name, sex, the sport played, whether they received a medal, age, and height. We first need to understand the data properties. So let's start with missing values.</p>
+<figure>
+  <caption>We have different types of variables in our data</caption>
+  <image source="images/gslides/162.png"/>
+</figure>
+<p>First, the results of the <c>skim()</c> function indicate that some of our variables have lots of missing values. For instance, the variable <c>Medal</c> has 231,333 missing values. Generally, this is a place for concern since most statistical analyses ignore observations with missing values. However, it is obvious that the missing values for the variable <c>Medal</c> are mainly because the athlete didn't receive any medals. So this kind of missing value should not be a problem. However, we have missing values in the variables <c>Height</c> and <c>Age</c>. Since we are going to use these variables in our analysis in this lesson, observations with missing values for these two variables will be dropped from our analysis. Remember that <c>NA</c> is the most common character for missing values, but sometimes they are coded as spaces, 999, -1 or "missing". Check for missing values in a variety of ways.</p>
+<figure>
+  <caption>There are some missing values in the data</caption>
+  <image source="images/gslides/163.png"/>
+</figure>
+<p>Second, we can see that there are some outliers in some of the numerical variables. For example, look at the summary of the variable <c>Age</c>. Although the average age among all the athletes is around 25, there is an individual who is 97 years old (fun fact: use the command <c>subset(df, df$Age == 97)</c> to check out the information about this athlete. You will see that the name of the athlete is John Quincy Adams Ward and he competed in the sport(!) Art Competitions Mixed Sculpturing in 1928. This artist is known for his George Washington statue in front of Federal Hall in Wall Street in New York City.) It is always good to know about the existence of outliers in your sample. Outliers can significantly skew the results of your analysis. You can find outliers by looking at the distribution of your variable too.</p>
+<figure>
+  <caption>There is an outlier in the Age variable</caption>
+  <image source="images/gslides/164.png"/>
+</figure>
+<p>Histograms, in general, are one of the best ways to look at a variable and find abnormalities. You can see that the age of most individuals in the sample are between 18-35.</p>
+<figure>
+  <caption>Histogram of the variable Age</caption>
+  <image source="images/gslides/165.png"/>
+</figure>
+<p>Now, rather than just summarizing the data points within a single variable, we can look at how two or more variables might be related to each other. For instance, we like to know if there is an association between age of athletes and their gender. One of the ways to do this is to look at a boxplot of age grouped by gender, i.e., the distribution of age separated for male and female athletes. Boxplot shows the distribution of the variable age for the gender groups. You can see that the average age is slightly higher for men than for women.</p>
+<figure>
+  <caption>Boxplot of the variable Age for male and female individuals</caption>
+  <image source="images/gslides/166.png"/>
+</figure>
+<p>If we are interested in looking at the distribution of male and female athletes over time, we can use frequency tables. Let us first create a frequency table of the share of women in each Olympic event. Tables are good for looking at factor or character variables.</p>
+<program language="r"><input><![CDATA[
+df_ath<-read_csv(file = here::here("data", "raw_data", "athlete_events.csv"))
+share <- df_ath %>%
+  group_by(Year, Sex) %>%
+  summarise(n =n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  filter(Sex == "F")
+]]></input></program>
+<program language="r"><input><![CDATA[
+share <- df %>%
+  group_by(Year, Sex) %>%
+  summarise(n =n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  filter(Sex == "F")
+]]></input></program>
+<program language="r"><input><![CDATA[
+share
+]]></input></program>
+<p>Now, if we want to plot this trend, we can use <c>geom_line()</c> from <c>ggplot</c>. It's interesting that the share of women among all athletes that was once at a very low level in the early 1900s has gone up to almost 50% in modern times.</p>
+<figure>
+  <caption>Plot of the share of female athletes over time</caption>
+  <image source="images/gslides/167.png"/>
+</figure>
+<p>In general, the most important plots in exploratory data analysis are:</p>
+<ul>
+  <li><p>Scatterplots (<c>geom_point()</c>)</p></li>
+  <li><p>Histograms (<c>geom_histogram()</c>)</p></li>
+  <li><p>Density plots (<c>geom_density()</c>)</p></li>
+  <li><p>Boxplots (<c>geom_boxplot()</c>)</p></li>
+  <li><p>Barplots (<c>geom_bar()</c>)</p></li>
+</ul>
+<p>To end our lesson on exploratory analysis, let's consider a question: are taller athletes more likely to win a medal? To answer this question we can use different methods. We can look at the distribution of height for those who received a medal and those who didn't. We can use boxplots or barplots. The choice is yours but because boxplots are more informative, we will use them. We can first create a variable that indicates whether the athlete has any medal (the variable <c>Medal</c> indicates the type of medals). Note that the variable <c>has.medal</c> is a transformation of the variable <c>Medal</c>.</p>
+<figure>
+  <caption>Creating a variable that shows whether the athlete has a medal or not</caption>
+  <image source="images/gslides/168.png"/>
+</figure>
+<p>And now, we use the following code to create the boxplot.</p>
+<figure>
+  <caption>Boxplot for the relationship between height and having won a medal</caption>
+  <image source="images/gslides/169.png"/>
+</figure>
+<p>What is obvious is that those who have a medal are taller. Can we say that being tall increases the probability of winning a medal in the Olympics? The answer to this question is that we don't know. There are some possible scenarios. For instance, it could be true that being tall increase the chances of winning medals. But it could also be that there are more medals awarded in sports such as volleyball or basketball that require taller athletes. In these sports, every member of the winning team gets a medal (even if country counts only one medal is counted for the country). As a result, we may end up having so many tall athletes with a medal in each Olympics. It could also be that there are other confounding factors involved that explain why an athlete wins a medal. We will learn about confounding variables in future lessons. For now, it's important to know, as we said in the beginning of this lesson, that association or correlation does not mean causation.</p>
+<p>In the next module we will cover more methods for visualizing data.</p>
+</subsection>
+<subsection xml:id="analyzing-json-in-r">
+<title>Analyzing JSON in R</title>
+<p>Above we discussed how to analyze pure text (meaning, text written by humans in their native written and spoken language). Here, we'll discuss how to briefly how others have wrangled text-based data from the Internet in the JSON format within R. This is possible because of the R package <c>jsonlite</c>, which was used in the following example:</p>
+<p><url href="https://blog.exploratory.io/@kanaugust">Kan Nishida</url>, a data scientist, was interested in <url href="https://blog.exploratory.io/working-with-json-data-in-very-simple-way-ad7ebcc0bb89">understanding what restaurant types found most frequently in each state or province</url>. To do this, he used JSON data originally released from Yelp. He wrangled the data from JSON format into a tabular format using <c>jsonlite</c> and other data wrangling packages, such as <c>dplyr</c>, to ultimately determine the types of restaurants found most frequently in a number of different states and provinces.</p>
+<figure>
+  <caption>Wrangling Yelp data from JSON into tidy tabular data</caption>
+  <image source="images/gslides/170.png"/>
+</figure>
+</subsection>
+<subsection xml:id="analyzing-xml-in-r">
+<title>Analyzing XML in R</title>
+<p>To see an example of not only using <c>xml2</c> to parse XML data, but also another example of using <c>rvest</c> to obtain the XML data, check out this post from <url href="https://towardsdatascience.com/@jroberayalas">José Roberto Ayala Solares</url> where he took the text from a New York Times article called <url href="https://www.nytimes.com/interactive/2017/06/23/opinion/trumps-lies.html">"Trump's Lies"</url>, scraped the data from the web (obtaining it in XML), and then <url href="https://towardsdatascience.com/web-scraping-tutorial-in-r-5e71fd107f32">wrangled it into a tidy format</url> using <c>xml2</c>.</p>
+<figure>
+  <caption>`rvest` and `xml2` are helpful for web scraping and working with XML data</caption>
+  <image source="images/gslides/171.png"/>
+</figure>
+<p>In this lesson, our goal is to make you aware that data from the Internet (and APIs in particular) will often come in either JSON or XML format. Thus, the JSON and XML examples provided here only give you a bit of an idea of what JSON and XML data are and how to work with them. Nevertheless, the more frequently you retrieve data from APIs and the Internet, the more comfortable you'll have to become with both JSON and XML. And, <c>jsonlite</c> and <c>xml2</c> will help you as you work with these data in R!</p>
+</subsection>
+</section>
+<section xml:id="case-studies">
+<title>Case Studies</title>
+<p>So far, we've introduced the case studies and read the raw data into R.</p>
+<p>Let's load the raw data that we previously saved using the <c>here</c> package.</p>
+<program language="r"><input><![CDATA[
+library(here)
+load(here::here("data","raw_data", "case_study_1.rda"))
+load(here::here("data", "raw_data", "case_study_2.rda"))
+#This loads all the data objects that we previously saved in our raw_data directory. Recall that this directory is located within a directory called data that is located within the directory where our project is located. 
+]]></input></program>
+<p>Now, we will work to get the data into two tidy formatted datasets that will include the information needed to answer our questions of interest.</p>
+<subsection xml:id="case-study-1-health-expenditures">
+<title>Case Study #1: Health Expenditures</title>
+<p>We've already read in the datasets we'll use for this health expenditures case study, but they're not yet cleaned and wrangled. So, we'll do that here!</p>
+<p>As a reminder, we're ultimately interested in answering the following questions with these data:</p>
+<ol>
+  <li><p>Is there a relationship between health care coverage and health care spending in the United States?</p></li>
+  <li><p>How does the spending distribution change across geographic regions in the United States?</p></li>
+  <li><p>Does the relationship between health care coverage and health care spending in the United States change from 2013 to 2014?</p></li>
+</ol>
+<p>This means that we'll need all the data from the variables necessary to answer this question in our tidy dataset.</p>
+<subsubsection xml:id="health-care-coverage-data">
+<title>health care Coverage Data</title>
+<p>Let's remind ourselves before we get to wrangling what data we have when it comes to health care coverage.</p>
+<program language="r"><input><![CDATA[
+coverage
+]]></input></program>
+<p>At a glance, we see that state-level information is stored in rows (with the exception of the first row, which stores country-level information) with columns corresponding to the amount of money spent on each type of health care, by year.</p>
+<paragraphs xml:id="states-data">
+<title>States Data</title>
+<p>To work with these data, we'll also want to be able to switch between full state names and two letter abbreviations. There's data in R available to you for just this purpose!</p>
+<program language="r"><input><![CDATA[
+library(datasets)
+data(state)
+state.name
+]]></input></program>
+<p>Before going any further, let's add some information about Washington, D.C, the nation's capital, which is not a state, but a territory.</p>
+<program language="r"><input><![CDATA[
+state.abb <- c(state.abb, "DC")
+state.region <- as.factor(c(as.character(state.region), "South"))
+state.name <- c(state.name, "District of Columbia")
+state_data <- tibble(Location = state.name,
+                     abb = state.abb,
+                     region = state.region)
+state_data
+]]></input></program>
+<p>If we focus in on the columns within this dataframe, we see that we have a number of different types of health care (i.e. employer, medicare, medicaid, etc.) for each year between 2013 and 2016:</p>
+<program language="r"><input><![CDATA[
+names(coverage)
+]]></input></program>
+<p>While a lot of information in here will be helpful, it's not in a tidy format. This is because, each variable is not in a separate column. For example, each column includes year, the type of coverage <em>and</em> the amount spent by state. We'll want to use each piece of information separately downstream as we start to visualize and analyze these data. So, let's work to get these pieces of information separated out now.</p>
+<p>To accomplish this, the first thing we'll have to do is reshape the data, using the <c>pivot_longer()</c> function from the <c>tidyr</c> package. As a reminder, this function gathers multiple columns and collapses them into new name-value pairs. This transform data from wide format into a long format, where:</p>
+<ul>
+  <li><p>The first argument defines the columns to gather</p></li>
+  <li><p>The <term><c>names_to</c></term> argument is the name of the new column that you are creating which contains the values of the column headings that you are gathering</p></li>
+  <li><p>The <term><c>values_to</c></term> argument is the name of the new column that will contain the values themselves; you can indicate the name of this column with the <c>values_to</c> argument.</p></li>
+</ul>
+<p>Here, we create a column titled <c>year_type</c> and <c>tot_coverage</c>, storing this newly formatted dataframe back into the variable name <c>coverage</c>. We also want to keep the Location column as it is because it also contains observational level data.</p>
+<program language="r"><input><![CDATA[
+coverage <- coverage %>%
+  mutate(across(starts_with("20"), 
+                as.integer)) %>%  ## Convert all year-based columns to integer
+  pivot_longer(-Location,         ## Use all columns BUT 'Location'
+               names_to = "year_type", 
+               values_to = "tot_coverage")
+coverage
+]]></input></program>
+<p>Great! We still have <c>Location</c> stored in a single column, but we've separated out <c>year_type</c> and <c>tot_coverage</c> into their own columns, storing all of the information in a <term>long</term> data format.</p>
+<p>Unfortunately, the <c>year_type</c> column still contains two pieces of information. We'll want to separate these out to ensure that the data are in a properly tidy format. To do this, we'll use the <c>separate()</c> function, which allows us to separate out the information stored in a single column into two columns. We'll also use the <c>convert=TRUE</c> argument to convert the character to an integer.</p>
+<program language="r"><input><![CDATA[
+coverage <- coverage %>% 
+  separate(year_type, sep="__", 
+           into = c("year", "type"), 
+           convert = TRUE)
+
+coverage
+]]></input></program>
+<p>Perfect! We now have the four columns we wanted, each storing a separate piece of information, <em>and</em> the year column is an integer, as you would want it to be!</p>
+<p>Let's go one step further and add in the state-level abbreviations and region for each row. We'll utilize our <c>state</c> datasets that we read in previously to accomplish this! Because we formatted the state data as a tibble, we can simply join it with our <c>coverage</c> dataset to get the state and region information.</p>
+<program language="r"><input><![CDATA[
+coverage <- coverage %>%
+  left_join(state_data, by = "Location")
+
+coverage
+]]></input></program>
+<p>Perfect! At this point, each row is an observation and each column stores a single piece of information. This dataset is now in good shape!</p>
+</paragraphs>
+</subsubsection>
+<subsubsection xml:id="health-care-spending-data">
+<title>health care Spending Data</title>
+<p>We'll have to take a similar approach when it comes to tidying the spending data as it has a similar structure to how the coverage data were stored.</p>
+<program language="r"><input><![CDATA[
+spending
+]]></input></program>
+<p>Here, we reshape the data using <c>year</c> and <c>tot_spending</c> for the key and value. We also want to keep <c>Location</c> like before. Then, in the <c>separate()</c> function, we create two new columns called <c>year</c> and <c>name.</c> Then, we ask to return all the columns, <em>except</em> name. To select all the columns except a specific column, use the <c>-</c> (subtraction) operator. (This process is also referred to as negative indexing.)</p>
+<program language="r"><input><![CDATA[
+# take spending data from wide to long
+spending <- spending %>%
+  pivot_longer(-Location, 
+               names_to = "year", 
+               values_to = "tot_spending")
+
+# separate year and name columns
+spending <- spending %>% 
+  separate(year, sep="__", 
+           into = c("year", "name"), 
+           convert = TRUE) %>% 
+  select(-name)
+
+# look at the data
+spending
+]]></input></program>
+<p>Perfect, we have a tidy dataset and the type of information stored in each column is appropriate for the information being stored in the column!</p>
+</subsubsection>
+<subsubsection xml:id="join-the-data">
+<title>Join the Data</title>
+<p>At this point, we have a <c>coverage</c> dataset and a <c>spending</c> dataset, but ultimately, we want all of this information in a single tidy data frame. To do this, we'll have to join the datasets together.</p>
+<p>We have to decide what type of join we want to do. For our questions, we only want information from years that are found in both the <c>coverage</c> and the <c>spending</c> datasets. This means that we'll want to do an <c>inner_join()</c>. This will keep the data from the intersection of years from <c>coverage</c> and  <c>spending</c> (meaning only 2013 and 2014). We'll store this in a new variable: <c>hc</c>.</p>
+<program language="r"><input><![CDATA[
+# inner join to combine data frames
+hc <- inner_join(coverage, spending, 
+                 by = c("Location", "year"))
+
+hc
+]]></input></program>
+<p>Great, we've combined the information in our datasets. But, we've got a bit of extraneous information remaining. For example, we want to look only at the state-level. So, let's filter out the country-level summary row:</p>
+<program language="r"><input><![CDATA[
+# filter to only include state level
+hc <- hc %>% 
+  filter(Location != "United States")
+]]></input></program>
+<p>Another problem is that inside our <c>hc</c> dataset, there are multiple types of health care coverage.</p>
+<program language="r"><input><![CDATA[
+table(hc$type)
+
+]]></input></program>
+<p>The "Total" type is not really a formal type of health care coverage. It really represents just the total number of people in the state. This is useful information and we can include it as a column called <c>tot_pop</c>. To accomplish this, we'll first store this information in a data frame called <c>pop</c>.</p>
+<program language="r"><input><![CDATA[
+pop <- hc %>% 
+  filter(type == "Total") %>% 
+  select(Location, year, tot_coverage)
+
+pop
+]]></input></program>
+<p>We can then, using a <c>left_join</c> to ensure we keep all of the rows in the <c>hc</c> data frame in tact, add this population level information while simultaneously removing the rows where <c>type</c> is "Total" from the dataset. Finally, we'll rename the columns to be informative of the information stored within:</p>
+<program language="r"><input><![CDATA[
+# ad population level information
+hc <- hc %>% 
+  filter(type != "Total") %>% 
+  left_join(pop, by = c("Location", "year")) %>% 
+  rename(tot_coverage = tot_coverage.x, 
+         tot_pop = tot_coverage.y)
+
+hc
+]]></input></program>
+<p>From here, instead of only storing the absolute number of people who are covered (<c>tot_coverage</c>), we will calculate the proportion of people who are coverage in each state, year and type, storing this information in <c>prop_coverage</c>.</p>
+<program language="r"><input><![CDATA[
+# add proportion covered
+hc <- hc %>% 
+    mutate(prop_coverage = tot_coverage/tot_pop) 
+
+hc
+]]></input></program>
+<p>The <c>tot_spending</c> column is reported in millions (1e6). Therefore, to calculate <c>spending_capita</c> we will need to adjust for this scaling factor to report it on the original scale (just dollars) and then divide by <c>tot_pop.</c> We can again use <c>mutate()</c> to accomplish this:</p>
+<program language="r"><input><![CDATA[
+# get spending capita in dollars
+hc <- hc %>% 
+  mutate(spending_capita = (tot_spending*1e6) / tot_pop)
+
+hc
+]]></input></program>
+<p>Yes! At this point we have a single tidy data frame storing all the information we'll need to answer our questions!</p>
+<p>Let's save our new tidy data for case study #1.</p>
+<program language="r"><input><![CDATA[
+save(hc, file = here::here("data", "tidy_data", "case_study_1_tidy.rda"))
+]]></input></program>
+</subsubsection>
+</subsection>
+<subsection xml:id="case-study-2-firearms">
+<title>Case Study #2: Firearms</title>
+<p>For our second case study, we're interested in the following question: At the state-level, what is the relationship between firearm legislation strength and annual rate of fatal police shootings? Time to wrangle <em>all</em> those many datasets we read in previously!</p>
+<subsubsection xml:id="census-data">
+<title>Census Data</title>
+<p>Let's take a look at the raw data to remind ourselves of what information we have:</p>
+<program language="r"><input><![CDATA[
+census
+]]></input></program>
+<p>These data look reasonably tidy to start; however, the information stored in each column is not particularly clear at a glance. For example, what is a RACE of 1? What does that mean?</p>
+<p>Well, if we look at the data dictionary in the document <url href="https://github.com/opencasestudies/ocs-police-shootings-firearm-legislation/blob/master/data/sc-est2017-alldata6.pdf">sc-est2017-alldata6.pdf</url>, we learn that:</p>
+<p>The key for <c>SEX</c> is as follows:</p>
+<ul>
+  <li><p>0 = Total</p></li>
+  <li><p>1 = Male</p></li>
+  <li><p>2 = Female</p></li>
+</ul>
+<p>The key for <c>ORIGIN</c> is as follows:</p>
+<ul>
+  <li><p>0 = Total</p></li>
+  <li><p>1 = Not Hispanic</p></li>
+  <li><p>2 = Hispanic</p></li>
+</ul>
+<p>The key for <c>RACE</c> is as follows:</p>
+<ul>
+  <li><p>1 = White Alone</p></li>
+  <li><p>2 = Black or African American Alone</p></li>
+  <li><p>3 = American Indian and Alaska Native Alone</p></li>
+  <li><p>4 = Asian Alone</p></li>
+  <li><p>5 = Native Hawaiian and Other Pacific Islander Alone</p></li>
+  <li><p>6 = Two or more races</p></li>
+</ul>
+<p>With that information in mind, we can then use the <c>dplyr</c> package to <c>filter</c>, <c>group_by</c>, and <c>summarize</c> the data in order to calculate the necessary statistics we'll need to answer our question.</p>
+<p>For each state, we add rows in the column <c>POPESTIMATE2015</c> since we are looking at the year <c>2015.</c> Setting the <c>ORIGIN</c> or <c>SEX</c> equal to 0 ensures we don’t add duplicate data, since 0 is the key for both Hispanic and non Hispanic residents and total male and female residents. We group by each state since all data in this study should be at the state level.</p>
+<p>We store each of these pieces of information in its own column within the new dataframe we've created <c>census_stats</c></p>
+<program language="r"><input><![CDATA[
+# summarize by ethnicity
+census_stats <- census %>%
+  filter(ORIGIN == 0, SEX == 0) %>%
+  group_by(NAME) %>%
+  summarize(white = sum(POPESTIMATE2015[RACE == 1])/sum(POPESTIMATE2015)*100,
+            black = sum(POPESTIMATE2015[RACE == 2])/sum(POPESTIMATE2015)*100)
+
+# add hispanic information
+census_stats$hispanic <- census %>%
+  filter(SEX == 0) %>% 
+  group_by(NAME) %>%
+  summarize(x = sum(POPESTIMATE2015[ORIGIN == 2])/sum(POPESTIMATE2015[ORIGIN == 0])*100) %>%
+  pull(x)
+
+# add male information
+census_stats$male <- census %>%
+  filter(ORIGIN == 0) %>%
+  group_by(NAME) %>%
+  summarize(x = sum(POPESTIMATE2015[SEX == 1])/sum(POPESTIMATE2015[SEX == 0])*100) %>%
+  pull(x)
+
+# add total population information
+census_stats$total_pop <- census %>%
+  filter(ORIGIN == 0, SEX == 0 ) %>%
+  group_by(NAME) %>%
+  summarize(total = sum(POPESTIMATE2015)) %>%
+  pull(total)
+
+# lowercase state name for consistency
+census_stats$NAME <- tolower(census_stats$NAME)
+
+census_stats
+]]></input></program>
+<p>We can approach the age data similarly, where we get the number of people within each state at each age:</p>
+<program language="r"><input><![CDATA[
+# get state-level age information
+age_stats <- census %>%
+  filter(ORIGIN == 0, SEX == 0) %>%
+  group_by(NAME, AGE) %>%
+  summarize(sum_ages = sum(POPESTIMATE2015))
+
+age_stats
+]]></input></program>
+<p>This information is in a long format, but it likely makes more sense to store this information in a wide format, where each column is a different state and each row is an age. To do this:</p>
+<program language="r"><input><![CDATA[
+age_stats <- age_stats %>%
+  pivot_wider(names_from = "NAME",
+              values_from = "sum_ages")
+  
+age_stats
+]]></input></program>
+<p>Now that we’ve made the data easier to work with, we need to find a way to get the median. One method is to take the cumulative sum of each column and then divide all the rows by the last row in each respective column, calculating a percentile/quantile for each age. To do this, we first remove the AGE column, as we don't want to calculate the median for this column. We then apply the <c>cumsum()</c> function and an anonymous function using <c>purrr</c>'s <c>map_dfc</c> function. This is a special variation of the <c>map()</c> function that returns a dataframe instead of a list by combining the data by column. But, of course, we do still want the AGE information in there, so we add that column back in using <c>mutate()</c> and then reorder the columns so that AGE is at the front again using <c>select()</c>.</p>
+<p>First let's see what would happen if we used <c>map()</c> instead of <c>map_dfc()</c>:</p>
+<program language="r"><input><![CDATA[
+ age_stats %>%
+  select(-AGE) %>%
+  map(cumsum) %>%
+  map(function(x) x/x[nrow(age_stats)]) %>%
+  glimpse
+]]></input></program>
+<p>We can see that we create a list of vectors for each state.</p>
+<p>Now let's use <c>map_dfc()</c>:</p>
+<program language="r"><input><![CDATA[
+# calculate median age for each state
+age_stats <- age_stats %>%
+  select(-AGE) %>%
+  map_dfc(cumsum) %>%
+  map_dfc(function(x) x/x[nrow(age_stats)]) %>%
+  mutate(AGE = age_stats$AGE) %>%
+  select(AGE, everything())
+
+glimpse(age_stats)
+]]></input></program>
+<p>Great, we have a tidy dataframe with a column for each state storing important census information for both ethnicity and age. Now onto the other datasets!</p>
+</subsubsection>
+<subsubsection xml:id="violent-crime">
+<title>Violent Crime</title>
+<p>For crime, we have the following data:</p>
+<program language="r"><input><![CDATA[
+crime
+]]></input></program>
+<p>If we take a look at what information is stored in each column...</p>
+<program language="r"><input><![CDATA[
+colnames(crime)
+]]></input></program>
+<p>you see that it's kind of a mess and there's a whole bunch of information in there that we're not necessarily interested in for this analysis.</p>
+<p>Because of the messy names here (we'll clean them up in a bit), we'll see the column index to select columns instead of the complicated names. Also, we print a specified row of violent crime to observe the <c>X__1</c> group we are looking for – Rate per 100,000 inhabitants (per the study.)</p>
+<program language="r"><input><![CDATA[
+violentcrime <- crime %>% 
+  select(c(1,3,5))
+
+violentcrime
+]]></input></program>
+<p>Great, so we're starting to home in on the data we're interested in but we're ultimately interested in Rate per 100,000 inhabitants, so we need get all rows where the second column is equal to <c>Rate per 100,000 inhabitants</c>.</p>
+<p>However, as we can see above, the value for State in these rows is <c>NA</c>, so we need to <c>fill()</c> that value with the state name that is listed in a previous row. Then we can select the rows where the second column is <c>Rate per 100,000 inhabitants</c>. After that, we no longer need the second column, so we'll remove it.</p>
+<program language="r"><input><![CDATA[
+violentcrime <- violentcrime %>% 
+  fill(State) %>%
+  filter(.[[2]] == "Rate per 100,000 inhabitants") %>%
+  rename( violent_crime = `Violent\ncrime1`) %>%
+  select(-`...3`)
+  
+violentcrime
+]]></input></program>
+<p>If we look closely at our data, we'll notice that some of our state names have 6s at the end of them. This will cause problems later on.</p>
+<program language="r"><input><![CDATA[
+violentcrime$State[20]
+]]></input></program>
+<p>So, let's clean that up now be removing those trailing numeric values <em>and</em> converting the names to lower case:</p>
+<program language="r"><input><![CDATA[
+# lower case and remove numbers from State column
+violentcrime <- violentcrime %>%
+  mutate(State = tolower(gsub('[0-9]+', '', State)))
+
+violentcrime
+]]></input></program>
+<p>We've now got ourselves a tidy dataset with violent crime information that's ready to be joined with our census_stats data!</p>
+<program language="r"><input><![CDATA[
+# join with census data
+firearms <- left_join(census_stats, violentcrime, 
+                  by = c("NAME" = "State"))
+
+firearms
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="brady-scores">
+<title>Brady Scores</title>
+<p>The study by AJPH groups the scores using 7 different categories. The study removed all weightings of the different laws in favor of a “1 law 1 point” system, since the weightings were “somewhat arbitrary.”</p>
+<p>For the purpose of practice and simplification we will just keep the first line of “total state points” from the Brady Scorecard as they are given. This will be where our analysis differs from the study. We need to transform the data frame so that we have a column of state names and a column of the corresponding total scores.</p>
+<program language="r"><input><![CDATA[
+brady
+]]></input></program>
+<p>This dataset includes a lot of information, but we're interested in the brady scores for each state. These are stored in the row where the first column is equal to "TOTAL STATE POINTS," so we <c>filter()</c> to only include that row. We then want to only receive the scores for each state, and not the information in the first few columns, so we specify that using <c>select()</c>. With the information we're interested in, we then take the data from wide to long using <c>pivot_longer()</c>, renaming the columns as we go. Finally, we specify that the information in the <c>brady_scores</c> column is numeric, not a character.</p>
+<program language="r"><input><![CDATA[
+brady <- brady %>%
+  rename(Law = `States can receive a maximum of 100 points`) %>% 
+  filter(Law == "TOTAL STATE POINTS") %>%
+  select((ncol(brady) - 49):ncol(brady)) %>% 
+  pivot_longer(everything(), 
+               names_to = "state",
+               values_to = "brady_scores") %>%
+  mutate_at("brady_scores", as.numeric)
+
+brady
+]]></input></program>
+<p>Only problem now is that we have the two letter state code, rather than the full state name we've been joining on so far here. We can, however, use the <c>state</c> datasets we used in the first case study here!</p>
+<program language="r"><input><![CDATA[
+brady <- brady %>% 
+  left_join(rename(state_data, state = abb), 
+            by = "state") %>%
+  select(Location, brady_scores) %>%
+  rename(state = Location) %>%
+  mutate(state = tolower(state))
+
+brady
+]]></input></program>
+<p>Now, it's time to join this information into our growing dataframe <c>firearms</c>:</p>
+<program language="r"><input><![CDATA[
+firearms <- left_join(firearms, brady, by = c("NAME" = "state"))
+
+firearms
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="the-counted-fatal-shootings">
+<title>The Counted Fatal Shootings</title>
+<p>We're making progress, but we have a ways to go still! Let's get working on incorporating data from <url href="https://docubase.mit.edu/project/the-counted/">The Counted</url>.</p>
+<p>As a reminder, we have a datasets here with data from 2015:</p>
+<program language="r"><input><![CDATA[
+counted15
+]]></input></program>
+<p>The data from each year are in a similar format with each row representing a different individual and the columns being consistent between the two datasets.</p>
+<p>Because of this consistent format, we can combine these two datasets using <c>bind_rows()</c>. By specifying <c>id = "dataset"</c>, a column called <c>dataset</c> will store which dataset each row came from originally. We can then use <c>mutate()</c> and <c>ifelse()</c> to conditionally specify the year -- 2015 or 2016 -- from which the data originated. We'll also be sure to change the two letter state abbreviation to the lower case state name, to allow for each merging.</p>
+<program language="r"><input><![CDATA[
+counted15 <- counted15 %>%
+  mutate(state = tolower(state.name[match(state, state.abb)]))
+]]></input></program>
+<p>At this point, we have a lot of information at the individual level, but we'd like to summarize this at the state level by ethnicity, gender, and armed status. The researchers “calculated descriptive statistics for the proportion of victims that were male, armed, and non-White,” so we'll do the same. We can accomplish this using <c>dplyr</c>. The <c>tally()</c> function will be particularly helpful here to count the number of observations in each group. We're calculating this for each state as well as calculating the annualized rate per 1,000,000 residents. This utilizes the <c>total_pop</c> column from the <c>census_stats</c> data frame we used earlier.</p>
+<program language="r"><input><![CDATA[
+# get overall stats
+counted_stats <- counted15 %>%
+  group_by(state) %>%
+  filter(classification == "Gunshot") %>%
+  tally() %>%
+  rename("gunshot_tally" = "n")
+
+# get summary for subset of population
+gunshot_filtered <- counted15 %>%
+  group_by(state) %>%
+  filter(classification == "Gunshot",raceethnicity != "white", armed != "No", gender == "Male") %>%
+  tally() %>% 
+  rename("gunshot_filtered" = "n")
+
+# join data together
+counted_stats <- left_join(counted_stats, gunshot_filtered, by = "state") %>%
+  mutate(total_pop = census_stats$total_pop[match(state, census_stats$NAME)],
+         gunshot_rate = (gunshot_tally/total_pop)*1000000/2) %>% 
+  select(-total_pop)
+
+counted_stats
+]]></input></program>
+<p>Time to merge this into the data frame we've been compiling:</p>
+<program language="r"><input><![CDATA[
+firearms <- left_join(firearms, counted_stats, by = c("NAME" = "state"))
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="unemployment-data">
+<title>Unemployment Data</title>
+<p>Let's recall the table we scraped from the web, which is currently storing our unemployment data:</p>
+<program language="r"><input><![CDATA[
+unemployment
+]]></input></program>
+<p>Let's first rename the columns to clean things up. You'll note that there are more rows in this data frame (due to an empty row, the United States, and a note being in this dataset); however, when we <c>left_merge()</c> in just a second these will disappear, so we can ignore them for now.</p>
+<program language="r"><input><![CDATA[
+unemployment <- unemployment %>% 
+  rename("state" = "State", 
+         "unemployment_rate" = "2015rate", 
+         "unemployment_rank" = "Rank") %>%
+  mutate(state = tolower(state)) %>%
+  arrange(state)
+
+unemployment
+]]></input></program>
+<p>Let's do that join now. Let's add unemployment information to our growing data frame!</p>
+<program language="r"><input><![CDATA[
+firearms <- left_join(firearms, unemployment, by = c("NAME" = "state"))
+]]></input></program>
+<p>If we take a look at the data we now have in our growing data frame, using <c>glimpse()</c>, we see that type is correct for most of our variables <em>except</em> <c>unemployment_rate</c> and <c>unemployment_rank</c>. This is due to that "Note" and empty (<c>""</c>) row in the unemployment dataset. So, let's be sure to get that variable to a numeric now as it should be:</p>
+<program language="r"><input><![CDATA[
+glimpse(firearms)
+]]></input></program>
+<program language="r"><input><![CDATA[
+# convert type for unemployment columns
+firearms <- firearms %>%
+  mutate_at("unemployment_rate", as.numeric) %>%
+  mutate_at("unemployment_rank", as.integer)
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="population-density-2015">
+<title>Population Density: 2015</title>
+<p>Population density for 2015 can be calculated from the Census data in combination with the land area data we've read in. This is calculated (rather than simply imported) because accurate data for state population in 2015 was not available in a downloadable format nor was it easy to scrape.</p>
+<p>From the census data, we can obtain total population counts:</p>
+<program language="r"><input><![CDATA[
+totalPop <- census %>%
+  filter(ORIGIN == 0, SEX == 0 ) %>%
+  group_by(NAME) %>%
+  summarize(total = sum(POPESTIMATE2015)) %>%
+  mutate(NAME = tolower(NAME))
+
+totalPop
+]]></input></program>
+<p>Then, we select <c>LND110210D</c> by looking at the <c>land</c> table and comparing values on other sites (such as the census or Wikipedia) to find the correct column. This column corresponds to land area in square miles. We'll convert all state names to lower case for easy merging with our growing data frame in a few steps.</p>
+<program language="r"><input><![CDATA[
+landSqMi <- land %>%
+  select(Areaname, land_area = LND110210D) %>% 
+  mutate(Areaname = tolower(Areaname))
+
+landSqMi
+]]></input></program>
+<p>Since <c>landSqMi</c> gives us area for each town in addition to the states, we will want merge on the state names to obtain only the area for each state, removing the city- and nation-level data. Also, because "district of columbia" appears twice, we'll use the <c>distinct()</c> function to only include on entry for "district of columbia"</p>
+<p>We can then calculate density and remove the <c>total</c> and <c>land_area</c> columns to only keep state name and density for each state:</p>
+<program language="r"><input><![CDATA[
+popdensity <- left_join(totalPop, landSqMi, by=c("NAME" = "Areaname")) %>% 
+  distinct() %>%
+  mutate(density = total/land_area) %>%
+  select(-c(total, land_area))
+
+popdensity
+]]></input></program>
+<p>This can now be joined with our growing data frame:</p>
+<program language="r"><input><![CDATA[
+firearms <- left_join(firearms, popdensity, by="NAME")
+]]></input></program>
+</subsubsection>
+<subsubsection xml:id="firearm-ownership">
+<title>Firearm Ownership</title>
+<p>Last but not least, we calculate firearm ownership as a percent of firearm suicides to all suicides.</p>
+<program language="r"><input><![CDATA[
+ownership_df <- as_tibble(list("NAME" = tolower(suicide_all$State), 
+                          "ownership" = suicide_firearm$Deaths/suicide_all$Deaths*100))
+ownership_df
+]]></input></program>
+<p>This can now be joined onto our tidy data frame:</p>
+<program language="r"><input><![CDATA[
+firearms <- left_join(firearms, ownership_df, by="NAME")
+]]></input></program>
+<p>And, with that, we've wrangled and tidied all these datasets into a single data frame. This can now be used for visualization and analysis!</p>
+<p>Let's save our new tidy data for case study #2.</p>
+<program language="r"><input><![CDATA[
+save(firearms, file = here::here("data", "tidy_data", "case_study_2_tidy.rda"))
+]]></input></program>
+</subsubsection>
+</subsection>
+</section>
 </chapter>
