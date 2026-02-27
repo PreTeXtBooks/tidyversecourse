@@ -86,7 +86,7 @@
 
 </subsubsection>
 
-<subsubsection xml:id="subsubsec-tibble">
+<subsubsection xml:id="subsubsec-ch02-tibble">
   <title><c>tibble()</c></title>
 
   <p>Alternatively, you can create a tibble on the fly by using <c>tibble()</c> and specifying the information you'd like stored in each column. Note that if you provide a single value, this value will be repeated across all rows of the tibble. This is referred to as "recycling inputs of length 1."</p>
@@ -1382,11 +1382,11 @@
   <p>There are many other helpful functions for interacting with the files in your Google Drive within the <c>googledrive</c> package.</p>
 </section>
 
-<section xml:id="sec-case-studies">
+<section xml:id="sec-ch02-case-studies">
   <title>Case Studies</title>
 
   <p>Now we will demonstrate how to import data using our case study examples.</p>
-<subsection xml:id="subsec-case-study-1-health-expenditures">
+<subsection xml:id="subsec-ch02-case-study-1-health-expenditures">
   <title>Case Study #1: Health Expenditures</title>
 
   <p>The data for this case study are available in <url href="https://github.com/opencasestudies/ocs-healthexpenditure/tree/master/data/KFF">CSVs hosted on GitHub</url>. CSVs from URLs can be read directly using <c>read_csv()</c> from <c>readr</c> (a core tidyverse package).</p>
@@ -1486,7 +1486,7 @@
 
 </subsection>
 
-<subsection xml:id="subsec-case-study-2-firearms">
+<subsection xml:id="subsec-ch02-case-study-2-firearms">
   <title>Case Study #2: Firearms</title>
 
   <p>We've got a whole bunch of datasets that we'll need to read in for this case study. They are from a number of different sources and are stored in different file formats. This means we'll need to use various functions to read the data into R.</p>
