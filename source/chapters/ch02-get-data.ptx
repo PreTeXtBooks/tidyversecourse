@@ -327,7 +327,7 @@
 
   <p>Note that we assign the information stored in this Google Sheet to the object <c>survey_sheet</c> so that we can use it again shortly.</p>
   <figure xml:id="fig-sheet-successfully-read-into-r">
-    <image source="images/book_figures/sheet1.png"/>
+    <image source="images/book_figures/Sheet1.png"/>
     <caption>Sheet successfully read into R</caption>
   </figure>
 
