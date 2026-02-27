@@ -3,7 +3,7 @@
 <chapter xml:id="ch-dataviz" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Visualizing Data in the Tidyverse</title>
 
-<section xml:id="sec-about-this-course">
+<section xml:id="sec-ch04-about-this-course">
   <title>About This Course</title>
 <p>
 Data visualization is a critical part of any data science project. Once data have been imported and wrangled into place, visualizing your data can help you get a handle on what's going on in the dataset. Similarly, once you've completed your analysis and are ready to present your findings, data visualizations are a highly effective way to communicate your results to others. In this course we will cover what data visualization is and define some of the basic types of data visualizations.
@@ -2453,7 +2453,7 @@ Here, distance specifies the temporal distance between the frames to show and al
 </subsubsection>
 </subsection>
 </section>
-<section xml:id="sec-case-studies">
+<section xml:id="sec-ch04-case-studies">
   <title>Case Studies</title>
 <p>
 At this point, we've done a lot of work with our case studies. We've introduced the case studies, read them into R, and have wrangled the data into a usable format. Now, we get to peak at the data using visualizations to better understand each dataset's observations and variables!
@@ -2468,7 +2468,7 @@ load(here::here("data", "tidy_data", "case_study_1_tidy.rda"))
 load(here::here("data", "tidy_data", "case_study_2_tidy.rda"))
 </input>
 </program>
-<subsection xml:id="subsec-case-study-1-health-expenditures">
+<subsection xml:id="subsec-ch04-case-study-1-health-expenditures">
   <title>Case Study #1: Health Expenditures</title>
 <p>
 We've now got the data in order so that we can start to explore the relationships between the variables contained in the health care dataset (<c>hc</c>) to answer our questions of interest:
@@ -2487,7 +2487,7 @@ hc
 <p>
 As a reminder, we have state level data, broken down by year and type of insurance. For each, we have the total number of individuals who have health care coverage (<c>tot_coverage</c>), the amount spent on coverage (<c>tot_spending</c>), the proportion of individuals covered (<c>prop_coverage</c>), and the amount spent per capita (<c>spending_capita</c>). Additionally, we have the state name (<c>Location</c>), the two letter state abbreviation  (<c>abb</c>), and the region of the United States where the state is located (<c>region</c>). Let's get visualizing!
 </p>
-<subsubsection xml:id="subsubsec-exploratory-data-analysis-eda">
+<subsubsection xml:id="subsubsec-cs1-exploratory-data-analysis-eda">
   <title>Exploratory Data Analysis (EDA)</title>
 <p>
 To first get a sense of what information we do and do not have, the <c>visdat</c> package can be very helpful. This package uses <c>ggplot2</c> to visualize missingness in a dataframe. For example, <c>vis_dat()</c> takes the dataframe as an input and visualizes the observations on the left and the variables across the top. Solid colors indicate that a value is present. Each type of variable is represented by a different color. Grey lines indicate missing values.
@@ -2887,7 +2887,7 @@ Now, of course there are <em>many</em> ways in which we could customize each of 
 </p>
 </subsubsection>
 </subsection>
-<subsection xml:id="subsec-case-study-2-firearms">
+<subsection xml:id="subsec-ch04-case-study-2-firearms">
   <title>Case Study #2: Firearms</title>
 <p>
 For our second case study, we're interested in the following question:
@@ -2909,7 +2909,7 @@ firearms
 <p>
 This dataset contains state level information about firearm ownership (broken down by ethnicity and gender), the population of each state (<c>total_pop</c>), the number of violent crimes (<c>violent_crime</c>), the “total state points” from the Brady Scorecard (<c>brady_scores</c>), the number of gunshots (<c>gunshot_tally</c>), the number of gunshots from armed, non-white, male individuals (<c>gunshot_filtered</c>), the annualized rate per 1,000,000 residents (<c>gunshot_rate</c>), the <c>unemployment rate</c> and <c>unemployment_rank</c>, population density (<c>density</c>), and firearm ownership as a percent of firearm suicides to all suicides (<c>ownership</c>).
 </p>
-<subsubsection xml:id="subsubsec-exploratory-data-analysis-eda">
+<subsubsection xml:id="subsubsec-cs2-exploratory-data-analysis-eda">
   <title>Exploratory Data Analysis (EDA)</title>
 <p>
 Similar to how we approached the health care case study, let's get an overall understanding of the data in our dataset, starting with understanding where data are missing in our dataset:
