@@ -527,7 +527,7 @@ For both measures of variance, the minimum value is 0. The larger the number, th
 <p>
 Often, you'll want to include tables in your reports summarizing your dataset. These will include the number of observations in your dataset and maybe the mean/median and standard deviation of a few variables. These could be organized into a table using what you learned in the data visualization course about generating tables.
 </p>
-<subsubsection xml:id="subsubsec-skimr">
+<subsubsection xml:id="subsubsec-ch05-skimr">
   <title>skimr</title>
 <p>
 Alternatively, there is a helpful package that will summarize all the variables within your dataset. The skimr package provides a tidy output with information about your dataset.
@@ -2931,7 +2931,7 @@ tune::show_best(resample_fit, metric = "accuracy")
 </subsubsection>
 </subsection>
 </section>
-<section xml:id="sec-case-studies">
+<section xml:id="sec-ch05-case-studies">
   <title>Case Studies</title>
 <p>
 Now we will demonstrate a more involved example with a case study.
