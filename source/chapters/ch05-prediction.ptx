@@ -2684,7 +2684,7 @@ Here, we will use a very popular method called either <url href="https://machine
 This method involves essentially preforming the holdout method iteratively with the training data.
 </p>
 <p>
-First, the training set is divided into <m>v</m> (or often called called <m>k</m>) equally sized smaller pieces. The number of <m>v</m> subsets to use is also a bit arbitrary, although generally speaking using 10 folds is good practice, but this depends on the variability and size of your dataset.
+First, the training set is divided into <m>v</m> (or often called <m>k</m>) equally sized smaller pieces. The number of <m>v</m> subsets to use is also a bit arbitrary, although generally speaking using 10 folds is good practice, but this depends on the variability and size of your dataset.
 </p>
 <p>
 We are going to use 4 folds for the sake of expediency and simplicity.
@@ -2991,11 +2991,11 @@ The data comes from the US <url href="https://www.epa.gov/">Environmental Protec
   </row>
   <row>
     <cell><alert>id</alert></cell>
-    <cell>Monitor number  &lt;br&gt; -- the county number is indicated before the decimal &lt;br&gt; -- the monitor number is indicated after the decimal &lt;br&gt;  <alert>Example</alert>: 1073.0023  is Jefferson county (1073) and .0023 one of 8 monitors</cell>
+    <cell>Monitor number  -- the county number is indicated before the decimal -- the monitor number is indicated after the decimal  <alert>Example</alert>: 1073.0023  is Jefferson county (1073) and .0023 one of 8 monitors</cell>
   </row>
   <row>
     <cell><alert>fips</alert></cell>
-    <cell>Federal information processing standard number for the county where the monitor is located &lt;br&gt; -- 5 digit id code for counties (zero is often the first value and sometimes is not shown) &lt;br&gt; -- the first 2 numbers indicate the state &lt;br&gt; -- the last three numbers indicate the county &lt;br&gt;  <alert>Example</alert>: Alabama's state code is 01 because it is first alphabetically &lt;br&gt; (note: Alaska and Hawaii are not included because they are not part of the contiguous US)</cell>
+    <cell>Federal information processing standard number for the county where the monitor is located -- 5 digit id code for counties (zero is often the first value and sometimes is not shown) -- the first 2 numbers indicate the state -- the last three numbers indicate the county  <alert>Example</alert>: Alabama's state code is 01 because it is first alphabetically (note: Alaska and Hawaii are not included because they are not part of the contiguous US)</cell>
   </row>
   <row>
     <cell><alert>Lat</alert></cell>
@@ -3019,39 +3019,39 @@ The data comes from the US <url href="https://www.epa.gov/">Environmental Protec
   </row>
   <row>
     <cell><alert>CMAQ</alert></cell>
-    <cell>Estimated values of air pollution from a computational model called <url href="https://www.epa.gov/cmaq"><alert>Community Multiscale Air Quality (CMAQ)</alert></url> &lt;br&gt; --  A monitoring system that simulates the physics of the atmosphere using chemistry and weather data to predict the air pollution &lt;br&gt; -- <alert><em>Does not use any of the PM<sub>2.5</sub> gravimetric monitoring data.</em></alert> (There is a version that does use the gravimetric monitoring data, but not this one!) &lt;br&gt; -- Data from the EPA</cell>
+    <cell>Estimated values of air pollution from a computational model called <url href="https://www.epa.gov/cmaq"><alert>Community Multiscale Air Quality (CMAQ)</alert></url> --  A monitoring system that simulates the physics of the atmosphere using chemistry and weather data to predict the air pollution -- <alert><em>Does not use any of the PM<sub>2.5</sub> gravimetric monitoring data.</em></alert> (There is a version that does use the gravimetric monitoring data, but not this one!) -- Data from the EPA</cell>
   </row>
   <row>
     <cell><alert>zcta</alert></cell>
-    <cell><url href="https://www2.census.gov/geo/pdfs/education/brochures/ZCTAs.pdf">Zip Code Tabulation Area</url> where the monitor is located &lt;br&gt; -- Postal Zip codes are converted into "generalized areal representations" that are non-overlapping  &lt;br&gt; -- Data from the 2010 Census</cell>
+    <cell><url href="https://www2.census.gov/geo/pdfs/education/brochures/ZCTAs.pdf">Zip Code Tabulation Area</url> where the monitor is located -- Postal Zip codes are converted into "generalized areal representations" that are non-overlapping  -- Data from the 2010 Census</cell>
   </row>
   <row>
     <cell><alert>zcta_area</alert></cell>
-    <cell>Land area of the zip code area in meters squared  &lt;br&gt; -- Data from the 2010 Census</cell>
+    <cell>Land area of the zip code area in meters squared  -- Data from the 2010 Census</cell>
   </row>
   <row>
     <cell><alert>zcta_pop</alert></cell>
-    <cell>Population in the zip code area  &lt;br&gt; -- Data from the 2010 Census</cell>
+    <cell>Population in the zip code area  -- Data from the 2010 Census</cell>
   </row>
   <row>
     <cell><alert>imp_a500</alert></cell>
-    <cell>Impervious surface measure &lt;br&gt; -- Within a circle with a radius of 500 meters around the monitor &lt;br&gt; -- Impervious surface are roads, concrete, parking lots, buildings &lt;br&gt; -- This is a measure of development</cell>
+    <cell>Impervious surface measure -- Within a circle with a radius of 500 meters around the monitor -- Impervious surface are roads, concrete, parking lots, buildings -- This is a measure of development</cell>
   </row>
   <row>
     <cell><alert>imp_a1000</alert></cell>
-    <cell>Impervious surface measure &lt;br&gt; --  Within a circle with a radius of 1000 meters around the monitor</cell>
+    <cell>Impervious surface measure --  Within a circle with a radius of 1000 meters around the monitor</cell>
   </row>
   <row>
     <cell><alert>imp_a5000</alert></cell>
-    <cell>Impervious surface measure &lt;br&gt; --  Within a circle with a radius of 5000 meters around the monitor</cell>
+    <cell>Impervious surface measure --  Within a circle with a radius of 5000 meters around the monitor</cell>
   </row>
   <row>
     <cell><alert>imp_a10000</alert></cell>
-    <cell>Impervious surface measure &lt;br&gt; --  Within a circle with a radius of 10000 meters around the monitor</cell>
+    <cell>Impervious surface measure --  Within a circle with a radius of 10000 meters around the monitor</cell>
   </row>
   <row>
     <cell><alert>imp_a15000</alert></cell>
-    <cell>Impervious surface measure &lt;br&gt; --  Within a circle with a radius of 15000 meters around the monitor</cell>
+    <cell>Impervious surface measure --  Within a circle with a radius of 15000 meters around the monitor</cell>
   </row>
   <row>
     <cell><alert>county_area</alert></cell>
@@ -3063,47 +3063,47 @@ The data comes from the US <url href="https://www.epa.gov/">Environmental Protec
   </row>
   <row>
     <cell><alert>Log_dist_to_prisec</alert></cell>
-    <cell>Log (Natural log) distance to a primary or secondary road from the monitor &lt;br&gt; -- Highway or major road</cell>
+    <cell>Log (Natural log) distance to a primary or secondary road from the monitor -- Highway or major road</cell>
   </row>
   <row>
     <cell><alert>log_pri_length_5000</alert></cell>
-    <cell>Count of primary road length in meters in a circle with a radius of 5000 meters around the monitor (Natural log) &lt;br&gt; -- Highways only</cell>
+    <cell>Count of primary road length in meters in a circle with a radius of 5000 meters around the monitor (Natural log) -- Highways only</cell>
   </row>
   <row>
     <cell><alert>log_pri_length_10000</alert></cell>
-    <cell>Count of primary road length in meters in a circle with a radius of 10000 meters around the monitor (Natural log) &lt;br&gt; -- Highways only</cell>
+    <cell>Count of primary road length in meters in a circle with a radius of 10000 meters around the monitor (Natural log) -- Highways only</cell>
   </row>
   <row>
     <cell><alert>log_pri_length_15000</alert></cell>
-    <cell>Count of primary road length in meters in a circle with a radius of 15000 meters around the monitor (Natural log) &lt;br&gt; -- Highways only</cell>
+    <cell>Count of primary road length in meters in a circle with a radius of 15000 meters around the monitor (Natural log) -- Highways only</cell>
   </row>
   <row>
     <cell><alert>log_pri_length_25000</alert></cell>
-    <cell>Count of primary road length in meters in a circle with a radius of 25000 meters around the monitor (Natural log) &lt;br&gt; -- Highways only</cell>
+    <cell>Count of primary road length in meters in a circle with a radius of 25000 meters around the monitor (Natural log) -- Highways only</cell>
   </row>
   <row>
     <cell><alert>log_prisec_length_500</alert></cell>
-    <cell>Count of primary and secondary road length in meters in a circle with a radius of 500 meters around the monitor (Natural log)  &lt;br&gt; -- Highway and secondary roads</cell>
+    <cell>Count of primary and secondary road length in meters in a circle with a radius of 500 meters around the monitor (Natural log)  -- Highway and secondary roads</cell>
   </row>
   <row>
     <cell><alert>log_prisec_length_1000</alert></cell>
-    <cell>Count of primary and secondary road length in meters in a circle with a radius of 1000 meters around the monitor (Natural log)  &lt;br&gt; -- Highway and secondary roads</cell>
+    <cell>Count of primary and secondary road length in meters in a circle with a radius of 1000 meters around the monitor (Natural log)  -- Highway and secondary roads</cell>
   </row>
   <row>
     <cell><alert>log_prisec_length_5000</alert></cell>
-    <cell>Count of primary and secondary road length in meters in a circle with a radius of 5000 meters around the monitor (Natural log)  &lt;br&gt; -- Highway and secondary roads</cell>
+    <cell>Count of primary and secondary road length in meters in a circle with a radius of 5000 meters around the monitor (Natural log)  -- Highway and secondary roads</cell>
   </row>
   <row>
     <cell><alert>log_prisec_length_10000</alert></cell>
-    <cell>Count of primary and secondary road length in meters in a circle with a radius of 10000 meters around the monitor (Natural log)  &lt;br&gt; -- Highway and secondary roads</cell>
+    <cell>Count of primary and secondary road length in meters in a circle with a radius of 10000 meters around the monitor (Natural log)  -- Highway and secondary roads</cell>
   </row>
   <row>
     <cell><alert>log_prisec_length_15000</alert></cell>
-    <cell>Count of primary and secondary road length in meters in a circle with a radius of 15000 meters around the monitor (Natural log)  &lt;br&gt; -- Highway and secondary roads</cell>
+    <cell>Count of primary and secondary road length in meters in a circle with a radius of 15000 meters around the monitor (Natural log)  -- Highway and secondary roads</cell>
   </row>
   <row>
     <cell><alert>log_prisec_length_25000</alert></cell>
-    <cell>Count of primary and secondary road length in meters in a circle with a radius of 25000 meters around the monitor (Natural log)  &lt;br&gt; -- Highway and secondary roads</cell>
+    <cell>Count of primary and secondary road length in meters in a circle with a radius of 25000 meters around the monitor (Natural log)  -- Highway and secondary roads</cell>
   </row>
   <row>
     <cell><alert>log_nei_2008_pm25_sum_10000</alert></cell>
@@ -3139,35 +3139,35 @@ The data comes from the US <url href="https://www.epa.gov/">Environmental Protec
   </row>
   <row>
     <cell><alert>nohs</alert></cell>
-    <cell>Percentage of people in zcta area where the monitor is that <alert>do not have a high school degree</alert> &lt;br&gt; -- Data from the Census</cell>
+    <cell>Percentage of people in zcta area where the monitor is that <alert>do not have a high school degree</alert> -- Data from the Census</cell>
   </row>
   <row>
     <cell><alert>somehs</alert></cell>
-    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was <alert>some high school education</alert> &lt;br&gt; -- Data from the Census</cell>
+    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was <alert>some high school education</alert> -- Data from the Census</cell>
   </row>
   <row>
     <cell><alert>hs</alert></cell>
-    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was completing a <alert>high school degree</alert> &lt;br&gt; -- Data from the Census</cell>
+    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was completing a <alert>high school degree</alert> -- Data from the Census</cell>
   </row>
   <row>
     <cell><alert>somecollege</alert></cell>
-    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was completing <alert>some college education</alert> &lt;br&gt; -- Data from the Census</cell>
+    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was completing <alert>some college education</alert> -- Data from the Census</cell>
   </row>
   <row>
     <cell><alert>associate</alert></cell>
-    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was completing an <alert>associate degree</alert> &lt;br&gt; -- Data from the Census</cell>
+    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was completing an <alert>associate degree</alert> -- Data from the Census</cell>
   </row>
   <row>
     <cell><alert>bachelor</alert></cell>
-    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was a <alert>bachelor's degree</alert> &lt;br&gt; -- Data from the Census</cell>
+    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was a <alert>bachelor's degree</alert> -- Data from the Census</cell>
   </row>
   <row>
     <cell><alert>grad</alert></cell>
-    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was a <alert>graduate degree</alert> &lt;br&gt; -- Data from the Census</cell>
+    <cell>Percentage of people in zcta area where the monitor whose highest formal educational attainment was a <alert>graduate degree</alert> -- Data from the Census</cell>
   </row>
   <row>
     <cell><alert>pov</alert></cell>
-    <cell>Percentage of people in zcta area where the monitor is that lived in <url href="https://aspe.hhs.gov/2008-hhs-poverty-guidelines"><alert>poverty</alert></url> in 2008  &lt;br&gt; -- Data from the Census</cell>
+    <cell>Percentage of people in zcta area where the monitor is that lived in <url href="https://aspe.hhs.gov/2008-hhs-poverty-guidelines"><alert>poverty</alert></url> in 2008  -- Data from the Census</cell>
   </row>
   <row>
     <cell><alert>hs_orless</alert></cell>
@@ -3175,15 +3175,15 @@ The data comes from the US <url href="https://www.epa.gov/">Environmental Protec
   </row>
   <row>
     <cell><alert>urc2013</alert></cell>
-    <cell><url href="https://www.cdc.gov/nchs/data/series/sr_02/sr02_166.pdf">2013 Urban-rural classification</url> of the county where the monitor is located &lt;br&gt; -- 6 category variable - 1 is totally urban 6 is completely rural &lt;br&gt;  -- Data from the <url href="https://www.cdc.gov/nchs/index.htm">National Center for Health Statistics</url></cell>
+    <cell><url href="https://www.cdc.gov/nchs/data/series/sr_02/sr02_166.pdf">2013 Urban-rural classification</url> of the county where the monitor is located -- 6 category variable - 1 is totally urban 6 is completely rural  -- Data from the <url href="https://www.cdc.gov/nchs/index.htm">National Center for Health Statistics</url></cell>
   </row>
   <row>
     <cell><alert>urc2006</alert></cell>
-    <cell><url href="https://www.cdc.gov/nchs/data/series/sr_02/sr02_154.pdf">2006 Urban-rural classification</url> of the county where the monitor is located &lt;br&gt; -- 6 category variable - 1 is totally urban 6 is completely rural &lt;br&gt; -- Data from the <url href="https://www.cdc.gov/nchs/index.htm">National Center for Health Statistics</url></cell>
+    <cell><url href="https://www.cdc.gov/nchs/data/series/sr_02/sr02_154.pdf">2006 Urban-rural classification</url> of the county where the monitor is located -- 6 category variable - 1 is totally urban 6 is completely rural -- Data from the <url href="https://www.cdc.gov/nchs/index.htm">National Center for Health Statistics</url></cell>
   </row>
   <row>
     <cell><alert>aod</alert></cell>
-    <cell>Aerosol Optical Depth measurement from a NASA satellite &lt;br&gt; -- based on the diffraction of a laser &lt;br&gt; -- used as a proxy of particulate pollution &lt;br&gt; -- unit-less - higher value indicates more pollution &lt;br&gt; -- Data from NASA</cell>
+    <cell>Aerosol Optical Depth measurement from a NASA satellite -- based on the diffraction of a laser -- used as a proxy of particulate pollution -- unit-less - higher value indicates more pollution -- Data from NASA</cell>
   </row>
 </tabular>
 <p>
