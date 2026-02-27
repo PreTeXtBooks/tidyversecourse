@@ -22,6 +22,7 @@
           <personname>Roger D. Peng</personname>
         </author>
       </titlepage>
+      <xi:include href="chapters/preface.ptx" />
     </frontmatter>
 
     <xi:include href="chapters/ch01-intro.ptx" />
