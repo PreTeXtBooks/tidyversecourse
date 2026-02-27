@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<pretext xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en-US">
+  <docinfo>
+  </docinfo>
+
+  <book xml:id="tidyversecourse">
+    <title>Tidyverse Skills for Data Science</title>
+
+    <frontmatter xml:id="frontmatter">
+      <titlepage>
+        <author>
+          <personname>Carrie Wright</personname>
+        </author>
+        <author>
+          <personname>Shannon E. Ellis</personname>
+        </author>
+        <author>
+          <personname>Stephanie C. Hicks</personname>
+        </author>
+        <author>
+          <personname>Roger D. Peng</personname>
+        </author>
+      </titlepage>
+    </frontmatter>
+
+    <xi:include href="chapters/ch01-intro.ptx" />
+    <xi:include href="chapters/ch02-get-data.ptx" />
+    <xi:include href="chapters/ch03-tidying.ptx" />
+    <xi:include href="chapters/ch04-dataviz.ptx" />
+    <xi:include href="chapters/ch05-prediction.ptx" />
+
+    <backmatter xml:id="backmatter">
+      <index>
+        <index-list />
+      </index>
+    </backmatter>
+  </book>
+</pretext>
