@@ -17,7 +17,7 @@ In this course, we set out to introduce the conceptual framework behind tidy dat
 In this specialization we assume familiarity with the R programming language. If you are not yet familiar with R, we suggest you first complete <url href="https://www.coursera.org/learn/r-programming">R Programming</url> before returning to complete this specialization. However, if you have some familiarity with R and want to learn how to work more efficiently with data, then you've come to the right place!
 </p>
 </introduction>
-<section xml:id="sec-about-this-course">
+<section xml:id="sec-ch01-about-this-course">
   <title>About This Course</title>
 <p>
 This course introduces a powerful set of data science tools known as the Tidyverse. The Tidyverse has revolutionized the way in which data scientists do almost every aspect of their job. We will cover the simple idea of "tidy data" and how this idea serves to organize data for analysis and modeling. We will also cover how non-tidy data can be transformed to tidy data, the data science project life cycle, and the ecosystem of Tidyverse R packages that can be used to execute a data science project.
@@ -1096,12 +1096,12 @@ The phrase "data science workflow" describes the method or steps by which a data
 We will demonstrate potential ways of organizing a workflow using real data from the <url href="https://www.opencasestudies.org">Open Case Studies</url> project.
 </p>
 </section>
-<section xml:id="sec-case-studies">
+<section xml:id="sec-ch01-case-studies">
   <title>Case Studies</title>
 <p>
 Throughout this specialization, we're going to make use of a number of case studies from <url href="https://www.opencasestudies.org">Open Case Studies</url> to demonstrate the concepts introduced in the course. We will generally make use of the same case studies throughout the specialization, providing continuity to allow you focus on the concepts and skills being taught (rather than the context) while working with interesting data. These case studies aim to address a public-health question and all of them use real data.
 </p>
-<subsection xml:id="subsec-case-study-1-health-expenditures">
+<subsection xml:id="subsec-ch01-case-study-1-health-expenditures">
   <title>Case Study #1: Health Expenditures</title>
 <p>
 The material for this first case study comes from the following:
@@ -1130,7 +1130,7 @@ The two datasets used in this case study come from the <url href="https://www.kf
 </ul>
 </subsubsection>
 </subsection>
-<subsection xml:id="subsec-case-study-2-firearms">
+<subsection xml:id="subsec-ch01-case-study-2-firearms">
   <title>Case Study #2: Firearms</title>
 <p>
 The material for the second case study comes from the following:
