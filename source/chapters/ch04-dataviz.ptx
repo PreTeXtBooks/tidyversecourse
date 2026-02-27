@@ -1082,7 +1082,7 @@ ggplot(diamonds) +
 We now have a pretty good looking plot! However, a few additional changes would make this plot <em>even better</em> for communication.
 </p>
 <p>
-Note: Additional themes are available from the [<c>ggthemes</c> package](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/). Users can also generate their own themes.
+Note: Additional themes are available from the <url href="https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/"><c>ggthemes</c> package</url>. Users can also generate their own themes.
 </p>
 </subsection>
 <subsection xml:id="subsec-custom-theme">
@@ -1691,7 +1691,7 @@ These are referred to as <c>ggplot2</c> extensions.
 <subsection xml:id="subsec-ggrepel">
   <title><c>ggrepel</c></title>
 <p>
-[<c>ggrepel</c>](https://github.com/slowkow/ggrepel) "provides geoms for<c> ggplot2</c> to repel overlapping text labels."
+<url href="https://github.com/slowkow/ggrepel"><c>ggrepel</c></url> "provides geoms for <c>ggplot2</c> to repel overlapping text labels."
 </p>
 <p>
 To demonstrate the functionality within the <c>ggrepel</c> package and demonstrate cases where it would be needed, let's use a dataset available from R - the <c>mtcars</c> dataset:
@@ -1749,7 +1749,7 @@ The only bit of code here that changed was that we changed <c>geom_text()</c> to
 <subsubsection xml:id="subsubsec-custom-formatting">
   <title>Custom Formatting</title>
 <p>
-Within <c>geom_text_repel()</c>, there are a number of additional formatting options available. We'll cover a number of the most important here, but the [<c>ggrepel</c> vignettes](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html) explore these further.
+Within <c>geom_text_repel()</c>, there are a number of additional formatting options available. We'll cover a number of the most important here, but the <url href="https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html"><c>ggrepel</c> vignettes</url> explore these further.
 </p>
 <p>
 <alert>Highlighting Specific Points</alert>
@@ -2218,7 +2218,7 @@ See <url href="https://patchwork.data-imaginist.com/">here</url> for more inform
 <subsection xml:id="subsec-gganimate">
   <title><c>gganimate</c></title>
 <p>
-The final <c>ggplot2</c> extension we'll discuss here is [<c>gganmiate</c>](https://gganimate.com/). This extends the grammar of graphics implemented in the <c>ggplot2</c> package to work with animated plots. To get started, you'll need to install and load the package:
+The final <c>ggplot2</c> extension we'll discuss here is <url href="https://gganimate.com/"><c>gganmiate</c></url>. This extends the grammar of graphics implemented in the <c>ggplot2</c> package to work with animated plots. To get started, you'll need to install and load the package:
 </p>
 <program language="r">
 <input>
