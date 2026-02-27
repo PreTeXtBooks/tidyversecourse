@@ -452,7 +452,7 @@ When using <c>ggplot2</c> to generate figures, you will always begin by calling 
 <c>geom_point</c> is most helpful for creating scatterplots. As a reminder from an earlier lesson, scatterplots are useful when you're looking at the relationship between two numeric variables. Within <c>geom</c> you will specify the arguments needed to tell <c>ggplot2</c> how you want your plot to look.
 </p>
 <p>
-You will map your variables using the aesthetic argument **<c>aes</c>**. We'll walk through examples below to make all of this clear. However, get comfortable with the overall look of the code now.
+You will map your variables using the aesthetic argument <alert><c>aes</c></alert>. We'll walk through examples below to make all of this clear. However, get comfortable with the overall look of the code now.
 </p>
 </subsection>
 <subsection xml:id="subsec-example-dataset-diamonds">
@@ -540,7 +540,7 @@ The Help pages of the diamonds dataset (accessed using <c>?diamonds</c>) state t
 By coloring our points by a different variable in the dataset, we now understand our dataset better. This is one of the goals of data visualization! And, specifically, what we're doing here in <c>ggplot2</c> is known as <alert>mapping a variable to an aesthetic</alert>. We took another variable in the dataset, mapped it to a color, and then put those colors on the points in the plot. Well, we only told <c>ggplot2</c> what variable to map. It took care of the rest!
 </p>
 <p>
-Of course, we can also <em>manually</em> specify the colors of the points on our graph; however, manually specifying the colors of points happens <em>outside</em> of the <c>aes()</c> call. This is because <c>ggplot2</c> does not have to go through the process of mapping the variable to an aesthetic (color in this case). In the code here, <c>ggplot2</c> doesn't have to go through the trouble of figuring out which level of the variable is going to be which color on the plot (the mapping to the aesthetic part of the process). Instead, it just colors every point red. Thus, **manually specifying the color of your points happens _outside_ of <c>aes()</c>**:
+Of course, we can also <em>manually</em> specify the colors of the points on our graph; however, manually specifying the colors of points happens <em>outside</em> of the <c>aes()</c> call. This is because <c>ggplot2</c> does not have to go through the process of mapping the variable to an aesthetic (color in this case). In the code here, <c>ggplot2</c> doesn't have to go through the trouble of figuring out which level of the variable is going to be which color on the plot (the mapping to the aesthetic part of the process). Instead, it just colors every point red. Thus, <alert>manually specifying the color of your points happens <em>outside</em> of <c>aes()</c></alert>:
 </p>
 <program language="r">
 <input>
@@ -1012,9 +1012,12 @@ ggplot(diamonds) +
        subtitle = "The majority of IF diamonds are an \"Ideal\" cut")
 </input>
 </program>
-<p>
-![<c>labs()</c> adds helpful tittles, subtitles, and captions](images/gslides/216.png)
-</p>
+<figure>
+  <image source="images/gslides/216.png">
+    <description><c>labs()</c> adds helpful tittles, subtitles, and captions</description>
+  </image>
+  <caption><c>labs()</c> adds helpful tittles, subtitles, and captions</caption>
+</figure>
 </subsubsection>
 <subsubsection xml:id="subsubsec-axis-labels">
   <title>Axis labels</title>
@@ -2076,7 +2079,7 @@ And, just like that we've got three plots, labeled, spaced out nicely in a grid,
 The <c>patchwork</c> package is similar to the <c>cowplot</c> package in that they both are helpful for combining plots together. They each allow for different plot modifications, so it is useful to know about both packages.
 </p>
 <p>
-With the <c>patchwork</c> package, plots can be combined using a few operators, such as <c>"+"</c>, <c>"/"</c>, and `"|".
+With the <c>patchwork</c> package, plots can be combined using a few operators, such as <c>"+"</c>, <c>"/"</c>, and <c>"|"</c>.
 </p>
 <p>
 To combine two plots together we can simply add them together with the <c>+</c> sign or place them next to one another using the <c>|</c>:
@@ -2889,9 +2892,11 @@ Now, of course there are <em>many</em> ways in which we could customize each of 
 <p>
 For our second case study, we're interested in the following question:
 </p>
+<blockquote>
 <p>
->At the state-level, what is the relationship between firearm legislation strength and annual rate of fatal police shootings?
+At the state-level, what is the relationship between firearm legislation strength and annual rate of fatal police shootings?
 </p>
+</blockquote>
 <p>
 In the previous course, we wrangled the data into a single, helpful dataframe: <c>firearms</c>.
 </p>
