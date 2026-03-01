@@ -2576,6 +2576,12 @@ ggplot(mtcars) +
   geom_boxplot(aes(factor(cyl), mpg))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-88-1.png">
+    <description>Static boxplot of cylinders vs miles per gallon from the mtcars dataset</description>
+  </image>
+  <caption>Static boxplot: cylinders vs mpg</caption>
+</figure>
 <p>
 But what if we wanted to understand the relationship between those two variables and the number of gears a car has (<c>gear</c>)?
 </p>
@@ -2590,6 +2596,12 @@ ggplot(mtcars) +
   facet_wrap(~gear)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-89-1.png">
+    <description>Faceted boxplot of cylinders vs miles per gallon, faceted by gear</description>
+  </image>
+  <caption>Faceted boxplot: cylinders vs mpg by gear</caption>
+</figure>
 <p>
 Alternatively, we could animate the plot, using <c>gganimate</c> so that on a single plot we rotate between each of these three plots.
 </p>
@@ -2608,6 +2620,12 @@ mtcars %>%
   transition_manual(gear)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-90-1.gif">
+    <description>Animated boxplot of cylinders vs mpg transitioning between gear levels using transition_manual</description>
+  </image>
+  <caption>Animated boxplot using <c>transition_manual()</c>: transitioning by gear</caption>
+</figure>
 <p>
 Note that here, <c>transition_manual()</c> is a new grammar class that we add right on top of our <c>ggplot2</c> plot code! Within this grammar class, we specify the variable upon which we'd like the transition in the animation to occur.
 </p>
@@ -2629,6 +2647,12 @@ anim &lt;- ggplot(mtcars) +
 anim
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-91-1.gif">
+    <description>Animated boxplot of cylinders vs mpg using transition_states by gear</description>
+  </image>
+  <caption>Animated boxplot using <c>transition_states()</c>: transitioning by gear</caption>
+</figure>
 <p>
 Note here that we've stored the output from <c>transition_states</c> in the object <c>anim</c>. We'll build on this object below.
 </p>
@@ -2645,6 +2669,12 @@ anim &lt;- anim +
 anim
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-92-1.gif">
+    <description>Animated boxplot with title label showing the current gear level</description>
+  </image>
+  <caption>Animated boxplot with gear label in title</caption>
+</figure>
 <p>
 Note that we're referring to the appropriate gear within the animation frame by specifying <c>{closest_state}</c>.
 </p>
@@ -2661,6 +2691,12 @@ anim &lt;- anim +
 anim
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-93-1.gif">
+    <description>Animated boxplot with cubic-in-out easing for a smoother start and end</description>
+  </image>
+  <caption>Animated boxplot with <c>ease_aes('cubic-in-out')</c></caption>
+</figure>
 <p>
 There are a number of easing functions, all of which are listed within the documentation, which can be viewed, as always, using the <c>?</c> help function: <c>?ease_aes</c>.
 </p>
@@ -2679,6 +2715,12 @@ anim &lt;- anim +
 anim
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-94-1.gif">
+    <description>Animated boxplot with fade-in entrance and shrink exit transitions</description>
+  </image>
+  <caption>Animated boxplot with <c>enter_fade()</c> and <c>exit_shrink()</c></caption>
+</figure>
 <p>
 The changes are subtle but you'll notice that on transition the data fades in to appear and shrinks upon exit.
 </p>
@@ -2695,6 +2737,12 @@ ggplot(mtcars) +
   geom_point(aes(qsec, mpg))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-95-1.png">
+    <description>Static scatterplot of quarter-mile time vs miles per gallon from the mtcars dataset</description>
+  </image>
+  <caption>Static scatterplot: qsec vs mpg</caption>
+</figure>
 <p>
 However, upon adding animation, we see how the data changes by gear.
 </p>
@@ -2711,6 +2759,12 @@ scat &lt;- ggplot(mtcars) +
 scat
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-96-1.gif">
+    <description>Animated scatterplot of quarter-mile time vs mpg transitioning by gear with gear label in title</description>
+  </image>
+  <caption>Animated scatterplot using <c>transition_states()</c>: transitioning by gear</caption>
+</figure>
 <p>
 However, the x- and y-axes remain constant throughout the animation.
 </p>
@@ -2727,6 +2781,12 @@ scat +
             include = FALSE)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-97-1.gif">
+    <description>Animated scatterplot with view_step allowing axes to adjust between gear levels</description>
+  </image>
+  <caption>Animated scatterplot with <c>view_step()</c>: adjusting positional scales by gear</caption>
+</figure>
 </subsubsection>
 <subsubsection xml:id="subsubsec-example-gapminder">
   <title>Example: gapminder</title>
@@ -2753,6 +2813,12 @@ gap &lt;- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country
 gap
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-98-1.gif">
+    <description>Animated scatterplot of GDP per capita vs life expectancy using the gapminder dataset, animated over time by year and faceted by continent</description>
+  </image>
+  <caption>Animated gapminder plot: GDP per capita vs life expectancy over time</caption>
+</figure>
 <p>
 Note that in this example, we're now using <c>transition_time()</c> rather than <c>transition_states()</c>. This is a variant of <c>transition_states()</c> that is particularly useful when the states represent points in time, such as the years we're animating through in the plot above. The transition length is set to correspond to the time difference between the points in the data.
 </p>
@@ -2770,6 +2836,12 @@ gap +
               alpha = 0.3)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-99-1.gif">
+    <description>Animated gapminder scatterplot with shadow trail showing historical data points from previous frames</description>
+  </image>
+  <caption>Animated gapminder plot with <c>shadow_trail()</c>: showing data trail over time</caption>
+</figure>
 <p>
 Here, distance specifies the temporal distance between the frames to show and alpha specifies the transparency of the trail, so that the current frame's data is always discernible.
 </p>
