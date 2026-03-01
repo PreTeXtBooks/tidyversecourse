@@ -54,7 +54,7 @@
   <pre>
 ## # A tibble: 31 × 3
 ##    Girth Height Volume
-##    <dbl>  <dbl>  <dbl>
+##    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
 ##  1   8.3     70   10.3
 ##  2   8.6     65   10.3
 ##  3   8.8     63   10.2
@@ -81,7 +81,7 @@
 <pre>
 ## # A tibble: 31 × 3
 ##   Girth Height Volume
-##   <dbl>  <dbl>  <dbl>
+##   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
 ## 1   8.3     70   10.3
 ## 2   8.6     65   10.3
 ## 3   8.8     63   10.2
@@ -161,7 +161,7 @@
 <pre>
 ## # A tibble: 5 × 4
 ##       a     b     c     z
-##   <int> <int> <dbl> <dbl>
+##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1     1     6     1    50
 ## 2     2     7     1    82
 ## 3     3     8     1   122
@@ -183,7 +183,7 @@
 <pre>
 ## # A tibble: 5 × 3
 ##   `two words` `12`    `:)` 
-##         <int> <chr>   <chr>
+##         &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;
 ## 1           1 numeric smile
 ## 2           2 numeric smile
 ## 3           3 numeric smile
@@ -266,7 +266,7 @@
 <pre>
 ## # A tibble: 150 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##           <dbl>       <dbl>        <dbl>       <dbl> <chr>  
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;  
 ##  1          5.1         3.5          1.4         0.2 setosa 
 ##  2          4.9         3            1.4         0.2 setosa 
 ##  3          4.7         3.2          1.3         0.2 setosa 
@@ -297,7 +297,7 @@
 <pre>
 ## # A tibble: 151 × 5
 ##    A            B           C            D           E      
-##    <chr>        <chr>       <chr>        <chr>       <chr>  
+##    &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;  
 ##  1 Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##  2 5.1          3.5         1.4          0.2         setosa 
 ##  3 4.9          3           1.4          0.2         setosa 
@@ -326,7 +326,7 @@
 <pre>
 ## # A tibble: 3 × 6
 ##   Name          Profession   Age `Has kids` `Date of birth`     `Date of death`    
-##   <chr>         <chr>      <dbl> <lgl>      <dttm>              <dttm>             
+##   &lt;chr&gt;         &lt;chr&gt;      &lt;dbl&gt; &lt;lgl&gt;      &lt;dttm&gt;              &lt;dttm&gt;             
 ## 1 David Bowie   musician      69 TRUE       1947-01-08 00:00:00 2016-01-10 00:00:00
 ## 2 Carrie Fisher actor         60 TRUE       1956-10-21 00:00:00 2016-12-27 00:00:00
 ## 3 Chuck Berry   musician      90 TRUE       1926-10-18 00:00:00 2017-03-18 00:00:00
@@ -352,7 +352,7 @@
 <pre>
 ## # A tibble: 3 × 6
 ##   Name          Profession   Age Has.kids Date.of.birth       Date.of.death      
-##   <chr>         <chr>      <dbl> <lgl>    <dttm>              <dttm>             
+##   &lt;chr&gt;         &lt;chr&gt;      &lt;dbl&gt; &lt;lgl&gt;    &lt;dttm&gt;              &lt;dttm&gt;             
 ## 1 David Bowie   musician      69 TRUE     1947-01-08 00:00:00 2016-01-10 00:00:00
 ## 2 Carrie Fisher actor         60 TRUE     1956-10-21 00:00:00 2016-12-27 00:00:00
 ## 3 Chuck Berry   musician      90 TRUE     1926-10-18 00:00:00 2017-03-18 00:00:00
@@ -373,7 +373,7 @@
 <pre>
 ## # A tibble: 3 × 6
 ##   NAME          PROFESSION   AGE `HAS KIDS` `DATE OF BIRTH`     `DATE OF DEATH`    
-##   <chr>         <chr>      <dbl> <lgl>      <dttm>              <dttm>             
+##   &lt;chr&gt;         &lt;chr&gt;      &lt;dbl&gt; &lt;lgl&gt;      &lt;dttm&gt;              &lt;dttm&gt;             
 ## 1 David Bowie   musician      69 TRUE       1947-01-08 00:00:00 2016-01-10 00:00:00
 ## 2 Carrie Fisher actor         60 TRUE       1956-10-21 00:00:00 2016-12-27 00:00:00
 ## 3 Chuck Berry   musician      90 TRUE       1926-10-18 00:00:00 2017-03-18 00:00:00
@@ -903,7 +903,7 @@
 <pre>
 ## # A tibble: 347 × 4
 ##    ArtistId Name                 AlbumId Title                                
-##       <int> <chr>                  <int> <chr>                                
+##       &lt;int&gt; &lt;chr&gt;                  &lt;int&gt; &lt;chr&gt;                                
 ##  1        1 AC/DC                      1 For Those About To Rock We Salute You
 ##  2        2 Accept                     2 Balls to the Wall                    
 ##  3        2 Accept                     3 Restless and Wild                    
@@ -947,7 +947,7 @@
 <pre>
 ## # A tibble: 418 × 4
 ##    ArtistId Name                 AlbumId Title                                
-##       <int> <chr>                  <int> <chr>                                
+##       &lt;int&gt; &lt;chr&gt;                  &lt;int&gt; &lt;chr&gt;                                
 ##  1        1 AC/DC                      1 For Those About To Rock We Salute You
 ##  2        1 AC/DC                      4 Let There Be Rock                    
 ##  3        2 Accept                     2 Balls to the Wall                    
@@ -992,7 +992,7 @@
 <pre>
 ## # A tibble: 347 × 4
 ##    ArtistId Name                 AlbumId Title                                
-##       <int> <chr>                  <int> <chr>                                
+##       &lt;int&gt; &lt;chr&gt;                  &lt;int&gt; &lt;chr&gt;                                
 ##  1        1 AC/DC                      1 For Those About To Rock We Salute You
 ##  2        1 AC/DC                      4 Let There Be Rock                    
 ##  3        2 Accept                     2 Balls to the Wall                    
@@ -1037,7 +1037,7 @@
 <pre>
 ## # A tibble: 418 × 4
 ##    ArtistId Name                 AlbumId Title                                
-##       <int> <chr>                  <int> <chr>                                
+##       &lt;int&gt; &lt;chr&gt;                  &lt;int&gt; &lt;chr&gt;                                
 ##  1        1 AC/DC                      1 For Those About To Rock We Salute You
 ##  2        1 AC/DC                      4 Let There Be Rock                    
 ##  3        2 Accept                     2 Balls to the Wall                    
@@ -1345,7 +1345,7 @@
 <pre>
 ## # A tibble: 8 × 2
 ##   repo                             address                                      
-##   <chr>                            <chr>                                        
+##   &lt;chr&gt;                            &lt;chr&gt;                                        
 ## 1 cbds                             https://github.com/JaneEverydayDoe/cbds      
 ## 2 first_project                    https://github.com/JaneEverydayDoe/first_pro…
 ## 3 gcd                              https://github.com/JaneEverydayDoe/gcd       
@@ -1455,7 +1455,7 @@
 <pre>
 ## # A tibble: 3 × 3
 ##   Name             Age Occupation  
-##   <chr>          <dbl> <chr>       
+##   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;       
 ## 1 Woody             40 Sherriff    
 ## 2 Buzz Lightyear    34 Space Ranger
 ## 3 Andy              NA Toy Owner
@@ -1475,7 +1475,7 @@
 <pre>
 ## # A tibble: 3 × 3
 ##   Name             Age Occupation  
-##   <chr>          <dbl> <chr>       
+##   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;       
 ## 1 Woody             40 Sherriff    
 ## 2 Buzz Lightyear    34 Space Ranger
 ## 3 Andy              NA Toy Owner
@@ -1494,7 +1494,7 @@
 <pre>
 ## # A tibble: 3 × 3
 ##   Name             Age Occupation  
-##   <chr>          <dbl> <chr>       
+##   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;       
 ## 1 Woody             40 Sherriff    
 ## 2 Buzz Lightyear    34 Space Ranger
 ## 3 Andy              NA Toy Owner
@@ -1704,7 +1704,7 @@
 
 ## # A tibble: 78 × 29
 ##    Location  `2013__Employer` `2013__Non-Grou… `2013__Medicaid` `2013__Medicare`
-##    <chr>                <dbl>            <dbl>            <dbl>            <dbl>
+##    &lt;chr&gt;                &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
 ##  1 United S…        155696900         13816000         54919100         40876300
 ##  2 Alabama            2126500           174200           869700           783000
 ##  3 Alaska              364900            24000            95000            55200
@@ -1715,13 +1715,13 @@
 ##  8 Connecti…          2030500           126800           532000           475300
 ##  9 Delaware            473700            25100           192700           141300
 ## 10 District…           324300            30400           174900            59900
-## # … with 68 more rows, and 24 more variables: 2013__Other Public <chr>,
-## #   2013__Uninsured <dbl>, 2013__Total <dbl>, 2014__Employer <dbl>,
-## #   2014__Non-Group <dbl>, 2014__Medicaid <dbl>, 2014__Medicare <dbl>,
-## #   2014__Other Public <chr>, 2014__Uninsured <dbl>, 2014__Total <dbl>,
-## #   2015__Employer <dbl>, 2015__Non-Group <dbl>, 2015__Medicaid <dbl>,
-## #   2015__Medicare <dbl>, 2015__Other Public <chr>, 2015__Uninsured <dbl>,
-## #   2015__Total <dbl>, 2016__Employer <dbl>, 2016__Non-Group <dbl>, …
+## # … with 68 more rows, and 24 more variables: 2013__Other Public &lt;chr&gt;,
+## #   2013__Uninsured &lt;dbl&gt;, 2013__Total &lt;dbl&gt;, 2014__Employer &lt;dbl&gt;,
+## #   2014__Non-Group &lt;dbl&gt;, 2014__Medicaid &lt;dbl&gt;, 2014__Medicare &lt;dbl&gt;,
+## #   2014__Other Public &lt;chr&gt;, 2014__Uninsured &lt;dbl&gt;, 2014__Total &lt;dbl&gt;,
+## #   2015__Employer &lt;dbl&gt;, 2015__Non-Group &lt;dbl&gt;, 2015__Medicaid &lt;dbl&gt;,
+## #   2015__Medicare &lt;dbl&gt;, 2015__Other Public &lt;chr&gt;, 2015__Uninsured &lt;dbl&gt;,
+## #   2015__Total &lt;dbl&gt;, 2016__Employer &lt;dbl&gt;, 2016__Non-Group &lt;dbl&gt;, …
 </pre>
 
   <p>So, the first few lines of the dataset appear to store information for each state (observation) in the rows and different variables in the columns. What about the final few lines of the file?</p>
@@ -1734,7 +1734,7 @@
 <pre>
 ## # A tibble: 30 × 29
 ##    Location  `2013__Employer` `2013__Non-Grou… `2013__Medicaid` `2013__Medicare`
-##    <chr>                <dbl>            <dbl>            <dbl>            <dbl>
+##    &lt;chr&gt;                &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
 ##  1 "Washing…          3541600           309000          1026800           879000
 ##  2 "West Vi…           841300            42600           382500           329400
 ##  3 "Wiscons…          3154500           225300           907600           812900
@@ -1745,13 +1745,13 @@
 ##  8 "In this…               NA               NA               NA               NA
 ##  9  <NA>                   NA               NA               NA               NA
 ## 10 "Data ex…               NA               NA               NA               NA
-## # … with 20 more rows, and 24 more variables: 2013__Other Public <chr>,
-## #   2013__Uninsured <dbl>, 2013__Total <dbl>, 2014__Employer <dbl>,
-## #   2014__Non-Group <dbl>, 2014__Medicaid <dbl>, 2014__Medicare <dbl>,
-## #   2014__Other Public <chr>, 2014__Uninsured <dbl>, 2014__Total <dbl>,
-## #   2015__Employer <dbl>, 2015__Non-Group <dbl>, 2015__Medicaid <dbl>,
-## #   2015__Medicare <dbl>, 2015__Other Public <chr>, 2015__Uninsured <dbl>,
-## #   2015__Total <dbl>, 2016__Employer <dbl>, 2016__Non-Group <dbl>, …
+## # … with 20 more rows, and 24 more variables: 2013__Other Public &lt;chr&gt;,
+## #   2013__Uninsured &lt;dbl&gt;, 2013__Total &lt;dbl&gt;, 2014__Employer &lt;dbl&gt;,
+## #   2014__Non-Group &lt;dbl&gt;, 2014__Medicaid &lt;dbl&gt;, 2014__Medicare &lt;dbl&gt;,
+## #   2014__Other Public &lt;chr&gt;, 2014__Uninsured &lt;dbl&gt;, 2014__Total &lt;dbl&gt;,
+## #   2015__Employer &lt;dbl&gt;, 2015__Non-Group &lt;dbl&gt;, 2015__Medicaid &lt;dbl&gt;,
+## #   2015__Medicare &lt;dbl&gt;, 2015__Other Public &lt;chr&gt;, 2015__Uninsured &lt;dbl&gt;,
+## #   2015__Total &lt;dbl&gt;, 2016__Employer &lt;dbl&gt;, 2016__Non-Group &lt;dbl&gt;, …
 </pre>
 
   <p>Looks like there's a lot of missing information there at the end of the file due the "Notes" observation. Seems as though Notes were added to the file that are not the actual data. We'll want to only include rows before the value of "Notes" for the <c>Location</c> variable at the end of the file. Using <c>n_max</c> and the <c>==</c> operator, we can specify that we want all the lines up to and including where the Location variable "is equal to" "Notes". Using <c>-1</c> we can also remove the last line, which will be the line that contains "Notes".</p>
@@ -1768,20 +1768,20 @@
 <pre>
 ## # A tibble: 6 × 29
 ##   Location      `2013__Employer` `2013__Non-Grou… `2013__Medicaid` `2013__Medicare`
-##   <chr>                    <dbl>            <dbl>            <dbl>            <dbl>
+##   &lt;chr&gt;                    &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
 ## 1 Vermont                 317700            26200           123400            96600
 ## 2 Virginia               4661600           364800           773200           968000
 ## 3 Washington             3541600           309000          1026800           879000
 ## 4 West Virginia           841300            42600           382500           329400
 ## 5 Wisconsin              3154500           225300           907600           812900
 ## 6 Wyoming                 305900            19500            74200            65400
-## # … with 24 more variables: 2013__Other Public <chr>, 2013__Uninsured <dbl>,
-## #   2013__Total <dbl>, 2014__Employer <dbl>, 2014__Non-Group <dbl>,
-## #   2014__Medicaid <dbl>, 2014__Medicare <dbl>, 2014__Other Public <chr>,
-## #   2014__Uninsured <dbl>, 2014__Total <dbl>, 2015__Employer <dbl>,
-## #   2015__Non-Group <dbl>, 2015__Medicaid <dbl>, 2015__Medicare <dbl>,
-## #   2015__Other Public <chr>, 2015__Uninsured <dbl>, 2015__Total <dbl>,
-## #   2016__Employer <dbl>, 2016__Non-Group <dbl>, 2016__Medicaid <dbl>, …
+## # … with 24 more variables: 2013__Other Public &lt;chr&gt;, 2013__Uninsured &lt;dbl&gt;,
+## #   2013__Total &lt;dbl&gt;, 2014__Employer &lt;dbl&gt;, 2014__Non-Group &lt;dbl&gt;,
+## #   2014__Medicaid &lt;dbl&gt;, 2014__Medicare &lt;dbl&gt;, 2014__Other Public &lt;chr&gt;,
+## #   2014__Uninsured &lt;dbl&gt;, 2014__Total &lt;dbl&gt;, 2015__Employer &lt;dbl&gt;,
+## #   2015__Non-Group &lt;dbl&gt;, 2015__Medicaid &lt;dbl&gt;, 2015__Medicare &lt;dbl&gt;,
+## #   2015__Other Public &lt;chr&gt;, 2015__Uninsured &lt;dbl&gt;, 2015__Total &lt;dbl&gt;,
+## #   2016__Employer &lt;dbl&gt;, 2016__Non-Group &lt;dbl&gt;, 2016__Medicaid &lt;dbl&gt;, …
 </pre>
 
   <p>Looks much better now! We can then use the <c>glimpse()</c> function of the <c>dplyr</c> package to get a sense of what types of information are stored in our dataset.</p>
@@ -1793,35 +1793,35 @@
 <pre>
 ## Rows: 52
 ## Columns: 29
-## $ Location             <chr> "United States", "Alabama", "Alaska", "Arizona", …
-## $ `2013__Employer`     <dbl> 155696900, 2126500, 364900, 2883800, 1128800, 177…
-## $ `2013__Non-Group`    <dbl> 13816000, 174200, 24000, 170800, 155600, 1986400,…
-## $ `2013__Medicaid`     <dbl> 54919100, 869700, 95000, 1346100, 600800, 8344800…
-## $ `2013__Medicare`     <dbl> 40876300, 783000, 55200, 842000, 515200, 3828500,…
-## $ `2013__Other Public` <chr> "6295400", "85600", "60600", "N/A", "67600", "675…
-## $ `2013__Uninsured`    <dbl> 41795100, 724800, 102200, 1223000, 436800, 559410…
-## $ `2013__Total`        <dbl> 313401200, 4763900, 702000, 6603100, 2904800, 381…
-## $ `2014__Employer`     <dbl> 154347500, 2202800, 345300, 2835200, 1176500, 177…
-## $ `2014__Non-Group`    <dbl> 19313000, 288900, 26800, 333500, 231700, 2778800,…
-## $ `2014__Medicaid`     <dbl> 61650400, 891900, 130100, 1639400, 639200, 961880…
-## $ `2014__Medicare`     <dbl> 41896500, 718400, 55300, 911100, 479400, 4049000,…
-## $ `2014__Other Public` <chr> "5985000", "143900", "37300", "N/A", "82000", "63…
-## $ `2014__Uninsured`    <dbl> 32967500, 522200, 100800, 827100, 287200, 3916700…
-## $ `2014__Total`        <dbl> 316159900, 4768000, 695700, 6657200, 2896000, 387…
-## $ `2015__Employer`     <dbl> 155965800, 2218000, 355700, 2766500, 1293700, 177…
-## $ `2015__Non-Group`    <dbl> 21816500, 291500, 22300, 278400, 200200, 3444200,…
-## $ `2015__Medicaid`     <dbl> 62384500, 911400, 128100, 1711500, 641400, 101381…
-## $ `2015__Medicare`     <dbl> 43308400, 719100, 60900, 949000, 484500, 4080100,…
-## $ `2015__Other Public` <chr> "6422300", "174600", "47700", "189300", "63700", …
-## $ `2015__Uninsured`    <dbl> 28965900, 519400, 90500, 844800, 268400, 2980600,…
-## $ `2015__Total`        <dbl> 318868500, 4833900, 705300, 6739500, 2953000, 391…
-## $ `2016__Employer`     <dbl> 157381500, 2263800, 324400, 3010700, 1290900, 181…
-## $ `2016__Non-Group`    <dbl> 21884400, 262400, 20300, 377000, 252900, 3195400,…
-## $ `2016__Medicaid`     <dbl> 62303400, 997000, 145400, 1468400, 618600, 985380…
-## $ `2016__Medicare`     <dbl> 44550200, 761200, 68200, 1028000, 490000, 4436000…
-## $ `2016__Other Public` <chr> "6192200", "128800", "55600", "172500", "67500", …
-## $ `2016__Uninsured`    <dbl> 28051900, 420800, 96900, 833700, 225500, 3030800,…
-## $ `2016__Total`        <dbl> 320372000, 4834100, 710800, 6890200, 2945300, 391…
+## $ Location             &lt;chr&gt; "United States", "Alabama", "Alaska", "Arizona", …
+## $ `2013__Employer`     &lt;dbl&gt; 155696900, 2126500, 364900, 2883800, 1128800, 177…
+## $ `2013__Non-Group`    &lt;dbl&gt; 13816000, 174200, 24000, 170800, 155600, 1986400,…
+## $ `2013__Medicaid`     &lt;dbl&gt; 54919100, 869700, 95000, 1346100, 600800, 8344800…
+## $ `2013__Medicare`     &lt;dbl&gt; 40876300, 783000, 55200, 842000, 515200, 3828500,…
+## $ `2013__Other Public` &lt;chr&gt; "6295400", "85600", "60600", "N/A", "67600", "675…
+## $ `2013__Uninsured`    &lt;dbl&gt; 41795100, 724800, 102200, 1223000, 436800, 559410…
+## $ `2013__Total`        &lt;dbl&gt; 313401200, 4763900, 702000, 6603100, 2904800, 381…
+## $ `2014__Employer`     &lt;dbl&gt; 154347500, 2202800, 345300, 2835200, 1176500, 177…
+## $ `2014__Non-Group`    &lt;dbl&gt; 19313000, 288900, 26800, 333500, 231700, 2778800,…
+## $ `2014__Medicaid`     &lt;dbl&gt; 61650400, 891900, 130100, 1639400, 639200, 961880…
+## $ `2014__Medicare`     &lt;dbl&gt; 41896500, 718400, 55300, 911100, 479400, 4049000,…
+## $ `2014__Other Public` &lt;chr&gt; "5985000", "143900", "37300", "N/A", "82000", "63…
+## $ `2014__Uninsured`    &lt;dbl&gt; 32967500, 522200, 100800, 827100, 287200, 3916700…
+## $ `2014__Total`        &lt;dbl&gt; 316159900, 4768000, 695700, 6657200, 2896000, 387…
+## $ `2015__Employer`     &lt;dbl&gt; 155965800, 2218000, 355700, 2766500, 1293700, 177…
+## $ `2015__Non-Group`    &lt;dbl&gt; 21816500, 291500, 22300, 278400, 200200, 3444200,…
+## $ `2015__Medicaid`     &lt;dbl&gt; 62384500, 911400, 128100, 1711500, 641400, 101381…
+## $ `2015__Medicare`     &lt;dbl&gt; 43308400, 719100, 60900, 949000, 484500, 4080100,…
+## $ `2015__Other Public` &lt;chr&gt; "6422300", "174600", "47700", "189300", "63700", …
+## $ `2015__Uninsured`    &lt;dbl&gt; 28965900, 519400, 90500, 844800, 268400, 2980600,…
+## $ `2015__Total`        &lt;dbl&gt; 318868500, 4833900, 705300, 6739500, 2953000, 391…
+## $ `2016__Employer`     &lt;dbl&gt; 157381500, 2263800, 324400, 3010700, 1290900, 181…
+## $ `2016__Non-Group`    &lt;dbl&gt; 21884400, 262400, 20300, 377000, 252900, 3195400,…
+## $ `2016__Medicaid`     &lt;dbl&gt; 62303400, 997000, 145400, 1468400, 618600, 985380…
+## $ `2016__Medicare`     &lt;dbl&gt; 44550200, 761200, 68200, 1028000, 490000, 4436000…
+## $ `2016__Other Public` &lt;chr&gt; "6192200", "128800", "55600", "172500", "67500", …
+## $ `2016__Uninsured`    &lt;dbl&gt; 28051900, 420800, 96900, 833700, 225500, 3030800,…
+## $ `2016__Total`        &lt;dbl&gt; 320372000, 4834100, 710800, 6890200, 2945300, 391…
 </pre>
 
   <p>This gives an us output with all the variables listed on the far left. Thus essentially the data is rotated from the way it would be shown if we used <c>head()</c> instead of <c>glimpse()</c>. The first few observations for each variable are shown for each variable with a comma separating each observation.</p>
@@ -1847,20 +1847,20 @@
 <pre>
 ## # A tibble: 6 × 25
 ##   Location      `1991__Total He… `1992__Total He… `1993__Total He… `1994__Total He…
-##   <chr>                    <dbl>            <dbl>            <dbl>            <dbl>
+##   &lt;chr&gt;                    &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
 ## 1 Vermont                   1330             1421             1522             1625
 ## 2 Virginia                 14829            15599            16634            17637
 ## 3 Washington               12674            13859            14523            15303
 ## 4 West Virginia             4672             5159             5550             5891
 ## 5 Wisconsin                12694            13669            14636            15532
 ## 6 Wyoming                   1023             1067             1171             1265
-## # … with 20 more variables: 1995__Total Health Spending <dbl>,
-## #   1996__Total Health Spending <dbl>, 1997__Total Health Spending <dbl>,
-## #   1998__Total Health Spending <dbl>, 1999__Total Health Spending <dbl>,
-## #   2000__Total Health Spending <dbl>, 2001__Total Health Spending <dbl>,
-## #   2002__Total Health Spending <dbl>, 2003__Total Health Spending <dbl>,
-## #   2004__Total Health Spending <dbl>, 2005__Total Health Spending <dbl>,
-## #   2006__Total Health Spending <dbl>, 2007__Total Health Spending <dbl>, …
+## # … with 20 more variables: 1995__Total Health Spending &lt;dbl&gt;,
+## #   1996__Total Health Spending &lt;dbl&gt;, 1997__Total Health Spending &lt;dbl&gt;,
+## #   1998__Total Health Spending &lt;dbl&gt;, 1999__Total Health Spending &lt;dbl&gt;,
+## #   2000__Total Health Spending &lt;dbl&gt;, 2001__Total Health Spending &lt;dbl&gt;,
+## #   2002__Total Health Spending &lt;dbl&gt;, 2003__Total Health Spending &lt;dbl&gt;,
+## #   2004__Total Health Spending &lt;dbl&gt;, 2005__Total Health Spending &lt;dbl&gt;,
+## #   2006__Total Health Spending &lt;dbl&gt;, 2007__Total Health Spending &lt;dbl&gt;, …
 </pre>
 
   <p>Recall from the introduction, that in data science workflows, we perform multiple steps in evaluating data. To keep this process tidy and reproducible, it is often helpful to save our data in a raw state and in processed states to allow for easy comparison. So let's save our case study 1 data to use in later sections of the course.</p>
@@ -1905,7 +1905,7 @@
 <pre>
 ## # A tibble: 236,844 × 19
 ##    SUMLEV REGION DIVISION STATE NAME      SEX ORIGIN  RACE   AGE CENSUS2010POP
-##    <chr>   <dbl>    <dbl> <chr> <chr>   <dbl>  <dbl> <dbl> <dbl>         <dbl>
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
 ##  1 040         3        6 01    Alabama     0      0     1     0         37991
 ##  2 040         3        6 01    Alabama     0      0     1     1         38150
 ##  3 040         3        6 01    Alabama     0      0     1     2         39738
@@ -1916,10 +1916,10 @@
 ##  8 040         3        6 01    Alabama     0      0     1     7         39695
 ##  9 040         3        6 01    Alabama     0      0     1     8         40012
 ## 10 040         3        6 01    Alabama     0      0     1     9         42073
-## # … with 236,834 more rows, and 9 more variables: ESTIMATESBASE2010 <dbl>,
-## #   POPESTIMATE2010 <dbl>, POPESTIMATE2011 <dbl>, POPESTIMATE2012 <dbl>,
-## #   POPESTIMATE2013 <dbl>, POPESTIMATE2014 <dbl>, POPESTIMATE2015 <dbl>,
-## #   POPESTIMATE2016 <dbl>, POPESTIMATE2017 <dbl>
+## # … with 236,834 more rows, and 9 more variables: ESTIMATESBASE2010 &lt;dbl&gt;,
+## #   POPESTIMATE2010 &lt;dbl&gt;, POPESTIMATE2011 &lt;dbl&gt;, POPESTIMATE2012 &lt;dbl&gt;,
+## #   POPESTIMATE2013 &lt;dbl&gt;, POPESTIMATE2014 &lt;dbl&gt;, POPESTIMATE2015 &lt;dbl&gt;,
+## #   POPESTIMATE2016 &lt;dbl&gt;, POPESTIMATE2017 &lt;dbl&gt;
 </pre>
 
 </subsubsection>
@@ -1952,7 +1952,7 @@
 <pre>
 ## # A tibble: 51 × 12
 ##    Sex        Race      State       Ethnicity `Age Group` `First Year` `Last Year`
-##    <chr>      <chr>     <chr>       <chr>     <chr>              <dbl>       <dbl>
+##    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;
 ##  1 Both Sexes All Races Alabama     Both      All Ages            2015        2016
 ##  2 Both Sexes All Races Alaska      Both      All Ages            2015        2016
 ##  3 Both Sexes All Races Arizona     Both      All Ages            2015        2016
@@ -1963,8 +1963,8 @@
 ##  8 Both Sexes All Races Delaware    Both      All Ages            2015        2016
 ##  9 Both Sexes All Races Florida     Both      All Ages            2015        2016
 ## 10 Both Sexes All Races Georgia     Both      All Ages            2015        2016
-## # … with 41 more rows, and 5 more variables: Cause of Death <chr>,
-## #   Deaths <dbl>, Population <dbl>, Crude Rate <dbl>, Age-Adjusted Rate <chr>
+## # … with 41 more rows, and 5 more variables: Cause of Death &lt;chr&gt;,
+## #   Deaths &lt;dbl&gt;, Population &lt;dbl&gt;, Crude Rate &lt;dbl&gt;, Age-Adjusted Rate &lt;chr&gt;
 </pre>
 
   <program language="r">
@@ -1977,7 +1977,7 @@
 <pre>
 ## # A tibble: 51 × 12
 ##    Sex        Race      State       Ethnicity `Age Group` `First Year` `Last Year`
-##    <chr>      <chr>     <chr>       <chr>     <chr>              <dbl>       <dbl>
+##    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;
 ##  1 Both Sexes All Races Alabama     Both      All Ages            2015        2016
 ##  2 Both Sexes All Races Alaska      Both      All Ages            2015        2016
 ##  3 Both Sexes All Races Arizona     Both      All Ages            2015        2016
@@ -1988,8 +1988,8 @@
 ##  8 Both Sexes All Races Delaware    Both      All Ages            2015        2016
 ##  9 Both Sexes All Races Florida     Both      All Ages            2015        2016
 ## 10 Both Sexes All Races Georgia     Both      All Ages            2015        2016
-## # … with 41 more rows, and 5 more variables: Cause of Death <chr>,
-## #   Deaths <dbl>, Population <dbl>, Crude Rate <dbl>, Age-Adjusted Rate <chr>
+## # … with 41 more rows, and 5 more variables: Cause of Death &lt;chr&gt;,
+## #   Deaths &lt;dbl&gt;, Population &lt;dbl&gt;, Crude Rate &lt;dbl&gt;, Age-Adjusted Rate &lt;chr&gt;
 </pre>
 
 </subsubsection>
@@ -2024,7 +2024,7 @@
 <pre>
 ## # A tibble: 116 × 54
 ##    `States can recei… `Category Point… `Sub Category P… Points AL    AK    AR   
-##    <chr>                         <dbl>            <dbl>  <dbl> <chr> <chr> <chr>
+##    &lt;chr&gt;                         &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 ##  1 TOTAL STATE POINTS               NA               NA     NA -18   -30   -24  
 ##  2 CATEGORY 1:  KEEP…               50               NA     NA <NA>  <NA>  <NA> 
 ##  3 BACKGROUND CHECKS…               NA               25     NA AL    AK    AR   
@@ -2035,13 +2035,13 @@
 ##  8 TOTAL                            NA               NA     NA 0     0     0    
 ##  9 <NA>                             NA               NA     NA <NA>  <NA>  <NA> 
 ## 10 OTHER LAWS TO STO…               NA               12     NA AL    AK    AR   
-## # … with 106 more rows, and 47 more variables: AZ <chr>, CA <chr>, CO <chr>,
-## #   CT <chr>, DE <chr>, FL <chr>, GA <chr>, HI <chr>, ID <chr>, IL <chr>,
-## #   IN <chr>, IA <chr>, KS <chr>, KY <chr>, LA <chr>, MA <chr>, MD <chr>,
-## #   ME <chr>, MI <chr>, MN <chr>, MO <chr>, MT <chr>, MS <chr>, NC <chr>,
-## #   ND <chr>, NE <chr>, NH <chr>, NJ <chr>, NM <chr>, NV <chr>, NY <chr>,
-## #   OK <chr>, OH <chr>, OR <chr>, PA <chr>, RI <chr>, SC <chr>, SD <chr>,
-## #   TN <chr>, TX <chr>, UT <chr>, VA <chr>, VT <chr>, WA <chr>, WI <chr>, ...
+## # … with 106 more rows, and 47 more variables: AZ &lt;chr&gt;, CA &lt;chr&gt;, CO &lt;chr&gt;,
+## #   CT &lt;chr&gt;, DE &lt;chr&gt;, FL &lt;chr&gt;, GA &lt;chr&gt;, HI &lt;chr&gt;, ID &lt;chr&gt;, IL &lt;chr&gt;,
+## #   IN &lt;chr&gt;, IA &lt;chr&gt;, KS &lt;chr&gt;, KY &lt;chr&gt;, LA &lt;chr&gt;, MA &lt;chr&gt;, MD &lt;chr&gt;,
+## #   ME &lt;chr&gt;, MI &lt;chr&gt;, MN &lt;chr&gt;, MO &lt;chr&gt;, MT &lt;chr&gt;, MS &lt;chr&gt;, NC &lt;chr&gt;,
+## #   ND &lt;chr&gt;, NE &lt;chr&gt;, NH &lt;chr&gt;, NJ &lt;chr&gt;, NM &lt;chr&gt;, NV &lt;chr&gt;, NY &lt;chr&gt;,
+## #   OK &lt;chr&gt;, OH &lt;chr&gt;, OR &lt;chr&gt;, PA &lt;chr&gt;, RI &lt;chr&gt;, SC &lt;chr&gt;, SD &lt;chr&gt;,
+## #   TN &lt;chr&gt;, TX &lt;chr&gt;, UT &lt;chr&gt;, VA &lt;chr&gt;, VT &lt;chr&gt;, WA &lt;chr&gt;, WI &lt;chr&gt;, ...
 </pre>
 
 </subsubsection>
@@ -2074,7 +2074,7 @@
 <pre>
 ## # A tibble: 510 × 14
 ##    State   Area       ...3     Population  `Violent\ncrime… `Murder and \nnonne…
-##    <chr>   <chr>      <chr>    <chr>                  <dbl>                <dbl>
+##    &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                  &lt;dbl&gt;                &lt;dbl&gt;
 ##  1 ALABAMA Metropoli… <NA>     3708033                   NA                   NA
 ##  2 <NA>    <NA>       Area ac… 0.97099999…            18122                  283
 ##  3 <NA>    <NA>       Estimat… 1                      18500                  287
@@ -2087,17 +2087,17 @@
 ## 10 <NA>    State Tot… <NA>     4858979                22952                  348
 ## # … with 500 more rows, and 8 more variables: Rape
 ## (revised
-## definition)2 <dbl>,
+## definition)2 &lt;dbl&gt;,
 ## #   Rape
 ## (legacy
-## definition)3 <dbl>, Robbery <dbl>, Aggravated 
-## assault <dbl>,
+## definition)3 &lt;dbl&gt;, Robbery &lt;dbl&gt;, Aggravated 
+## assault &lt;dbl&gt;,
 ## #   Property 
-## crime <dbl>, Burglary <dbl>, Larceny-
-## theft <dbl>,
+## crime &lt;dbl&gt;, Burglary &lt;dbl&gt;, Larceny-
+## theft &lt;dbl&gt;,
 ## #   Motor 
 ## vehicle 
-## theft <dbl>
+## theft &lt;dbl&gt;
 </pre>
 
   <p>Note, however, there are slight differences in the code used here, relative to the Brady data. We have to use <c>skip = 3</c> to skip the first three lines of this file. <em>Also</em>, this file has the extension <c>.xls</c> rather than <c>.xlsx</c>, which we specify within the <c>fileext</c> argument.</p>
@@ -2132,7 +2132,7 @@
 <pre>
 ## # A tibble: 3,198 × 34
 ##    Areaname      STCOU LND010190F LND010190D LND010190N1 LND010190N2 LND010200F
-##    <chr>         <chr>      <dbl>      <dbl> <chr>       <chr>            <dbl>
+##    &lt;chr&gt;         &lt;chr&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;            &lt;dbl&gt;
 ##  1 UNITED STATES 00000          0   3787425. 0000        0000                 0
 ##  2 ALABAMA       01000          0     52423. 0000        0000                 0
 ##  3 Autauga, AL   01001          0       604. 0000        0000                 0
@@ -2143,13 +2143,13 @@
 ##  8 Bullock, AL   01011          0       626. 0000        0000                 0
 ##  9 Butler, AL    01013          0       778. 0000        0000                 0
 ## 10 Calhoun, AL   01015          0       612. 0000        0000                 0
-## # … with 3,188 more rows, and 27 more variables: LND010200D <dbl>,
-## #   LND010200N1 <chr>, LND010200N2 <chr>, LND110180F <dbl>, LND110180D <dbl>,
-## #   LND110180N1 <chr>, LND110180N2 <chr>, LND110190F <dbl>, LND110190D <dbl>,
-## #   LND110190N1 <chr>, LND110190N2 <chr>, LND110200F <dbl>, LND110200D <dbl>,
-## #   LND110200N1 <chr>, LND110200N2 <chr>, LND110210F <dbl>, LND110210D <dbl>,
-## #   LND110210N1 <chr>, LND110210N2 <chr>, LND210190F <dbl>, LND210190D <dbl>,
-## #   LND210190N1 <chr>, LND210190N2 <chr>, LND210200F <dbl>, LND210200D <dbl>, …
+## # … with 3,188 more rows, and 27 more variables: LND010200D &lt;dbl&gt;,
+## #   LND010200N1 &lt;chr&gt;, LND010200N2 &lt;chr&gt;, LND110180F &lt;dbl&gt;, LND110180D &lt;dbl&gt;,
+## #   LND110180N1 &lt;chr&gt;, LND110180N2 &lt;chr&gt;, LND110190F &lt;dbl&gt;, LND110190D &lt;dbl&gt;,
+## #   LND110190N1 &lt;chr&gt;, LND110190N2 &lt;chr&gt;, LND110200F &lt;dbl&gt;, LND110200D &lt;dbl&gt;,
+## #   LND110200N1 &lt;chr&gt;, LND110200N2 &lt;chr&gt;, LND110210F &lt;dbl&gt;, LND110210D &lt;dbl&gt;,
+## #   LND110210N1 &lt;chr&gt;, LND110210N2 &lt;chr&gt;, LND210190F &lt;dbl&gt;, LND210190D &lt;dbl&gt;,
+## #   LND210190N1 &lt;chr&gt;, LND210190N2 &lt;chr&gt;, LND210200F &lt;dbl&gt;, LND210200D &lt;dbl&gt;, …
 </pre>
 
 </subsubsection>
@@ -2180,7 +2180,7 @@
   <pre>
 ## # A tibble: 54 × 3
 ##    State           `2015rate` Rank 
-##    <chr>           <chr>      <chr>
+##    &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt;
 ##  1 "United States" "5.3"      ""   
 ##  2 ""              ""         ""   
 ##  3 "North Dakota"  "2.8"      "1"  
