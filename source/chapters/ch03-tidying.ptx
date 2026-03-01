@@ -2257,6 +2257,24 @@ text_df %>%
 ]]></input></program>
 <pre>
 ## Joining, by = "word"
+
+## # A tibble: 14 × 3
+##     line word    sentiment   
+##    <int> <chr>   <chr>       
+##  1     1 good    anticipation
+##  2     1 good    joy         
+##  3     1 good    positive    
+##  4     1 good    surprise    
+##  5     1 good    trust       
+##  6     2 swear   positive    
+##  7     2 swear   trust       
+##  8     2 improve anticipation
+##  9     2 improve joy         
+## 10     2 improve positive    
+## 11     2 improve trust       
+## 12     3 worse   fear        
+## 13     3 worse   negative    
+## 14     3 worse   sadness
 </pre>
 <p>Notice that the sentiments applied to each word are dependent upon the sentiments defined within the lexicon. Words that are missing or that are used differently than anticipated by those who generated the lexicon <em>could</em> be misclassified. Additionally, since we're using single word tokens, qualifiers are removed from context. So in the carrots poem, the word good in "are good for your eyes" would be given the same sentiment as good if the phrase were "are <em>not</em> good for your eyes." Thus, a lot context and nuance is lost in this approach. It's always important to consider the limitations of your analytical approach!</p>
 <p>Above we found the sentiments for each token, but let's summarize that by counting the number of times each sentiment appears.</p>
@@ -2268,6 +2286,18 @@ text_df %>%
 ]]></input></program>
 <pre>
 ## Joining, by = "word"
+
+## # A tibble: 8 × 2
+##   sentiment        n
+##   <chr>        <int>
+## 1 positive         3
+## 2 trust            3
+## 3 anticipation     2
+## 4 joy              2
+## 5 fear             1
+## 6 negative         1
+## 7 sadness          1
+## 8 surprise         1
 </pre>
 <p>As we're analyzing a short poem, we see that only a few sentiments show up multiple times; however, using sentiment analysis on this poem suggests that the poem is generally positive, including words that convey trust, anticipation, and joy.</p>
 <p>Analyzing a four line poem, however, is not typically what one would do. They would instead analyze the text across chapters in a book or across multiple books. Here, we've just demonstrated the concepts behind how you would go about carrying out sentiment analysis.</p>
