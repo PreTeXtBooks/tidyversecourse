@@ -500,6 +500,10 @@ b &lt;-  c(29, 29, 29, 29, 723678)
 var(b)
   </input>
 </program>
+<pre>
+## [1] 0
+## [1] 104733575040
+</pre>
 <p>
 The only difference between the two vectors is that the second one has one value that is much larger than "29". The variance for this vector is thus much higher.
 </p>
@@ -519,6 +523,10 @@ sqrt(var(b))
 
   </input>
 </program>
+<pre>
+## [1] 323625.7
+## [1] 323625.7
+</pre>
 <p>
 For both measures of variance, the minimum value is 0. The larger the number, the more spread out the values in the valuable are.
 </p>
@@ -562,6 +570,13 @@ If we take a look closer at the <c>bodywt</c> and <c>brianwt</c> variables, we c
 dplyr::filter(df, bodywt == 6654)
   </input>
 </program>
+<pre>
+## # A tibble: 1 × 11
+##   name    genus vore  order conservation sleep_total sleep_rem sleep_cycle awake
+##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 Africa… Loxo… herbi Prob… vu                   3.3        NA          NA  20.7
+## # ℹ 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+</pre>
 <p>
 Ah! looks like it is an elephant, that makes sense.
 </p>
@@ -578,6 +593,14 @@ hist(pull(df, bodywt))
 dplyr::filter(df, bodywt &gt; 2000)
   </input>
 </program>
+<pre>
+## # A tibble: 2 × 11
+##   name    genus vore  order conservation sleep_total sleep_rem sleep_cycle awake
+##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 Asian … Elep… herbi Prob… en                   3.9        NA          NA  20.1
+## 2 Africa… Loxo… herbi Prob… vu                   3.3        NA          NA  20.7
+## # ℹ 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+</pre>
 <p>
 Looks like both data points are for elephants.
 </p>
@@ -686,6 +709,15 @@ df %&gt;%
 
   </input>
 </program>
+<pre>
+## # A tibble: 3 × 11
+##   name    genus vore  order conservation sleep_total sleep_rem sleep_cycle awake
+##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 Asian … Elep… herbi Prob… en                   3.9      NA          NA    20.1
+## 2 Human   Homo  omni  Prim… &lt;NA&gt;                 8         1.9         1.5  16  
+## 3 Africa… Loxo… herbi Prob… vu                   3.3      NA          NA    20.7
+## # ℹ 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+</pre>
 <p>
 It is humans! Let's see what the plot looks like without humans:
 </p>
