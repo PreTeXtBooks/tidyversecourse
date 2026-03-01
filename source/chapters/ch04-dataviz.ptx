@@ -466,6 +466,22 @@ diamonds &lt;- as_tibble(diamonds)
 diamonds
 </input>
 </program>
+<pre>
+## # A tibble: 53,940 × 10
+##    carat cut       color clarity depth table price     x     y     z
+##    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+##  2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+##  3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+##  4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+##  5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+##  6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+##  7  0.24 Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+##  8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+##  9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+## 10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39
+## # … with 53,930 more rows
+</pre>
 <figure>
   <image source="images/gslides/193.png">
     <description>First 12 rows of diamonds dataset</description>
@@ -612,6 +628,13 @@ ggplot(data = diamonds) +
   geom_point(mapping = aes(x = carat, y = price, shape = clarity))
 </input>
 </program>
+<pre>
+## Warning: Using shapes for an ordinal variable is not advised
+## Warning: The shape palette can deal with a maximum of 6 discrete values because
+## more than 6 becomes difficult to discriminate; you have 8. Consider
+## specifying shapes manually if you must have them.
+## Warning: Removed 5445 rows containing missing values (geom_point).
+</pre>
 <figure>
   <image source="images/gslides/199.png">
     <description>mapping clarity to shape</description>
@@ -703,6 +726,9 @@ ggplot(data = diamonds) +
   geom_histogram(mapping =  aes(carat))
 </input>
 </program>
+<pre>
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+</pre>
 <figure>
   <image source="images/gslides/203.png">
     <description>histogram of carat shows range and shape</description>
@@ -1205,6 +1231,12 @@ ggplot(diamonds) +
                               ncol = 2))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-36-1.png">
+    <description>legend displayed with 2 columns using ncol</description>
+  </image>
+  <caption>legend displayed with 2 columns using ncol</caption>
+</figure>
 <p>
 Or, we can modify the font of the legend title using <c>title.theme()</c>.
 </p>
@@ -1227,6 +1259,12 @@ ggplot(diamonds) +
                              title.theme = element_text(face = "bold")))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-37-1.png">
+    <description>legend with bold title using title.theme</description>
+  </image>
+  <caption>legend with bold title using title.theme</caption>
+</figure>
 <p>
 Alternatively, we can do this modification, as well as other legend modifications, like adding a rectangle around the legend, using the <c>theme()</c> function.
 </p>
@@ -1252,6 +1290,12 @@ guides(fill = guide_legend("Cut Quality")) +
  
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-38-1.png">
+    <description>legend with background rectangle using theme()</description>
+  </image>
+  <caption>legend with background rectangle using theme()</caption>
+</figure>
 <p>
 At this point, we have an informative title, clear colors, a well-labeled legend, and text that is large enough throughout the graph. This is certainly a graph that could be used in a presentation. We've taken it from a graph that is useful to just ourselves (exploratory) and made it into a plot that can communicate our findings well to others (explanatory)!
 </p>
@@ -1299,6 +1343,12 @@ ggplot(diamonds) +
          x = "Clarity")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-40-1.png">
+    <description>Bar chart of diamond clarity with y-axis on log10 scale</description>
+  </image>
+  <caption>Bar chart of diamond clarity with y-axis on log10 scale</caption>
+</figure>
 <p>
 Notice that the values are not changed, just the way they are plotted. Now the y-axis increases by a factor of 10 for each break.
 </p>
@@ -1309,7 +1359,16 @@ We will create a plot of the price of the diamonds to demonstrate the utility of
 <input>
 ggplot(diamonds) + 
   geom_boxplot(aes(y = price, x = clarity))
-
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-41-1.png">
+    <description>Boxplot of diamond price by clarity</description>
+  </image>
+  <caption>Boxplot of diamond price by clarity</caption>
+</figure>
+<program language="r">
+<input>
 ggplot(diamonds) + 
   geom_boxplot(aes(y = price, x = clarity)) + 
   scale_y_continuous(trans = "log10") + 
@@ -1317,6 +1376,12 @@ ggplot(diamonds) +
        x = "Diamond Clarity")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-41-2.png">
+    <description>Boxplot of diamond price by clarity with log10 y-axis scale</description>
+  </image>
+  <caption>Boxplot of diamond price by clarity with log10 y-axis scale</caption>
+</figure>
 <p>
 In the first plot, it is difficult to tell what values the boxplots correspond to and it is difficult to compare the boxplots (particularly for the last three clarity categories), however this is greatly improved in the second plot.
 </p>
@@ -1333,6 +1398,12 @@ ggplot(diamonds) +
        x = "Diamond Clarity")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-42-1.png">
+    <description>Boxplot of diamond price by clarity with log10 scale and dollar labels</description>
+  </image>
+  <caption>Boxplot of diamond price by clarity with log10 scale and dollar labels</caption>
+</figure>
 <p>
 In the above plot, we might also want to order the boxplots by the median price, we can do so using the <c>fct_reorder</c> function of <c>forcats</c> package to change the order for the <c>clarity</c> levels to be based on the median of the <c>price</c> values.
 </p>
@@ -1348,6 +1419,12 @@ ggplot(diamonds) +
 
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-43-1.png">
+    <description>Boxplot of diamond price by clarity ordered by median price</description>
+  </image>
+  <caption>Boxplot of diamond price by clarity ordered by median price</caption>
+</figure>
 <p>
 Now we can more easily determine that the <c>SI2</c> diamonds are the most expensive.
 </p>
@@ -1490,6 +1567,12 @@ ggplot(diamonds) +
   geom_hline(yintercept = 0.5, color = "red", size = 1)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-48-1.png">
+    <description>Stacked bar chart with horizontal line at 50% using geom_hline</description>
+  </image>
+  <caption>Stacked bar chart with horizontal line at 50% using geom_hline</caption>
+</figure>
 <p>
 Now, it is easier to tell that slightly over half of the <c>VVS2</c> diamonds have an <c>Ideal</c> cut. This would be much more difficult to see without the horizontal line.
 </p>
@@ -1508,6 +1591,12 @@ ggplot(diamonds) +
   geom_vline(xintercept = 5.5, color = "black", size = .5)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-49-1.png">
+    <description>Stacked bar chart with horizontal and vertical lines using geom_hline and geom_vline</description>
+  </image>
+  <caption>Stacked bar chart with horizontal and vertical lines using geom_hline and geom_vline</caption>
+</figure>
 <p>
 This would be helpful if we wanted to especially point out differences between the last three clarity categories of diamonds compared to the other categories.
 </p>
@@ -1572,6 +1661,16 @@ df &lt;- diamonds %>%
 df
 </input>
 </program>
+<pre>
+## # A tibble: 5 × 5
+##   cut           N   min   avg   max
+##   &lt;ord&gt;     &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+## 1 Fair       1610   337 4359. 18574
+## 2 Good       4906   327 3929. 18788
+## 3 Very Good 12082   336 3982. 18818
+## 4 Premium   13791   326 4584. 18823
+## 5 Ideal     21551   326 3458. 18806
+</pre>
 <p>
 By getting the data summarized into a single object in R (<c>df</c>), we're on our way to making an informative table. However, this is clearly just an exploratory table. The output in R from this code follows some of the good table rules above, but not all of them. At a glance, it will help you to understand the data, but it's not the finished table you would want to send to your boss.
 </p>
@@ -1712,6 +1811,17 @@ as_tibble(rownames = "model")
 head(mtcars)
 </input>
 </program>
+<pre>
+## # A tibble: 6 × 12
+##   model          mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Mazda RX4     21       6   160   110  3.9   2.62  16.5     0     1     4     4
+## 2 Mazda RX4 W…  21       6   160   110  3.9   2.88  17.0     0     1     4     4
+## 3 Datsun 710    22.8     4   108    93  3.85  2.32  18.6     1     1     4     1
+## 4 Hornet 4 Dr…  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
+## 5 Hornet Spor…  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
+## 6 Valiant       18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
+</pre>
 <p>
 What if we were to plot a scatterplot between horsepower (<c>hp</c>) and weight (<c>wt</c>) of each car and wanted to label each point in that plot with the care model.
 </p>
@@ -1727,6 +1837,12 @@ ggplot(mtcars, aes(wt, hp, label = model)) +
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-56-1.png">
+    <description>Scatterplot of car weight vs horsepower with overlapping text labels</description>
+  </image>
+  <caption>Scatterplot of car weight vs horsepower with overlapping text labels</caption>
+</figure>
 <p>
 The overall trend is clear here - the more a car weights, the more horsepower it tends to have. However, many of the labels are overlapping and impossible to read - this is where <c>ggrepel</c> plays a role:
 </p>
@@ -1743,6 +1859,12 @@ ggplot(mtcars, aes(wt, hp, label = model)) +
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-57-1.png">
+    <description>Scatterplot of car weight vs horsepower with non-overlapping labels using ggrepel</description>
+  </image>
+  <caption>Scatterplot of car weight vs horsepower with non-overlapping labels using ggrepel</caption>
+</figure>
 <p>
 The only bit of code here that changed was that we changed <c>geom_text()</c> to <c>geom_text_repel()</c>. This, like <c>geom_text()</c> adds text directly to the plot. However, it also helpfully repels overlapping labels away from one another and away from the data points on the plot.
 </p>
@@ -1777,6 +1899,12 @@ ggplot(mtcars, aes(wt, hp, label = model)) +
 
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-58-1.png">
+    <description>Scatterplot highlighting Mercedes cars with labeled points using ggrepel</description>
+  </image>
+  <caption>Scatterplot highlighting Mercedes cars with labeled points using ggrepel</caption>
+</figure>
 <p>
 Here, notice that we first create a new column in our dataframe called <c>merc</c>. Here, we include the model of the car, only if "Merc" is in the model of the car's name.
 </p>
@@ -1835,6 +1963,12 @@ mtcars %>%
       scale_y_continuous(limits = c(9, 38))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-59-1.png">
+    <description>Scatterplot labeling high-mpg cars using ggrepel text alignment options</description>
+  </image>
+  <caption>Scatterplot labeling high-mpg cars using ggrepel text alignment options</caption>
+</figure>
 <p>
 Notice that we've also had to provide the plot with more room by customizing the x- and y- axes, using the final two lines of code you see above.
 </p>
@@ -1867,7 +2001,16 @@ mtcars %>%
                         cex = 1)) +
   theme_minimal() +
   theme(legend.position = "none")
-
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-60-1.png">
+    <description>Scatterplot with first.points direct labels for high-mpg cars</description>
+  </image>
+  <caption>Scatterplot with first.points direct labels for high-mpg cars</caption>
+</figure>
+<program language="r">
+<input>
 mtcars %>%
   mutate(mpg_highlight = case_when(mpg > 30 ~ "high", mpg &lt; 30 ~ "low")) %>%
   ggplot(aes(qsec, mpg, label = model)) +
@@ -1882,6 +2025,12 @@ mtcars %>%
   theme(legend.position = "none")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-60-2.png">
+    <description>Scatterplot with last.points direct labels for high-mpg cars</description>
+  </image>
+  <caption>Scatterplot with last.points direct labels for high-mpg cars</caption>
+</figure>
 <p>
 This package is especially useful for labeling lines in a lineplot. There are several methods, one of which is the <c>angled.boxes</c> method. This often negates the need for a legend.
 </p>
@@ -1897,6 +2046,12 @@ ggplot(mtcars, aes(qsec, mpg, color = cyl, group = cyl)) +
   labs(title = "Differences in cars with 4, 6, or 8 cylinders")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-61-1.png">
+    <description>Line plot with angled.boxes direct labels showing differences in cars by cylinder count</description>
+  </image>
+  <caption>Line plot with angled.boxes direct labels showing differences in cars by cylinder count</caption>
+</figure>
 <p>
 See <url href="https://cran.r-project.org/web/packages/directlabels/directlabels.pdf">here</url> for more information about this package.
 </p>
@@ -1940,6 +2095,12 @@ p1 &lt;- ggplot(mtcars, aes(qsec, mpg, color = transmission)) +
 p1
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-64-1.png">
+    <description>Scatterplot of qsec vs mpg colored by transmission type using theme_cowplot</description>
+  </image>
+  <caption>Scatterplot of qsec vs mpg colored by transmission type using theme_cowplot</caption>
+</figure>
 <p>
 Let's make a similar plot, but color by engine type. We'll want to manually change the colors here so that we aren't using the same colors for transmission and engine. We'll store this in <c>p2</c>.
 </p>
@@ -1953,6 +2114,12 @@ p2 &lt;- ggplot(mtcars, aes(qsec, mpg, color = engine)) +
 p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-65-1.png">
+    <description>Scatterplot of qsec vs mpg colored by engine type using theme_cowplot</description>
+  </image>
+  <caption>Scatterplot of qsec vs mpg colored by engine type using theme_cowplot</caption>
+</figure>
 <p>
 Great - we've now got two plots with the same theme and similar appearance. What if we wanted to combine these into a single grid for presentation purposes?
 </p>
@@ -1968,6 +2135,12 @@ Combining plots is made simple within the <c>cowplot</c> package using the <c>pl
 plot_grid(p1, p2, ncol = 2)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-66-1.png">
+    <description>Two plots displayed side by side using plot_grid</description>
+  </image>
+  <caption>Two plots displayed side by side using plot_grid</caption>
+</figure>
 <p>
 Here, we specify the two plots we'd like to plot on a single grid and we also optionally include how many columns we'd like using the <c>ncol</c> parameter.
 </p>
@@ -1980,6 +2153,12 @@ To plot these one on top of the other, you could specify for <c>plot_grid()</c> 
 plot_grid(p1, p2, ncol = 1)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-67-1.png">
+    <description>Two plots stacked on top of one another using plot_grid</description>
+  </image>
+  <caption>Two plots stacked on top of one another using plot_grid</caption>
+</figure>
 <p>
 Note that by default, the plots will share the space equally, but it's also possible to make one larger than the other within the grid using <c>rel_widths</c> and <c>rel_heights</c>.
 </p>
@@ -1999,6 +2178,12 @@ p3 &lt;- ggplot(mtcars, aes(engine)) +
 p3
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-68-1.png">
+    <description>Faceted bar chart of engine type by transmission using theme_minimal_hgrid</description>
+  </image>
+  <caption>Faceted bar chart of engine type by transmission using theme_minimal_hgrid</caption>
+</figure>
 <p>
 Note that for this plot we've chosen a different theme, allowing for horizontal grid lines. This can be helpful when visualizing bar plots.
 </p>
@@ -2011,6 +2196,12 @@ If we were to plot these next to one another using the defaults, the faceted plo
 plot_grid(p1, p3)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-69-1.png">
+    <description>p1 and faceted p3 plotted next to one another with default spacing</description>
+  </image>
+  <caption>p1 and faceted p3 plotted next to one another with default spacing</caption>
+</figure>
 <p>
 We can use <c>rel_widths</c> to specify the relative width for the plot on the left relative to the plot on the right:
 </p>
@@ -2020,6 +2211,12 @@ We can use <c>rel_widths</c> to specify the relative width for the plot on the l
 plot_grid(p1, p3, rel_widths = c(1, 1.3))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-70-1.png">
+    <description>p1 and p3 in a grid with adjusted relative widths</description>
+  </image>
+  <caption>p1 and p3 in a grid with adjusted relative widths</caption>
+</figure>
 <p>
 Notice how the plot on the left is now a bit more narrow and the plot on the right is a bit wider.
 </p>
@@ -2035,6 +2232,12 @@ Within these grids, you'll often want to label these plots so that you can refer
 plot_grid(p1, p3, labels = "AUTO", rel_widths = c(1, 1.3))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-71-1.png">
+    <description>p1 and p3 in a labeled grid with AUTO labels A and B</description>
+  </image>
+  <caption>p1 and p3 in a labeled grid with AUTO labels A and B</caption>
+</figure>
 <p>
 <alert>Adding Joint Titles</alert>
 </p>
@@ -2068,6 +2271,12 @@ title &lt;- ggdraw() +
 plot_grid(title, three_plots, ncol = 1, rel_heights = c(0.1, 1))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-72-1.png">
+    <description>Three plots combined in a labeled grid with a shared title using plot_grid</description>
+  </image>
+  <caption>Three plots combined in a labeled grid with a shared title using plot_grid</caption>
+</figure>
 <p>
 And, just like that we've got three plots, labeled, spaced out nicely in a grid, with a shared title, all thanks to the functionality within the <c>cowplot</c> package.
 </p>
@@ -2089,9 +2298,25 @@ To combine two plots together we can simply add them together with the <c>+</c> 
 #install.packages(patchwork)
 library(patchwork)
 p1 + p2
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-73-1.png">
+    <description>Two plots combined side by side using the patchwork + operator</description>
+  </image>
+  <caption>Two plots combined side by side using the patchwork + operator</caption>
+</figure>
+<program language="r">
+<input>
 p1 | p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-73-2.png">
+    <description>Two plots combined side by side using the patchwork | operator</description>
+  </image>
+  <caption>Two plots combined side by side using the patchwork | operator</caption>
+</figure>
 <p>
 If we want a plot above another plot we can use the "/" symbol:
 </p>
@@ -2100,6 +2325,12 @@ If we want a plot above another plot we can use the "/" symbol:
 p1 / p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-74-1.png">
+    <description>Two plots stacked vertically using the patchwork / operator</description>
+  </image>
+  <caption>Two plots stacked vertically using the patchwork / operator</caption>
+</figure>
 <p>
 Grouping or nesting plots together using parenthesis can result in two or more plots taking up a single grid space.
 </p>
@@ -2111,6 +2342,12 @@ Thus, to combine multiple plots in a more complicated layout, one can combine tw
 (p3 + p2) / p1
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-75-1.png">
+    <description>p3 and p2 on one row with p1 below using patchwork grouping</description>
+  </image>
+  <caption>p3 and p2 on one row with p1 below using patchwork grouping</caption>
+</figure>
 <p>
 Without the parentheses we would have the following:
 </p>
@@ -2119,6 +2356,12 @@ Without the parentheses we would have the following:
 p3 + p2 / p1
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-76-1.png">
+    <description>p3, p2, and p1 combined without parentheses grouping in patchwork</description>
+  </image>
+  <caption>p3, p2, and p1 combined without parentheses grouping in patchwork</caption>
+</figure>
 <p>
 You can also empty plot spacers using the <c>plotspacer()</c> function like so:
 </p>
@@ -2127,6 +2370,12 @@ You can also empty plot spacers using the <c>plotspacer()</c> function like so:
 (plot_spacer() + p2 + plot_spacer()) / p1
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-77-1.png">
+    <description>Plot layout using plot_spacer() to add empty space around p2 above p1</description>
+  </image>
+  <caption>Plot layout using plot_spacer() to add empty space around p2 above p1</caption>
+</figure>
 <p>
 You can modify the widths of the plots using the <c>widths</c> argument of the <c>plot_layout()</c> function. In the following example we will make the width of the plot on the left 2 times that of the plot on the right. Any numeric values will do, it is the ratio of the numbers that make the difference.
 </p>
@@ -2136,18 +2385,50 @@ Thus, both <c>p1 + p2 + plot_layout(widths = c(2, 1))</c> and <c>p1 + p2 + plot_
 <program language="r">
 <input>
 p1 + p2 + plot_layout(widths = c(2, 1))
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-78-1.png">
+    <description>Two plots with relative widths c(2,1) using plot_layout</description>
+  </image>
+  <caption>Two plots with relative widths c(2,1) using plot_layout</caption>
+</figure>
+<program language="r">
+<input>
 p1 + p2 + plot_layout(widths = c(60, 30))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-78-2.png">
+    <description>Two plots with relative widths c(60,30) using plot_layout</description>
+  </image>
+  <caption>Two plots with relative widths c(60,30) using plot_layout</caption>
+</figure>
 <p>
 The relative heights of the plots can also be modified using a <c>heights</c> argument with the same function.
 </p>
 <program language="r">
 <input>
 p1 + p2 + plot_layout(heights = c(2, 1))
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-79-1.png">
+    <description>Two plots with relative heights c(2,1) using plot_layout</description>
+  </image>
+  <caption>Two plots with relative heights c(2,1) using plot_layout</caption>
+</figure>
+<program language="r">
+<input>
 p1 + p2 + plot_layout(heights = c(60, 30))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-79-2.png">
+    <description>Two plots with relative heights c(60,30) using plot_layout</description>
+  </image>
+  <caption>Two plots with relative heights c(60,30) using plot_layout</caption>
+</figure>
 <p>
 This package also allows for modification of legends. For example, legends can be gathered together to one side of the combined plots using the <c>guides = 'collect'</c> argument of the <c>plot_layout()</c> function.
 </p>
@@ -2156,6 +2437,12 @@ This package also allows for modification of legends. For example, legends can b
 p1 + p2 + plot_layout(guides = "collect")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-80-1.png">
+    <description>Two plots with collected legends using plot_layout guides argument</description>
+  </image>
+  <caption>Two plots with collected legends using plot_layout guides argument</caption>
+</figure>
 <p>
 You can also specify the number of columns or rows using this same function with the <c>ncol</c> or <c>nrow</c> as you would with <c>facet_wrap()</c> of the <c>ggplot2</c> package, where plots are added to <alert>complete a row</alert> before they will be added to a new row. For example, the following will result in an empty 2nd row below the plots.
 </p>
@@ -2164,6 +2451,12 @@ You can also specify the number of columns or rows using this same function with
 p1 + p2 + plot_layout(nrow = 2, ncol = 2, guides = "collect")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-81-1.png">
+    <description>Two plots arranged in a 2x2 grid with collected legends</description>
+  </image>
+  <caption>Two plots arranged in a 2x2 grid with collected legends</caption>
+</figure>
 <p>
 However, the <c>byrow = FALSE</c> argument can disrupt this behavior and result in an empty 2nd column:
 </p>
@@ -2172,6 +2465,12 @@ However, the <c>byrow = FALSE</c> argument can disrupt this behavior and result 
 p1 +p2 + plot_layout(nrow = 2, ncol = 2, byrow = FALSE, guides = "collect")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-82-1.png">
+    <description>Two plots in a 2x2 grid filled by column using byrow = FALSE</description>
+  </image>
+  <caption>Two plots in a 2x2 grid filled by column using byrow = FALSE</caption>
+</figure>
 <p>
 In this case the <alert>columns will be preferentially completed</alert> before placing a plot in a new column.
 </p>
@@ -2183,6 +2482,12 @@ We can also use the package to change the theme specifications of specific plots
 p1 + p2 + theme(legend.position = "bottom") + p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-83-1.png">
+    <description>Three-plot patchwork with legend moved to bottom on only p2</description>
+  </image>
+  <caption>Three-plot patchwork with legend moved to bottom on only p2</caption>
+</figure>
 <p>
 Using the <c>*</c>, themes can be added to all plots that are nested together.
 </p>
@@ -2191,6 +2496,12 @@ Using the <c>*</c>, themes can be added to all plots that are nested together.
 (p1 + p2) *theme_bw() + p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-84-1.png">
+    <description>Patchwork plots with theme_bw applied to nested plots using the * operator</description>
+  </image>
+  <caption>Patchwork plots with theme_bw applied to nested plots using the * operator</caption>
+</figure>
 <p>
 The <c>&amp;</c> adds themes to all plots.
 </p>
@@ -2199,6 +2510,12 @@ The <c>&amp;</c> adds themes to all plots.
 (p1 + p2) + p2 &amp; theme(axis.title.x = element_text(face = "bold"))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-85-1.png">
+    <description>Patchwork plots with bold x-axis title applied to all plots using the &amp; operator</description>
+  </image>
+  <caption>Patchwork plots with bold x-axis title applied to all plots using the &amp; operator</caption>
+</figure>
 <p>
 Annotations for all the plots combined can also be added using the <c>plot_annotation()</c> function, which can also take <c>theme()</c> function specifications with the <c>theme</c> argument.
 </p>
@@ -2211,6 +2528,12 @@ Annotations for all the plots combined can also be added using the <c>plot_annot
 
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-86-1.png">
+    <description>Three patchwork plots with a shared title added via plot_annotation</description>
+  </image>
+  <caption>Three patchwork plots with a shared title added via plot_annotation</caption>
+</figure>
 <p>
 See <url href="https://patchwork.data-imaginist.com/">here</url> for more information about the <c>patchwork</c> package.
 </p>
@@ -2484,6 +2807,23 @@ We've now got the data in order so that we can start to explore the relationship
 hc
 </input>
 </program>
+<pre>
+## # A tibble: 612 × 10
+##    Location  year type         tot_coverage abb   region tot_spending tot_pop
+##    &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;               &lt;int&gt; &lt;chr&gt; &lt;fct&gt;         &lt;dbl&gt;   &lt;int&gt;
+##  1 Alabama   2013 Employer          2126500 AL    South         33788 4763900
+##  2 Alabama   2013 Non-Group          174200 AL    South         33788 4763900
+##  3 Alabama   2013 Medicaid           869700 AL    South         33788 4763900
+##  4 Alabama   2013 Medicare           783000 AL    South         33788 4763900
+##  5 Alabama   2013 Other Public        85600 AL    South         33788 4763900
+##  6 Alabama   2013 Uninsured          724800 AL    South         33788 4763900
+##  7 Alabama   2014 Employer          2202800 AL    South         35263 4768000
+##  8 Alabama   2014 Non-Group          288900 AL    South         35263 4768000
+##  9 Alabama   2014 Medicaid           891900 AL    South         35263 4768000
+## 10 Alabama   2014 Medicare           718400 AL    South         35263 4768000
+## # … with 602 more rows, and 2 more variables: prop_coverage &lt;dbl&gt;,
+## #   spending_capita &lt;dbl&gt;
+</pre>
 <p>
 As a reminder, we have state level data, broken down by year and type of insurance. For each, we have the total number of individuals who have health care coverage (<c>tot_coverage</c>), the amount spent on coverage (<c>tot_spending</c>), the proportion of individuals covered (<c>prop_coverage</c>), and the amount spent per capita (<c>spending_capita</c>). Additionally, we have the state name (<c>Location</c>), the two letter state abbreviation  (<c>abb</c>), and the region of the United States where the state is located (<c>region</c>). Let's get visualizing!
 </p>
@@ -2500,6 +2840,12 @@ library(visdat)
 vis_dat(hc)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-102-1.png">
+    <description>Visualization of variable types and missingness in the hc dataset using vis_dat</description>
+  </image>
+  <caption>Visualization of variable types and missingness in the hc dataset using vis_dat</caption>
+</figure>
 <p>
 We now have a sense that a few states, for some years are missing coverage data, which also affects the ability to calculate proportion covered.
 </p>
@@ -2511,6 +2857,12 @@ To see these values highlighted more specifically, we can use the related <c>vis
 vis_miss(hc)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-103-1.png">
+    <description>Visualization of missingness in the hc dataset using vis_miss</description>
+  </image>
+  <caption>Visualization of missingness in the hc dataset using vis_miss</caption>
+</figure>
 <p>
 Here we see that missing values only occur 0.6% of the time, with 3.1% of the observations missing entries for <c>tot_coverage</c> and <c>prop_coverage</c>. So, all in all, there is not a lot of missing data, but we still want to be sure we understand where missingness occurs before answering our questions.
 </p>
@@ -2523,6 +2875,31 @@ hc %>%
   filter(is.na(tot_coverage))
 </input>
 </program>
+<pre>
+## # A tibble: 19 × 10
+##    Location              year type  tot_coverage abb   region tot_spending tot_pop
+##    &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;        &lt;int&gt; &lt;chr&gt; &lt;fct&gt;         &lt;dbl&gt;   &lt;int&gt;
+##  1 Arizona               2013 Othe…           NA AZ    West          41481 6603100
+##  2 Arizona               2014 Othe…           NA AZ    West          43356 6657200
+##  3 District of Columbia  2013 Othe…           NA DC    South          7443  652100
+##  4 District of Columbia  2014 Othe…           NA DC    South          7871  656900
+##  5 Indiana               2014 Othe…           NA IN    North…        54741 6477500
+##  6 Kansas                2013 Othe…           NA KS    North…        21490 2817600
+##  7 Kansas                2014 Othe…           NA KS    North…        22183 2853000
+##  8 Kentucky              2014 Othe…           NA KY    South         35323 4315700
+##  9 Massachusetts         2013 Othe…           NA MA    North…        68899 6647700
+## 10 Massachusetts         2014 Othe…           NA MA    North…        71274 6658100
+## 11 New Hampshire         2014 Othe…           NA NH    North…        12742 1319700
+## 12 New Jersey            2013 Othe…           NA NJ    North…        75148 8807400
+## 13 North Dakota          2013 Othe…           NA ND    North…         6795  714500
+## 14 Oklahoma              2013 Othe…           NA OK    South         28097 3709400
+## 15 Rhode Island          2014 Othe…           NA RI    North…        10071 1048200
+## 16 Tennessee             2013 Othe…           NA TN    South         46149 6400200
+## 17 Tennessee             2014 Othe…           NA TN    South         48249 6502000
+## 18 West Virginia         2013 Othe…           NA WV    South         16622 1822000
+## 19 Wisconsin             2014 Othe…           NA WI    North…        50109 5747200
+## # … with 2 more variables: prop_coverage &lt;dbl&gt;, spending_capita &lt;dbl&gt;
+</pre>
 <p>
 Ah, so we see that the "Other" type of coverage is missing in both 2013 and 2014 for a subset of states. We'll be focusing on the non-"Other" types of health care coverage, so this shouldn't pose a problem, but it is good to know!
 </p>
@@ -2595,6 +2972,12 @@ hc %>%
        y = "coverage proportion")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-107-1.png">
+    <description>Scatterplot of health care spending per capita vs coverage proportion for 2013 Employer data</description>
+  </image>
+  <caption>Scatterplot of health care spending per capita vs coverage proportion for 2013 Employer data</caption>
+</figure>
 <p>
 We see that there appears to be some relationship, with those states that spend more per capita also having higher proportions of their population having health care coverage.
 </p>
@@ -2615,6 +2998,12 @@ hc %>%
   geom_smooth(method = "lm", col = "red")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-108-1.png">
+    <description>Scatterplot with linear fit line of health care spending per capita vs coverage proportion for 2013</description>
+  </image>
+  <caption>Scatterplot with linear fit line of health care spending per capita vs coverage proportion for 2013</caption>
+</figure>
 <p>
 Beyond that, we likely want to know which point represents which state, so we can add state labels:
 </p>
@@ -2634,6 +3023,12 @@ hc %>%
             nudge_x = 150)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-109-1.png">
+    <description>Scatterplot with state abbreviation labels and fit line for 2013 Employer health care data</description>
+  </image>
+  <caption>Scatterplot with state abbreviation labels and fit line for 2013 Employer health care data</caption>
+</figure>
 <p>
 From there, it'd likely be helpful to have information from each region:
 </p>
@@ -2655,6 +3050,12 @@ hc %>%
             show.legend = FALSE)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-110-1.png">
+    <description>Scatterplot colored by US region with state labels and fit line for 2013 Employer data</description>
+  </image>
+  <caption>Scatterplot colored by US region with state labels and fit line for 2013 Employer data</caption>
+</figure>
 <p>
 So far, we've only been focusing on data from 2013. What about looking at data from both 2013 and 2014? We can do that using <c>facet_wrap()</c>:
 </p>
@@ -2676,6 +3077,12 @@ hc %>%
             show.legend = FALSE)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-111-1.png">
+    <description>Faceted scatterplot by year (2013 and 2014) colored by region for Employer health care data</description>
+  </image>
+  <caption>Faceted scatterplot by year (2013 and 2014) colored by region for Employer health care data</caption>
+</figure>
 <p>
 We see that the overall trend holds, but there has been some movement. For example, we see at a glance that DC has a higher proportion of its population covered in 2014 relative to 2013, while MA saw a drop in coverage. UT appears to be an outlier in both years having low spending but a high proportion of individuals covered.
 </p>
@@ -2700,6 +3107,12 @@ hc %>%
             show.legend = FALSE)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-112-1.png">
+    <description>Faceted scatterplot by insurance type colored by region for 2013 health care data</description>
+  </image>
+  <caption>Faceted scatterplot by insurance type colored by region for 2013 health care data</caption>
+</figure>
 <p>
 From these data, we see that Employer health care coverage is the most popular way in which individuals receive their health insurance across all states. We also see a flat or positive relationship for all other types of insurance, except for "Uninsured". We see that the more money spent per capita the fewer individuals the state has without insurance, as one might expect.
 </p>
@@ -2724,6 +3137,12 @@ hc %>%
             show.legend = FALSE)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-113-1.png">
+    <description>Faceted scatterplot by insurance type colored by region for 2014 health care data</description>
+  </image>
+  <caption>Faceted scatterplot by insurance type colored by region for 2014 health care data</caption>
+</figure>
 <p>
 The same general patterns hold in 2014 as we saw in 2013; however, the patterns are not exactly the same.
 </p>
@@ -2815,6 +3234,12 @@ hc %>%
   labs(y = "spending per capita")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-115-1.png">
+    <description>Boxplot of health care spending per capita by US region</description>
+  </image>
+  <caption>Boxplot of health care spending per capita by US region</caption>
+</figure>
 <p>
 Here, we get a sense of the overall trend, seeing that states in the Northeast tend to spend the most on health care, while states in the West spend the least.
 </p>
@@ -2833,6 +3258,12 @@ hc %>%
   labs(y = "spending per capita")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-116-1.png">
+    <description>Boxplot with jittered data points of health care spending per capita by region (Employer type)</description>
+  </image>
+  <caption>Boxplot with jittered data points of health care spending per capita by region (Employer type)</caption>
+</figure>
 <p>
 This gives us a sense of the variation in spending for states in each region. Of note, there are more outliers in the South and West, with a few states spending more on health care than even states in the Northeast, where spending tends to be higher.
 </p>
@@ -2873,6 +3304,12 @@ hc %>%
   facet_grid(year~type)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-117-1.png">
+    <description>Grid of scatterplots faceted by year and insurance type showing spending vs coverage colored by region</description>
+  </image>
+  <caption>Grid of scatterplots faceted by year and insurance type showing spending vs coverage colored by region</caption>
+</figure>
 <p>
 With this output, the top row shows the data from 2013 and the bottom shows the data from 2014. We can then visually compare the top plot to the bottom plot for each time of insurance.
 </p>
@@ -2906,6 +3343,24 @@ In the previous course, we wrangled the data into a single, helpful dataframe: <
 firearms
 </input>
 </program>
+<pre>
+## # A tibble: 51 × 15
+##    NAME                 white black hispanic  male total_pop violent_crime brady_scores
+##    &lt;chr&gt;                &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
+##  1 alabama               69.5 26.7      4.13  48.5   4850858          472.        -18  
+##  2 alaska                66.5  3.67     6.82  52.4    737979          730.        -30  
+##  3 arizona               83.5  4.80    30.9   49.7   6802262          410.        -39  
+##  4 arkansas              79.6 15.7      7.18  49.1   2975626          521.        -24  
+##  5 california            73.0  6.49    38.7   49.7  39032444          426.         76  
+##  6 colorado              87.6  4.47    21.3   50.3   5440445          321          22  
+##  7 connecticut           80.9 11.6     15.3   48.8   3593862          218.         73  
+##  8 delaware              70.3 22.5      8.96  48.4    944107          499          41  
+##  9 district of columbia  44.1 48.5     10.7   47.4    672736         1269.         NA  
+## 10 florida               77.7 16.9     24.7   48.9  20268567          462.        -20.5
+## # … with 41 more rows, and 7 more variables: gunshot_tally &lt;int&gt;,
+## #   gunshot_filtered &lt;int&gt;, gunshot_rate &lt;dbl&gt;, unemployment_rate &lt;dbl&gt;,
+## #   unemployment_rank &lt;int&gt;, density &lt;dbl&gt;, ownership &lt;dbl&gt;
+</pre>
 <p>
 This dataset contains state level information about firearm ownership (broken down by ethnicity and gender), the population of each state (<c>total_pop</c>), the number of violent crimes (<c>violent_crime</c>), the “total state points” from the Brady Scorecard (<c>brady_scores</c>), the number of gunshots (<c>gunshot_tally</c>), the number of gunshots from armed, non-white, male individuals (<c>gunshot_filtered</c>), the annualized rate per 1,000,000 residents (<c>gunshot_rate</c>), the <c>unemployment rate</c> and <c>unemployment_rank</c>, population density (<c>density</c>), and firearm ownership as a percent of firearm suicides to all suicides (<c>ownership</c>).
 </p>
@@ -2920,6 +3375,12 @@ Similar to how we approached the health care case study, let's get an overall un
 vis_dat(firearms)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-119-1.png">
+    <description>Visualization of variable types and missingness in the firearms dataset using vis_dat</description>
+  </image>
+  <caption>Visualization of variable types and missingness in the firearms dataset using vis_dat</caption>
+</figure>
 <p>
 We see that we have data for all 50 states (and Washington, D.C.) for most variables in our dataset; however, we're missing information for one state when it comes to gunshot information and another state when it comes to Brady scores and ownership by suicide rates.
 </p>
@@ -2954,6 +3415,12 @@ ggplot(firearms,
   geom_text_repel(aes(label = NAME))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-121-1.png">
+    <description>Scatterplot of total population vs violent crime with state labels using ggrepel</description>
+  </image>
+  <caption>Scatterplot of total population vs violent crime with state labels using ggrepel</caption>
+</figure>
 <p>
 Here we see that the visualization of this relationship is largely dependent upon the state's population, with large states like Texas and California sticking out. However, we do see that, for its size, Washington D.C had many more violent cries than other states, despite its small population.
 </p>
@@ -2972,6 +3439,12 @@ ggplot(firearms,
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-122-1.png">
+    <description>Scatterplot of unemployment rate vs violent crime across US states</description>
+  </image>
+  <caption>Scatterplot of unemployment rate vs violent crime across US states</caption>
+</figure>
 <p>
 Here, there appears to be some relationship with states that have higher rates of unemployment having slightly more violent crimes, but violent crimes is not adjusted by population, so this is likely not <em>that</em> helpful.
 </p>
@@ -2990,6 +3463,12 @@ ggplot(firearms,
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-123-1.png">
+    <description>Scatterplot of annualized rate of fatal police shootings vs gun ownership by suicide rate</description>
+  </image>
+  <caption>Scatterplot of annualized rate of fatal police shootings vs gun ownership by suicide rate</caption>
+</figure>
 <p>
 This suggests that states with more fatal police shootings <em>tend</em> to have more firearm suicides relative to non-firearm suicides; however, this relationship is non linear.
 </p>
@@ -3022,6 +3501,12 @@ ggplot(firearms, aes(x = brady_scores,
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-124-1.png">
+    <description>Scatterplot of Brady firearm legislative strength score vs annualized rate of fatal police shootings</description>
+  </image>
+  <caption>Scatterplot of Brady firearm legislative strength score vs annualized rate of fatal police shootings</caption>
+</figure>
 <p>
 In this plot, we see that there is a relationship, but it is non-linear. Overall, the higher the legislative strength score (<c>brady_scores</c>), the lower the rate of police shootings; however, this decrease is nonlinear, as all states with a positive Brady Score have a similar police shooting rate.
 </p>
@@ -3041,6 +3526,12 @@ ggplot(firearms, aes(x = brady_scores,
             nudge_x = 7)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-125-1.png">
+    <description>Scatterplot of firearm legislation score vs fatal police shootings with state name labels</description>
+  </image>
+  <caption>Scatterplot of firearm legislation score vs fatal police shootings with state name labels</caption>
+</figure>
 <p>
 This makes it clear that Wyoming, New Mexico, Oklahoma, Arizona, and Nevada have some of the highest rates of fatal police shootings, while  Connecticut, New York, Pennsylvania, and North Dakota are among the lowest.
 </p>
@@ -3061,6 +3552,12 @@ ggplot(firearms, aes(x = brady_scores,
   geom_text_repel(aes(label = NAME))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-126-1.png">
+    <description>Scatterplot of firearm legislation score vs fatal police shootings with repelled state name labels</description>
+  </image>
+  <caption>Scatterplot of firearm legislation score vs fatal police shootings with repelled state name labels</caption>
+</figure>
 <p>
 If we wanted to save this particular plot as a pdf, we could do so like this to save the plot in a directory called exploratory within a directory called figures:
 </p>
