@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <chapter xml:id="ch-get-data" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>Importing Data in the Tidyverse</title>
+   <title>Importing Data in the Tidyverse</title>
+  <introduction><p>Data are stored in all sorts of different file formats and structures. In this course, we'll
+   discuss each of these common formats and discuss how to get them into R so you can start working with them!
+  </p></introduction>
 <section xml:id="sec-ch02-about-this-course">
   <title>About This Course</title>
 
