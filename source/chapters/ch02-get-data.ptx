@@ -1741,9 +1741,9 @@
 ##  4 "Wyoming"           305900            19500            74200            65400
 ##  5 "Notes"                 NA               NA               NA               NA
 ##  6 "The maj…               NA               NA               NA               NA
-##  7  <NA>                   NA               NA               NA               NA
+##  7  &lt;NA&gt;                   NA               NA               NA               NA
 ##  8 "In this…               NA               NA               NA               NA
-##  9  <NA>                   NA               NA               NA               NA
+##  9  &lt;NA&gt;                   NA               NA               NA               NA
 ## 10 "Data ex…               NA               NA               NA               NA
 ## # … with 20 more rows, and 24 more variables: 2013__Other Public &lt;chr&gt;,
 ## #   2013__Uninsured &lt;dbl&gt;, 2013__Total &lt;dbl&gt;, 2014__Employer &lt;dbl&gt;,
@@ -2026,14 +2026,14 @@
 ##    `States can recei… `Category Point… `Sub Category P… Points AL    AK    AR   
 ##    &lt;chr&gt;                         &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 ##  1 TOTAL STATE POINTS               NA               NA     NA -18   -30   -24  
-##  2 CATEGORY 1:  KEEP…               50               NA     NA <NA>  <NA>  <NA> 
+##  2 CATEGORY 1:  KEEP…               50               NA     NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
 ##  3 BACKGROUND CHECKS…               NA               25     NA AL    AK    AR   
-##  4 Background Checks…               NA               NA     25 <NA>  <NA>  <NA> 
-##  5 Background Checks…               NA               NA     20 <NA>  <NA>  <NA> 
-##  6 Background Checks…               NA               NA      5 <NA>  <NA>  <NA> 
-##  7 Verifiy Legal Pur…               NA               NA     20 <NA>  <NA>  <NA> 
+##  4 Background Checks…               NA               NA     25 &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+##  5 Background Checks…               NA               NA     20 &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+##  6 Background Checks…               NA               NA      5 &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+##  7 Verifiy Legal Pur…               NA               NA     20 &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
 ##  8 TOTAL                            NA               NA     NA 0     0     0    
-##  9 <NA>                             NA               NA     NA <NA>  <NA>  <NA> 
+##  9 &lt;NA&gt;                             NA               NA     NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
 ## 10 OTHER LAWS TO STO…               NA               12     NA AL    AK    AR   
 ## # … with 106 more rows, and 47 more variables: AZ &lt;chr&gt;, CA &lt;chr&gt;, CO &lt;chr&gt;,
 ## #   CT &lt;chr&gt;, DE &lt;chr&gt;, FL &lt;chr&gt;, GA &lt;chr&gt;, HI &lt;chr&gt;, ID &lt;chr&gt;, IL &lt;chr&gt;,
@@ -2075,16 +2075,16 @@
 ## # A tibble: 510 × 14
 ##    State   Area       ...3     Population  `Violent\ncrime… `Murder and \nnonne…
 ##    &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                  &lt;dbl&gt;                &lt;dbl&gt;
-##  1 ALABAMA Metropoli… <NA>     3708033                   NA                   NA
-##  2 <NA>    <NA>       Area ac… 0.97099999…            18122                  283
-##  3 <NA>    <NA>       Estimat… 1                      18500                  287
-##  4 <NA>    Cities ou… <NA>     522241                    NA                   NA
-##  5 <NA>    <NA>       Area ac… 0.97399999…             3178                   32
-##  6 <NA>    <NA>       Estimat… 1                       3240                   33
-##  7 <NA>    Nonmetrop… <NA>     628705                    NA                   NA
-##  8 <NA>    <NA>       Area ac… 0.99399999…             1205                   28
-##  9 <NA>    <NA>       Estimat… 1                       1212                   28
-## 10 <NA>    State Tot… <NA>     4858979                22952                  348
+##  1 ALABAMA Metropoli… &lt;NA&gt;     3708033                   NA                   NA
+##  2 &lt;NA&gt;    &lt;NA&gt;       Area ac… 0.97099999…            18122                  283
+##  3 &lt;NA&gt;    &lt;NA&gt;       Estimat… 1                      18500                  287
+##  4 &lt;NA&gt;    Cities ou… &lt;NA&gt;     522241                    NA                   NA
+##  5 &lt;NA&gt;    &lt;NA&gt;       Area ac… 0.97399999…             3178                   32
+##  6 &lt;NA&gt;    &lt;NA&gt;       Estimat… 1                       3240                   33
+##  7 &lt;NA&gt;    Nonmetrop… &lt;NA&gt;     628705                    NA                   NA
+##  8 &lt;NA&gt;    &lt;NA&gt;       Area ac… 0.99399999…             1205                   28
+##  9 &lt;NA&gt;    &lt;NA&gt;       Estimat… 1                       1212                   28
+## 10 &lt;NA&gt;    State Tot… &lt;NA&gt;     4858979                22952                  348
 ## # … with 500 more rows, and 8 more variables: Rape
 ## (revised
 ## definition)2 &lt;dbl&gt;,
