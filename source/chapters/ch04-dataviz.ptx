@@ -1231,6 +1231,12 @@ ggplot(diamonds) +
                               ncol = 2))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-36-1.png">
+    <description>legend displayed with 2 columns using ncol</description>
+  </image>
+  <caption>legend displayed with 2 columns using ncol</caption>
+</figure>
 <p>
 Or, we can modify the font of the legend title using <c>title.theme()</c>.
 </p>
@@ -1253,6 +1259,12 @@ ggplot(diamonds) +
                              title.theme = element_text(face = "bold")))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-37-1.png">
+    <description>legend with bold title using title.theme</description>
+  </image>
+  <caption>legend with bold title using title.theme</caption>
+</figure>
 <p>
 Alternatively, we can do this modification, as well as other legend modifications, like adding a rectangle around the legend, using the <c>theme()</c> function.
 </p>
@@ -1278,6 +1290,12 @@ guides(fill = guide_legend("Cut Quality")) +
  
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-38-1.png">
+    <description>legend with background rectangle using theme()</description>
+  </image>
+  <caption>legend with background rectangle using theme()</caption>
+</figure>
 <p>
 At this point, we have an informative title, clear colors, a well-labeled legend, and text that is large enough throughout the graph. This is certainly a graph that could be used in a presentation. We've taken it from a graph that is useful to just ourselves (exploratory) and made it into a plot that can communicate our findings well to others (explanatory)!
 </p>
