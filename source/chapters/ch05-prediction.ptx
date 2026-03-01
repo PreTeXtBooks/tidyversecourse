@@ -360,6 +360,10 @@ ggplot(df, aes(sleep_rem)) +
   geom_density()
   </input>
 </program>
+<pre>
+## Warning: Removed 22 rows containing non-finite outside the scale range
+## (`stat_density()`).
+</pre>
 <p>
 <alert>Uniform Distribution</alert>
 </p>
@@ -640,6 +644,11 @@ dplyr::select_if(is.numeric) %&gt;%
     ggcorr(label = TRUE)
   </input>
 </program>
+<pre>
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+</pre>
 <program language="r">
   <input>
 library(GGally)
@@ -685,6 +694,32 @@ cor.test(pull(df %&gt;% filter(bodywt&lt;2000 &amp; bodywt &gt;1),bodywt),
 
   </input>
 </program>
+<pre>
+## `geom_smooth()` using formula = 'y ~ x'
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  pull(df %&gt;% filter(bodywt &lt; 2000 &amp; bodywt &gt; 1), bodywt) and pull(df %&gt;% filter(bodywt &lt; 2000 &amp; bodywt &gt; 1), brainwt)
+## t = 2.7461, df = 28, p-value = 0.01042
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.1203262 0.7040582
+## sample estimates:
+##       cor 
+## 0.4606273
+## `geom_smooth()` using formula = 'y ~ x'
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  pull(df %&gt;% filter(bodywt &lt; 2000 &amp; bodywt &gt; 1 &amp; brainwt &lt; 1), bodywt) and pull(df %&gt;% filter(bodywt &lt; 2000 &amp; bodywt &gt; 1 &amp; brainwt &lt; 1), brainwt)
+## t = 6.6127, df = 27, p-value = 4.283e-07
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.5897381 0.8949042
+## sample estimates:
+##       cor 
+## 0.7862926
+</pre>
 <p>
 We can see from this plot that in general <c>brainwt</c> is correlated with <c>bodywt</c>. Or in other words, <c>brainwt</c> tends to increase with <c>bodywt</c>.
 </p>
@@ -1150,6 +1185,9 @@ trees %&gt;%
   geom_smooth(method = "lm", se = FALSE)
   </input>
 </program>
+<pre>
+## `geom_smooth()` using formula = 'y ~ x'
+</pre>
 <p>
 On this graph, the relationship looks approximately linear and the variance (distance from points to the line) is constant across the data. Given this, it's appropriate to use linear regression for these data.
 </p>
@@ -1284,6 +1322,13 @@ library(broom)
 tidy(fit)
   </input>
 </program>
+<pre>
+## # A tibble: 2 × 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    62.0      4.38      14.2  1.49e-14
+## 2 Girth           1.05     0.322      3.27 2.76e- 3
+</pre>
 <p>
 Note that the values <em>haven't</em> changed. They're just organized into an easy-to-use table. It's helpful to keep in mind that this function and package exist as you work with statistical models.
 </p>
@@ -1478,6 +1523,9 @@ soda_ounces &lt;- rnorm(100, mean = 12, sd = 0.04)
 head(soda_ounces)
   </input>
 </program>
+<pre>
+## [1] 11.99444 12.04799 11.97009 11.97699 11.98946 11.98178
+</pre>
 <p>
 In this code, we're specifying that we want to take a random draw of 100 different values (representing our 100 cans of soft drink), where the mean is 12 (representing the 12 ounces of soda expected to be within each can), and allowing for some variation (we've set the standard deviation to be 0.04).
 </p>
@@ -1526,6 +1574,19 @@ A t-test will check whether the observed ounces differs from the expected mean (
 t.test(soda_ounces, mu = 12)
   </input>
 </program>
+<pre>
+## 
+## 	One Sample t-test
+## 
+## data:  soda_ounces
+## t = -0.074999, df = 99, p-value = 0.9404
+## alternative hypothesis: true mean is not equal to 12
+## 95 percent confidence interval:
+##  11.99187 12.00754
+## sample estimates:
+## mean of x 
+##   11.9997
+</pre>
 <p>
 In the output from this function, we'll focus on the 95 percent confidence interval. Confidence Intervals provide the range of values likely to contain the unknown population parameter. Here, the population parameter we're interested in is the mean. Thus, the 95% Confidence Intervals provides us the range where, upon repeated sampling, the calculated mean would fall 95 percent of the time. More specifically, if the 95 percent confidence interval contains the expected mean (12 oz), then we can be confident that the company is not shorting us on the amount of liquid they're putting into each can.
 </p>
@@ -1631,6 +1692,22 @@ soda_ounces &lt;-as_tibble(soda_ounces)
 soda_ounces
   </input>
 </program>
+<pre>
+## # A tibble: 100 × 1
+##    value
+##    &lt;dbl&gt;
+##  1  12.0
+##  2  12.0
+##  3  12.0
+##  4  12.0
+##  5  12.0
+##  6  12.0
+##  7  12.0
+##  8  12.0
+##  9  12.0
+## 10  12.0
+## # ℹ 90 more rows
+</pre>
 <p>
 Now we will use the <c>specify()</c> function of the <c>infer</c> package to indicate that the <c>value</c> variable is our response variable that will be used in our hypothesis. This is as you might expect more important when we have multiple variables in our data. Then we can specify our null hypothesis with the <c>hypothesize()</c> function.
 </p>
@@ -1702,6 +1779,9 @@ CI &lt;-soda_ounces %&gt;%
 CI
   </input>
 </program>
+<pre>
+## Using `level = 0.95` to compute confidence interval.
+</pre>
 <p>
 We can see that our confidence interval is very similar but slightly different from the results we obtained using the <c>t.test()</c> function and the <c>lm()</c> function. This is because we used a different method to calculate the confidence interval based on the bootstrap samples. Furthermore, the results will vary every time the code is run because the bootstrap samples are randomly created each time (unless you set a seed with set.seed).
 </p>
@@ -2181,6 +2261,10 @@ split_iris
 # the default proportion is 1/4 testing and 3/4 training
   </input>
 </program>
+<pre>
+## &lt;Training/Testing/Total&gt;
+## &lt;100/50/150&gt;
+</pre>
 <p>
 This results in printing the number of training data rows, the number testing data rows, and the total rows - each is printed with the "/" as a division between the values. Here the training set is called the analysis set, while the testing set is called the assess set.
 </p>
@@ -2199,6 +2283,22 @@ testing_iris &lt;-testing(split_iris)
 head(testing_iris)
   </input>
 </program>
+<pre>
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1          5.2         3.5          1.5         0.2     setosa
+## 2          5.7         2.6          3.5         1.0 versicolor
+## 3          6.3         3.3          6.0         2.5  virginica
+## 4          6.5         3.2          5.1         2.0  virginica
+## 5          6.3         3.4          5.6         2.4  virginica
+## 6          6.4         2.8          5.6         2.2  virginica
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.6         3.4          1.4         0.3  setosa
+## 3          5.4         3.7          1.5         0.2  setosa
+## 4          4.8         3.4          1.6         0.2  setosa
+## 5          5.8         4.0          1.2         0.2  setosa
+## 6          5.7         4.4          1.5         0.4  setosa
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-step-2-example-of-preparing-for-preprocessing-the-data-with-recipes">
   <title>Step 2: Example of preparing for preprocessing the data with <c>recipes</c></title>
@@ -2255,6 +2355,11 @@ first_recipe &lt;- training_iris %&gt;%
 first_recipe
   </input>
 </program>
+<pre>
+## 
+## Attaching package: 'recipes'
+##
+</pre>
 <p>
 Alternatively, we could also specify the outcome and predictor(s) by assigning roles to the variables by using the <c>update_role()</c> function. Please see <url href="https://tidymodels.github.io/recipes/reference/recipe.html">here</url> for examples of the variety of roles variables can take.
 </p>
@@ -2270,6 +2375,9 @@ first_recipe &lt;- recipe(training_iris) %&gt;%
 first_recipe
   </input>
 </program>
+<pre>
+##
+</pre>
 <p>
 We can view our recipe using the base summary() function.
 </p>
@@ -2278,6 +2386,16 @@ We can view our recipe using the base summary() function.
 summary(first_recipe)
   </input>
 </program>
+<pre>
+## # A tibble: 5 × 4
+##   variable     type      role      source  
+##   &lt;chr&gt;        &lt;list&gt;    &lt;chr&gt;     &lt;chr&gt;   
+## 1 Sepal.Length &lt;chr [2]&gt; outcome   original
+## 2 Sepal.Width  &lt;chr [2]&gt; predictor original
+## 3 Petal.Length &lt;chr [2]&gt; &lt;NA&gt;      original
+## 4 Petal.Width  &lt;chr [2]&gt; &lt;NA&gt;      original
+## 5 Species      &lt;chr [3]&gt; predictor original
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-step-2-specify-the-preprocessing-steps-with-step-functions">
   <title>Step 2: Specify the preprocessing steps with <c>step*()</c> functions</title>
@@ -2337,6 +2455,9 @@ first_recipe &lt;- first_recipe %&gt;%
 first_recipe
   </input>
 </program>
+<pre>
+##
+</pre>
 </subsubsection>
 </subsubsection>
 <subsubsection xml:id="subsubsec-step-3-example-of-optionally-performing-the-preprocessing-to-see-how-it-influences-the-data">
@@ -2369,6 +2490,17 @@ prepped_rec
 names(prepped_rec)
   </input>
 </program>
+<pre>
+## oper 1 step dummy [training] 
+## The retained training set is ~ 0.01 Mb  in memory.
+##
+##  [1] "var_info"       "term_info"      "steps"          "template"      
+##  [5] "retained"       "requirements"   "ptype"          "tr_info"       
+##  [9] "orig_lvls"      "fit_times"      "last_term_info"
+##  [1] "var_info"       "term_info"      "steps"          "template"      
+##  [5] "retained"       "requirements"   "ptype"          "tr_info"       
+##  [9] "orig_lvls"      "fit_times"      "last_term_info"
+</pre>
 <p>
 There are also lots of useful things to checkout in the output of <c>prep()</c>. You can see:
 </p>
@@ -2389,6 +2521,16 @@ prepped_rec$var_info
 
   </input>
 </program>
+<pre>
+## # A tibble: 5 × 4
+##   variable     type      role      source  
+##   &lt;chr&gt;        &lt;list&gt;    &lt;chr&gt;     &lt;chr&gt;   
+## 1 Sepal.Length &lt;chr [2]&gt; outcome   original
+## 2 Sepal.Width  &lt;chr [2]&gt; predictor original
+## 3 Petal.Length &lt;chr [2]&gt; &lt;NA&gt;      original
+## 4 Petal.Width  &lt;chr [2]&gt; &lt;NA&gt;      original
+## 5 Species      &lt;chr [3]&gt; predictor original
+</pre>
 <p>
 Now we can use <c>bake</c> to see the preprocessed training data.
 </p>
@@ -2404,6 +2546,17 @@ preproc_train &lt;-recipes::bake(prepped_rec, new_data = NULL)
 glimpse(preproc_train)
   </input>
 </program>
+<pre>
+## Rows: 100
+## Columns: 7
+## $ Sepal.Length       &lt;dbl&gt; 5.2, 5.7, 6.3, 6.5, 6.3, 6.4, 6.8, 7.9, 6.2, 7.1, 5…
+## $ Sepal.Width        &lt;dbl&gt; 3.5, 2.6, 3.3, 3.2, 3.4, 2.8, 3.2, 3.8, 2.9, 3.0, 2…
+## $ Petal.Length       &lt;dbl&gt; 1.5, 3.5, 6.0, 5.1, 5.6, 5.6, 5.9, 6.4, 4.3, 5.9, 4…
+## $ Petal.Width        &lt;dbl&gt; 0.2, 1.0, 2.5, 2.0, 2.4, 2.2, 2.3, 2.0, 1.3, 2.1, 1…
+## $ Species_setosa     &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, …
+## $ Species_versicolor &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, …
+## $ Species_virginica  &lt;dbl&gt; 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, …
+</pre>
 <p>
 We can see that the <c>Species</c> variable has been replaced by 3 variables representing the 3 different species numerically with zeros and ones.
 </p>
@@ -2416,6 +2569,108 @@ baked_test_pm &lt;- recipes::bake(prepped_rec, new_data = testing_iris)
 glimpse(baked_test_pm)
   </input>
 </program>
+<pre>
+## Rows: 50
+## Columns: 7
+## $ Sepal.Length       &lt;dbl&gt; 5.1, 4.6, 5.4, 4.8, 5.8, 5.7, 5.1, 4.6, 5.1, 5.2, 4…
+## $ Sepal.Width        &lt;dbl&gt; 3.5, 3.4, 3.7, 3.4, 4.0, 4.4, 3.5, 3.6, 3.3, 3.4, 3…
+## $ Petal.Length       &lt;dbl&gt; 1.4, 1.4, 1.5, 1.6, 1.2, 1.5, 1.4, 1.0, 1.7, 1.4, 1…
+## $ Petal.Width        &lt;dbl&gt; 0.2, 0.3, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.5, 0.2, 0…
+## $ Species_setosa     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ Species_versicolor &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Species_virginica  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## Warning: ! There are new levels in `county`: "Colbert", "Etowah", "Russell", "Walker",
+##   "Cochise", "Coconino", "Mohave", "Arkansas", "Crittenden", "Garland",
+##   "Phillips", "Pope", "Calaveras", "Humboldt", "Inyo", "Merced", "Monterey",
+##   "San Benito", …, "Laramie", and "Sublette".
+## ℹ Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()`
+##   to handle unseen values.
+## Rows: 292
+## Columns: 37
+## $ id                          &lt;fct&gt; 1033.1002, 1055.001, 1069.0003, 1073.0023,…
+## $ fips                        &lt;fct&gt; 1033, 1055, 1069, 1073, 1073, 1073, 1073, …
+## $ lat                         &lt;dbl&gt; 34.75878, 33.99375, 31.22636, 33.55306, 33…
+## $ lon                         &lt;dbl&gt; -87.65056, -85.99107, -85.39077, -86.81500…
+## $ CMAQ                        &lt;dbl&gt; 9.402679, 9.241744, 9.121892, 10.235612, 1…
+## $ zcta_area                   &lt;dbl&gt; 16716984, 154069359, 162685124, 26929603, …
+## $ zcta_pop                    &lt;dbl&gt; 9042, 20045, 30217, 9010, 16140, 3699, 137…
+## $ imp_a500                    &lt;dbl&gt; 19.17301038, 16.49307958, 19.13927336, 41.…
+## $ imp_a15000                  &lt;dbl&gt; 5.2472094, 5.1612102, 4.7401296, 17.452484…
+## $ county_area                 &lt;dbl&gt; 1534877333, 1385618994, 1501737720, 287819…
+## $ county_pop                  &lt;dbl&gt; 54428, 104430, 101547, 658466, 658466, 194…
+## $ log_dist_to_prisec          &lt;dbl&gt; 5.760131, 5.261457, 7.112373, 6.600958, 6.…
+## $ log_pri_length_5000         &lt;dbl&gt; 8.517193, 9.066563, 8.517193, 11.156977, 1…
+## $ log_pri_length_25000        &lt;dbl&gt; 10.15769, 12.01356, 10.12663, 12.98762, 12…
+## $ log_prisec_length_500       &lt;dbl&gt; 8.611945, 8.740680, 6.214608, 6.214608, 6.…
+## $ log_prisec_length_1000      &lt;dbl&gt; 9.735569, 9.627898, 7.600902, 9.075921, 8.…
+## $ log_prisec_length_5000      &lt;dbl&gt; 11.770407, 11.728889, 12.298627, 12.281645…
+## $ log_prisec_length_10000     &lt;dbl&gt; 12.840663, 12.768279, 12.994141, 13.278416…
+## $ log_nei_2008_pm10_sum_10000 &lt;dbl&gt; 6.69187313, 4.43719884, 0.92888890, 8.2097…
+## $ log_nei_2008_pm10_sum_15000 &lt;dbl&gt; 6.70127741, 4.46267932, 3.67473904, 8.6488…
+## $ log_nei_2008_pm10_sum_25000 &lt;dbl&gt; 7.148858, 4.678311, 3.744629, 8.858019, 8.…
+## $ popdens_county              &lt;dbl&gt; 35.460814, 75.367038, 67.619664, 228.77763…
+## $ popdens_zcta                &lt;dbl&gt; 540.8870404, 130.1037411, 185.7391706, 334…
+## $ nohs                        &lt;dbl&gt; 7.3, 4.3, 5.8, 7.1, 2.7, 11.1, 9.7, 3.0, 8…
+## $ somehs                      &lt;dbl&gt; 15.8, 13.3, 11.6, 17.1, 6.6, 11.6, 21.6, 1…
+## $ hs                          &lt;dbl&gt; 30.6, 27.8, 29.8, 37.2, 30.7, 46.0, 39.3, …
+## $ somecollege                 &lt;dbl&gt; 20.9, 29.2, 21.4, 23.5, 25.7, 17.2, 21.6, …
+## $ associate                   &lt;dbl&gt; 7.6, 10.1, 7.9, 7.3, 8.0, 4.1, 5.2, 6.6, 4…
+## $ bachelor                    &lt;dbl&gt; 12.7, 10.0, 13.7, 5.9, 17.6, 7.1, 2.2, 7.8…
+## $ grad                        &lt;dbl&gt; 5.1, 5.4, 9.8, 2.0, 8.7, 2.9, 0.4, 4.2, 3.…
+## $ pov                         &lt;dbl&gt; 19.0, 8.8, 15.6, 25.5, 7.3, 8.1, 13.3, 23.…
+## $ hs_orless                   &lt;dbl&gt; 53.7, 45.4, 47.2, 61.4, 40.0, 68.7, 70.6, …
+## $ urc2006                     &lt;dbl&gt; 4, 4, 4, 1, 1, 1, 2, 3, 3, 3, 2, 5, 4, 1, …
+## $ aod                         &lt;dbl&gt; 36.000000, 43.416667, 33.000000, 39.583333…
+## $ value                       &lt;dbl&gt; 11.212174, 12.375394, 10.508850, 15.591017…
+## $ state_California            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ city_Not.in.a.city          &lt;dbl&gt; NA, NA, NA, 0, 1, 1, 1, NA, NA, NA, 0, NA,…
+## Warning: ! There are new levels in `county`: "Colbert", "Etowah", "Russell", "Walker",
+##   "Cochise", "Coconino", "Mohave", "Arkansas", "Crittenden", "Garland",
+##   "Phillips", "Pope", "Calaveras", "Humboldt", "Inyo", "Merced", "Monterey",
+##   "San Benito", …, "Laramie", and "Sublette".
+## ℹ Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()`
+##   to handle unseen values.
+## Rows: 292
+## Columns: 38
+## $ id                          &lt;fct&gt; 1033.1002, 1055.001, 1069.0003, 1073.0023,…
+## $ value                       &lt;dbl&gt; 11.212174, 12.375394, 10.508850, 15.591017…
+## $ fips                        &lt;fct&gt; 1033, 1055, 1069, 1073, 1073, 1073, 1073, …
+## $ lat                         &lt;dbl&gt; 34.75878, 33.99375, 31.22636, 33.55306, 33…
+## $ lon                         &lt;dbl&gt; -87.65056, -85.99107, -85.39077, -86.81500…
+## $ CMAQ                        &lt;dbl&gt; 9.402679, 9.241744, 9.121892, 10.235612, 1…
+## $ zcta_area                   &lt;dbl&gt; 16716984, 154069359, 162685124, 26929603, …
+## $ zcta_pop                    &lt;dbl&gt; 9042, 20045, 30217, 9010, 16140, 3699, 137…
+## $ imp_a500                    &lt;dbl&gt; 19.17301038, 16.49307958, 19.13927336, 41.…
+## $ imp_a15000                  &lt;dbl&gt; 5.2472094, 5.1612102, 4.7401296, 17.452484…
+## $ county_area                 &lt;dbl&gt; 1534877333, 1385618994, 1501737720, 287819…
+## $ county_pop                  &lt;dbl&gt; 54428, 104430, 101547, 658466, 658466, 194…
+## $ log_dist_to_prisec          &lt;dbl&gt; 5.760131, 5.261457, 7.112373, 6.600958, 6.…
+## $ log_pri_length_5000         &lt;dbl&gt; 8.517193, 9.066563, 8.517193, 11.156977, 1…
+## $ log_pri_length_25000        &lt;dbl&gt; 10.15769, 12.01356, 10.12663, 12.98762, 12…
+## $ log_prisec_length_500       &lt;dbl&gt; 8.611945, 8.740680, 6.214608, 6.214608, 6.…
+## $ log_prisec_length_1000      &lt;dbl&gt; 9.735569, 9.627898, 7.600902, 9.075921, 8.…
+## $ log_prisec_length_5000      &lt;dbl&gt; 11.770407, 11.728889, 12.298627, 12.281645…
+## $ log_prisec_length_10000     &lt;dbl&gt; 12.840663, 12.768279, 12.994141, 13.278416…
+## $ log_prisec_length_25000     &lt;dbl&gt; 13.79973, 13.70026, 13.85550, 14.45221, 13…
+## $ log_nei_2008_pm10_sum_10000 &lt;dbl&gt; 6.69187313, 4.43719884, 0.92888890, 8.2097…
+## $ log_nei_2008_pm10_sum_15000 &lt;dbl&gt; 6.70127741, 4.46267932, 3.67473904, 8.6488…
+## $ log_nei_2008_pm10_sum_25000 &lt;dbl&gt; 7.148858, 4.678311, 3.744629, 8.858019, 8.…
+## $ popdens_county              &lt;dbl&gt; 35.460814, 75.367038, 67.619664, 228.77763…
+## $ popdens_zcta                &lt;dbl&gt; 540.8870404, 130.1037411, 185.7391706, 334…
+## $ nohs                        &lt;dbl&gt; 7.3, 4.3, 5.8, 7.1, 2.7, 11.1, 9.7, 3.0, 8…
+## $ somehs                      &lt;dbl&gt; 15.8, 13.3, 11.6, 17.1, 6.6, 11.6, 21.6, 1…
+## $ hs                          &lt;dbl&gt; 30.6, 27.8, 29.8, 37.2, 30.7, 46.0, 39.3, …
+## $ somecollege                 &lt;dbl&gt; 20.9, 29.2, 21.4, 23.5, 25.7, 17.2, 21.6, …
+## $ associate                   &lt;dbl&gt; 7.6, 10.1, 7.9, 7.3, 8.0, 4.1, 5.2, 6.6, 4…
+## $ bachelor                    &lt;dbl&gt; 12.7, 10.0, 13.7, 5.9, 17.6, 7.1, 2.2, 7.8…
+## $ grad                        &lt;dbl&gt; 5.1, 5.4, 9.8, 2.0, 8.7, 2.9, 0.4, 4.2, 3.…
+## $ pov                         &lt;dbl&gt; 19.0, 8.8, 15.6, 25.5, 7.3, 8.1, 13.3, 23.…
+## $ hs_orless                   &lt;dbl&gt; 53.7, 45.4, 47.2, 61.4, 40.0, 68.7, 70.6, …
+## $ urc2006                     &lt;dbl&gt; 4, 4, 4, 1, 1, 1, 2, 3, 3, 3, 2, 5, 4, 1, …
+## $ aod                         &lt;dbl&gt; 36.000000, 43.416667, 33.000000, 39.583333…
+## $ state_California            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ city_Not.in.a.city          &lt;dbl&gt; 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, …
+</pre>
 <p>
 Great! Now back to the typical steps.
 </p>
@@ -2452,6 +2707,11 @@ Lin_reg_model &lt;- parsnip::linear_reg()
 Lin_reg_model
   </input>
 </program>
+<pre>
+## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
+</pre>
 <p>
 OK. So far, all we have defined is that we want to use a linear regression. Now let's tell <c>parsnip</c> more about what we want.
 </p>
@@ -2470,6 +2730,11 @@ Lin_reg_model &lt;-
 Lin_reg_model
   </input>
 </program>
+<pre>
+## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
+</pre>
 <p>
 Some packages can do either classification or regression, so it is a good idea to specify which mode you intend to perform. Here, we aim to predict a continuous variable, thus we want to perform a <c>regression</c> analysis. You can do this with the <c>set_mode()</c> function of the <c>parsnip</c> package, by using either <c>set_mode("classification")</c> or <c>set_mode("regression")</c>.
 </p>
@@ -2510,6 +2775,21 @@ iris_reg_wflow
 
   </input>
 </program>
+<pre>
+## ══ Workflow ════════════════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: linear_reg()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 1 Recipe Step
+## 
+## • step_dummy()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
+</pre>
 <p>
 Ah, nice. Notice how it tells us about both our preprocessing steps and our model specifications.
 </p>
@@ -2522,6 +2802,27 @@ iris_reg_wflow_fit &lt;- parsnip::fit(iris_reg_wflow, data = training_iris)
 iris_reg_wflow_fit
   </input>
 </program>
+<pre>
+## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: linear_reg()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 1 Recipe Step
+## 
+## • step_dummy()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## 
+## Call:
+## stats::lm(formula = ..y ~ ., data = data)
+## 
+## Coefficients:
+##        (Intercept)         Sepal.Width      Species_setosa  Species_versicolor  
+##             4.4406              0.7228             -1.9013             -0.5232  
+##  Species_virginica  
+##                 NA
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-step-6-example-of-assessing-the-model-performance">
   <title>Step 6: Example of assessing the model performance</title>
@@ -2545,6 +2846,18 @@ head(wf_fit$fit$fitted.values)
 predict(iris_reg_wflow_fit, new_data = training_iris)
   </input>
 </program>
+<pre>
+FALSE Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.
+FALSE ℹ Please use `extract_fit_parsnip()` instead.
+FALSE This warning is displayed once every 8 hours.
+FALSE Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+FALSE generated.
+FALSE        1        2        3        4        5        6 
+FALSE 5.069194 5.796771 6.825955 6.753671 6.898239 6.464535
+FALSE Warning in predict.lm(object = object$fit, newdata = new_data, type =
+FALSE "response", : prediction from rank-deficient fit; consider predict(.,
+FALSE rankdeficient="NA")
+</pre>
 <p>
 To get more information about the prediction for each sample, we can use the <c>augment()</c> function of the <c>broom</c> package. This requires using the preprocessed training data from <c>bake()</c> (or with previous versions <c>juice()</c>), as well as the predicted values from either of the two previous methods.
 </p>
@@ -2566,6 +2879,17 @@ head(wf_fitted_values)
 
   </input>
 </program>
+<pre>
+FALSE # A tibble: 6 × 6
+FALSE   Sepal.Length .fitted   .hat .sigma  .cooksd .std.resid
+FALSE          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+FALSE 1          5.2    5.07 0.0336  0.459 0.000738      0.292
+FALSE 2          5.7    5.80 0.0340  0.459 0.000409     -0.216
+FALSE 3          6.3    6.83 0.0362  0.456 0.0129       -1.17 
+FALSE 4          6.5    6.75 0.0315  0.458 0.00259      -0.565
+FALSE 5          6.3    6.90 0.0429  0.455 0.0201       -1.34 
+FALSE 6          6.4    6.46 0.0317  0.459 0.000169     -0.144
+</pre>
 <p>
 Nice, now we can see what the original value for <c>Sepal.Length</c> right next to the predicted <c>.fitted</c> value, as well as standard errors and other metrics for each value.
 </p>
@@ -2581,6 +2905,12 @@ yardstick::rmse(wf_fitted_values,
 
   </input>
 </program>
+<pre>
+## # A tibble: 1 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard       0.447
+</pre>
 <p>
 We can see that our RMSE was <c>r yardstick::rmse(wf_fitted_values, truth = Sepal.Length, estimate = .fitted) %&gt;% pull(.estimate)</c>. This is fairly low, so our model did pretty well.
 </p>
@@ -2597,6 +2927,9 @@ wf_fitted_values %&gt;%
   labs( x = "True Sepal Length", y = "Predicted Sepal Length")
   </input>
 </program>
+<pre>
+## `geom_smooth()` using formula = 'y ~ x'
+</pre>
 <p>
 We can see that overall our model predicted the sepal length fairly well, as the predicted values are fairly close to the true values. We can also see that the predictions were similar to the truth for the full range of true sepal length values.
 </p>
@@ -2616,6 +2949,21 @@ overallfit &lt;-iris_reg_wflow %&gt;%
 overallfit
   </input>
 </program>
+<pre>
+FALSE → A | warning: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")
+FALSE # Resampling results
+FALSE # Manual resampling 
+FALSE # A tibble: 1 × 6
+FALSE   splits           id               .metrics .notes   .predictions .workflow 
+FALSE   &lt;list&gt;           &lt;chr&gt;            &lt;list&gt;   &lt;list&gt;   &lt;list&gt;       &lt;list&gt;    
+FALSE 1 &lt;split [100/50]&gt; train/test split &lt;tibble&gt; &lt;tibble&gt; &lt;tibble&gt;     &lt;workflow&gt;
+FALSE 
+FALSE There were issues with some computations:
+FALSE 
+FALSE   - Warning(s) x1: prediction from rank-deficient fit; consider predict(., rankdefic...
+FALSE 
+FALSE Run `show_notes(.Last.tune.result)` for more information.
+</pre>
 <p>
 We can then use the <c>collect_metrics()</c> function of the <c>tune</c> package to get the RMSE:
 </p>
@@ -2624,6 +2972,13 @@ We can then use the <c>collect_metrics()</c> function of the <c>tune</c> package
 tune::collect_metrics(overallfit)
   </input>
 </program>
+<pre>
+## # A tibble: 2 × 4
+##   .metric .estimator .estimate .config             
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               
+## 1 rmse    standard       0.403 Preprocessor1_Model1
+## 2 rsq     standard       0.733 Preprocessor1_Model1
+</pre>
 <p>
 We can see that our RMSE is pretty similar for the testing data as well.
 </p>
@@ -2661,6 +3016,32 @@ count(testing_iris, Species)
 
   </input>
 </program>
+<pre>
+## &lt;Training/Testing/Total&gt;
+## &lt;99/51/150&gt;
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1          5.2         3.5          1.5         0.2     setosa
+## 2          5.7         2.6          3.5         1.0 versicolor
+## 3          6.3         3.3          6.0         2.5  virginica
+## 4          6.5         3.2          5.1         2.0  virginica
+## 5          6.3         3.4          5.6         2.4  virginica
+## 6          6.4         2.8          5.6         2.2  virginica
+##      Species  n
+## 1     setosa 32
+## 2 versicolor 32
+## 3  virginica 36
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.6         3.4          1.4         0.3  setosa
+## 3          5.4         3.7          1.5         0.2  setosa
+## 4          4.8         3.4          1.6         0.2  setosa
+## 5          5.8         4.0          1.2         0.2  setosa
+## 6          5.7         4.4          1.5         0.4  setosa
+##      Species  n
+## 1     setosa 18
+## 2 versicolor 18
+## 3  virginica 14
+</pre>
 <p>
 Great, indeed we have good representation of all 3 species in both the training and testing sets.
 </p>
@@ -2763,6 +3144,31 @@ vfold_iris
 pull(vfold_iris, splits)
   </input>
 </program>
+<pre>
+## #  4-fold cross-validation 
+## # A tibble: 4 × 2
+##   splits          id   
+##   &lt;list&gt;          &lt;chr&gt;
+## 1 &lt;split [75/25]&gt; Fold1
+## 2 &lt;split [75/25]&gt; Fold2
+## 3 &lt;split [75/25]&gt; Fold3
+## 4 &lt;split [75/25]&gt; Fold4
+## [[1]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;75/25/100&gt;
+## 
+## [[2]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;75/25/100&gt;
+## 
+## [[3]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;75/25/100&gt;
+## 
+## [[4]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;75/25/100&gt;
+</pre>
 <p>
 Now we can see that we have created 4 folds of the data and we can see how many values were set aside for testing (called assessing for cross validation sets) and training (called analysis for cross validation sets) within each fold.
 </p>
@@ -2779,6 +3185,22 @@ head(as.data.frame(first_fold, data = "analysis")) # training set of this fold
 head(as.data.frame(first_fold, data = "assessment")) # test set of this fold
   </input>
 </program>
+<pre>
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1          5.2         3.5          1.5         0.2     setosa
+## 2          5.7         2.6          3.5         1.0 versicolor
+## 3          6.3         3.3          6.0         2.5  virginica
+## 4          6.4         2.8          5.6         2.2  virginica
+## 5          6.8         3.2          5.9         2.3  virginica
+## 6          7.9         3.8          6.4         2.0  virginica
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1          6.5         3.2          5.1         2.0  virginica
+## 2          6.3         3.4          5.6         2.4  virginica
+## 3          5.9         3.0          4.2         1.5 versicolor
+## 4          5.8         2.7          5.1         1.9  virginica
+## 5          5.1         3.8          1.6         0.2     setosa
+## 6          6.0         2.7          5.1         1.6 versicolor
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-example-of-creating-another-recipe-model-and-workflow">
   <title>Example of creating another recipe, model and workflow</title>
@@ -2807,6 +3229,11 @@ cat_model
 
   </input>
 </program>
+<pre>
+## Decision Tree Model Specification (classification)
+## 
+## Computational engine: rpart
+</pre>
 <p>
 Great! Now we will make a workflow for this.
 </p>
@@ -2819,6 +3246,19 @@ iris_cat_wflow
 
   </input>
 </program>
+<pre>
+## ══ Workflow ════════════════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: decision_tree()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 0 Recipe Steps
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## Decision Tree Model Specification (classification)
+## 
+## Computational engine: rpart
+</pre>
 <p>
 So our next step is to fit and tune the model with our training data cross validation subsets.
 </p>
@@ -2837,6 +3277,26 @@ wf_fit_cat &lt;- iris_cat_wflow_fit %&gt;%
   pull_workflow_fit()
   </input>
 </program>
+<pre>
+## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: decision_tree()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 0 Recipe Steps
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## n= 100 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+## 1) root 100 64 virginica (0.32000000 0.32000000 0.36000000)  
+##   2) Petal.Length&lt; 2.6 32  0 setosa (1.00000000 0.00000000 0.00000000) *
+##   3) Petal.Length&gt;=2.6 68 32 virginica (0.00000000 0.47058824 0.52941176)  
+##     6) Petal.Length&lt; 4.85 33  2 versicolor (0.00000000 0.93939394 0.06060606) *
+##     7) Petal.Length&gt;=4.85 35  1 virginica (0.00000000 0.02857143 0.97142857) *
+</pre>
 <p>
 The output is a bit different for categorical variables. We can also see variable importance from the model fit, which shows which variables were most important for classifying the data values. This lists a score for each variable which shows the decrease in error when splitting by this variable relative to others.
 </p>
@@ -2846,6 +3306,10 @@ wf_fit_cat$fit$variable.importance
 
   </input>
 </program>
+<pre>
+## Petal.Length  Petal.Width Sepal.Length  Sepal.Width 
+##     60.85957     55.73558     42.94372     19.08610
+</pre>
 <p>
 We can see that <c>Petal.Width</c> was the most important for predicting <c>Species</c>.
 </p>
@@ -2860,6 +3324,9 @@ yardstick::accuracy_vec(
                truth = training_iris$Species, estimate = pred_species$.pred_class)
   </input>
 </program>
+<pre>
+## [1] 0.97
+</pre>
 <p>
 It looks like 97% of the time our model correctly predicted the right species.
 </p>
@@ -2872,6 +3339,14 @@ count(training_iris, Species)
 count(pred_species, .pred_class)
   </input>
 </program>
+<pre>
+## # A tibble: 3 × 2
+##   .pred_class     n
+##   &lt;fct&gt;       &lt;int&gt;
+## 1 setosa         32
+## 2 versicolor     33
+## 3 virginica      35
+</pre>
 <p>
 We can see that one extra versicolor iris was predicted, and one fewer virginica iris.
 </p>
@@ -2886,6 +3361,22 @@ predicted_and_truth &lt;-bind_cols(training_iris,
 head(predicted_and_truth)
   </input>
 </program>
+<pre>
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1          5.2         3.5          1.5         0.2     setosa
+## 2          5.7         2.6          3.5         1.0 versicolor
+## 3          6.3         3.3          6.0         2.5  virginica
+## 4          6.5         3.2          5.1         2.0  virginica
+## 5          6.3         3.4          5.6         2.4  virginica
+## 6          6.4         2.8          5.6         2.2  virginica
+##   predicted_species
+## 1            setosa
+## 2        versicolor
+## 3         virginica
+## 4         virginica
+## 5         virginica
+## 6         virginica
+</pre>
 <p>
 However, to fit the model to our cross validation folds we can use the <c>fit_resamples()</c> function of the <c>tune</c> package, by specifying our <c>workflow</c> object and the cross validation fold object we just created. See <url href="https://tidymodels.github.io/tune/reference/fit_resamples.html">here</url> for more information.
 </p>
@@ -2896,6 +3387,55 @@ set.seed(122)
 resample_fit &lt;- tune::fit_resamples(iris_cat_wflow, vfold_iris)
   </input>
 </program>
+<pre>
+## # Resampling results
+## # 4-fold cross-validation 
+## # A tibble: 4 × 4
+##   splits          id    .metrics         .notes          
+##   &lt;list&gt;          &lt;chr&gt; &lt;list&gt;           &lt;list&gt;          
+## 1 &lt;split [75/25]&gt; Fold1 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+## 2 &lt;split [75/25]&gt; Fold2 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+## 3 &lt;split [75/25]&gt; Fold3 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+## 4 &lt;split [75/25]&gt; Fold4 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+## → A | warning: the standard deviation is zero, The correlation matrix has missing values. 330 columns were excluded from the
+##                filter.
+## # Resampling results
+## # 10-fold cross-validation 
+## # A tibble: 10 × 4
+##    splits           id     .metrics         .notes          
+##    &lt;list&gt;           &lt;chr&gt;  &lt;list&gt;           &lt;list&gt;          
+##  1 &lt;split [525/59]&gt; Fold01 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+##  2 &lt;split [525/59]&gt; Fold02 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+##  3 &lt;split [525/59]&gt; Fold03 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+##  4 &lt;split [525/59]&gt; Fold04 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+##  5 &lt;split [526/58]&gt; Fold05 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+##  6 &lt;split [526/58]&gt; Fold06 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+##  7 &lt;split [526/58]&gt; Fold07 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+##  8 &lt;split [526/58]&gt; Fold08 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+##  9 &lt;split [526/58]&gt; Fold09 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+## 10 &lt;split [526/58]&gt; Fold10 &lt;tibble [2 × 4]&gt; &lt;tibble [2 × 3]&gt;
+## 
+## There were issues with some computations:
+## 
+##   - Warning(s) x1: ! There are new levels in `county`: "Allen", "McDowell", "Chaves"...
+##   - Warning(s) x1: ! There are new levels in `county`: "Athens", "Cabell", "Doughert...
+##   - Warning(s) x1: ! There are new levels in `county`: "Forest", "Niagara", "Spencer...
+##   - Warning(s) x1: ! There are new levels in `county`: "Hampton City", "Randolph", "...
+##   - Warning(s) x1: ! There are new levels in `county`: "Macon", "Arlington", "Champa...
+##   - Warning(s) x1: ! There are new levels in `county`: "Oconee", "Cobb", "Vigo", "Ka...
+##   - Warning(s) x1: ! There are new levels in `county`: "Stark", "St. Lucie", "Ashlan...
+##   - Warning(s) x1: ! There are new levels in `county`: "Yuma", "Flathead", "Grafton"...
+##   - Warning(s) x1: ! There are new levels in `state`: "Maine" and "North Dakota". ℹ ...
+##   - Warning(s) x1: ! There are new levels in `state`: "Nevada". ℹ Consider using ste...
+##   - Warning(s) x1: the standard deviation is zero, The correlation matrix has missin...
+##   - Warning(s) x1: the standard deviation is zero, The correlation matrix has missin...
+##   - Warning(s) x3: the standard deviation is zero, The correlation matrix has missin...
+##   - Warning(s) x1: the standard deviation is zero, The correlation matrix has missin...
+##   - Warning(s) x1: the standard deviation is zero, The correlation matrix has missin...
+##   - Warning(s) x3: the standard deviation is zero, The correlation matrix has missin...
+## 
+## Run `show_notes(.Last.tune.result)` for more information.
+</pre>
 <p>
 We can now take a look at various performance metrics based on the fit of our cross validation "resamples".
 </p>
@@ -2908,6 +3448,19 @@ resample_fit
 collect_metrics(resample_fit)
   </input>
 </program>
+<pre>
+## # A tibble: 3 × 6
+##   .metric     .estimator   mean     n std_err .config             
+##   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+## 1 accuracy    multiclass 0.95       4  0.0191 Preprocessor1_Model1
+## 2 brier_class multiclass 0.0503     4  0.0178 Preprocessor1_Model1
+## 3 roc_auc     hand_till  0.964      4  0.0137 Preprocessor1_Model1
+## # A tibble: 2 × 6
+##   .metric .estimator  mean     n std_err .config             
+##   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+## 1 rmse    standard   2.09     10  0.123  Preprocessor1_Model1
+## 2 rsq     standard   0.321    10  0.0357 Preprocessor1_Model1
+</pre>
 <p>
 The accuracy appears to be 94 percent. Often the performance will be reduced using cross validation.
 </p>
@@ -2929,6 +3482,14 @@ cat_model_tune
 
   </input>
 </program>
+<pre>
+## Decision Tree Model Specification (classification)
+## 
+## Main Arguments:
+##   min_n = tune()
+## 
+## Computational engine: rpart
+</pre>
 <p>
 Now we can create a new workflow using the categorical recipe and the tuning model:
 </p>
@@ -2960,6 +3521,18 @@ tune::show_best(resample_fit, metric = "accuracy")
 
   </input>
 </program>
+<pre>
+## # A tibble: 3 × 6
+##   .metric     .estimator   mean     n std_err .config             
+##   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+## 1 accuracy    multiclass 0.95       4  0.0191 Preprocessor1_Model1
+## 2 brier_class multiclass 0.0503     4  0.0178 Preprocessor1_Model1
+## 3 roc_auc     hand_till  0.964      4  0.0137 Preprocessor1_Model1
+## # A tibble: 1 × 6
+##   .metric  .estimator  mean     n std_err .config             
+##   &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+## 1 accuracy multiclass  0.95     4  0.0191 Preprocessor1_Model1
+</pre>
 </subsubsection>
 </subsection>
 </section>
@@ -3236,6 +3809,10 @@ library(here)
 pm &lt;- readr::read_csv(here("data","tidy_data","pm25_data.csv"))
   </input>
 </program>
+<pre>
+## here() starts at /Users/carriewright/Documents/GitHub/Coursera/tidyversecourse
+## Rows: 876 Columns: 50
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-data-exploration-and-wrangling">
   <title>Data Exploration and Wrangling</title>
@@ -3249,6 +3826,60 @@ pm %&gt;%
   glimpse()
   </input>
 </program>
+<pre>
+## Rows: 876
+## Columns: 50
+## $ id                          &lt;dbl&gt; 1003.001, 1027.000, 1033.100, 1049.100, 10…
+## $ value                       &lt;dbl&gt; 9.597647, 10.800000, 11.212174, 11.659091,…
+## $ fips                        &lt;dbl&gt; 1003, 1027, 1033, 1049, 1055, 1069, 1073, …
+## $ lat                         &lt;dbl&gt; 30.49800, 33.28126, 34.75878, 34.28763, 33…
+## $ lon                         &lt;dbl&gt; -87.88141, -85.80218, -87.65056, -85.96830…
+## $ state                       &lt;chr&gt; "Alabama", "Alabama", "Alabama", "Alabama"…
+## $ county                      &lt;chr&gt; "Baldwin", "Clay", "Colbert", "DeKalb", "E…
+## $ city                        &lt;chr&gt; "Fairhope", "Ashland", "Muscle Shoals", "C…
+## $ CMAQ                        &lt;dbl&gt; 8.098836, 9.766208, 9.402679, 8.534772, 9.…
+## $ zcta                        &lt;dbl&gt; 36532, 36251, 35660, 35962, 35901, 36303, …
+## $ zcta_area                   &lt;dbl&gt; 190980522, 374132430, 16716984, 203836235,…
+## $ zcta_pop                    &lt;dbl&gt; 27829, 5103, 9042, 8300, 20045, 30217, 901…
+## $ imp_a500                    &lt;dbl&gt; 0.01730104, 1.96972318, 19.17301038, 5.782…
+## $ imp_a1000                   &lt;dbl&gt; 1.4096021, 0.8531574, 11.1448962, 3.867647…
+## $ imp_a5000                   &lt;dbl&gt; 3.3360118, 0.9851479, 15.1786154, 1.231141…
+## $ imp_a10000                  &lt;dbl&gt; 1.9879187, 0.5208189, 9.7253870, 1.0316469…
+## $ imp_a15000                  &lt;dbl&gt; 1.4386207, 0.3359198, 5.2472094, 0.9730444…
+## $ county_area                 &lt;dbl&gt; 4117521611, 1564252280, 1534877333, 201266…
+## $ county_pop                  &lt;dbl&gt; 182265, 13932, 54428, 71109, 104430, 10154…
+## $ log_dist_to_prisec          &lt;dbl&gt; 4.648181, 7.219907, 5.760131, 3.721489, 5.…
+## $ log_pri_length_5000         &lt;dbl&gt; 8.517193, 8.517193, 8.517193, 8.517193, 9.…
+## $ log_pri_length_10000        &lt;dbl&gt; 9.210340, 9.210340, 9.274303, 10.409411, 1…
+## $ log_pri_length_15000        &lt;dbl&gt; 9.630228, 9.615805, 9.658899, 11.173626, 1…
+## $ log_pri_length_25000        &lt;dbl&gt; 11.32735, 10.12663, 10.15769, 11.90959, 12…
+## $ log_prisec_length_500       &lt;dbl&gt; 7.295356, 6.214608, 8.611945, 7.310155, 8.…
+## $ log_prisec_length_1000      &lt;dbl&gt; 8.195119, 7.600902, 9.735569, 8.585843, 9.…
+## $ log_prisec_length_5000      &lt;dbl&gt; 10.815042, 10.170878, 11.770407, 10.214200…
+## $ log_prisec_length_10000     &lt;dbl&gt; 11.88680, 11.40554, 12.84066, 11.50894, 12…
+## $ log_prisec_length_15000     &lt;dbl&gt; 12.205723, 12.042963, 13.282656, 12.353663…
+## $ log_prisec_length_25000     &lt;dbl&gt; 13.41395, 12.79980, 13.79973, 13.55979, 13…
+## $ log_nei_2008_pm25_sum_10000 &lt;dbl&gt; 0.318035438, 3.218632928, 6.573127301, 0.0…
+## $ log_nei_2008_pm25_sum_15000 &lt;dbl&gt; 1.967358961, 3.218632928, 6.581917457, 3.2…
+## $ log_nei_2008_pm25_sum_25000 &lt;dbl&gt; 5.067308, 3.218633, 6.875900, 4.887665, 4.…
+## $ log_nei_2008_pm10_sum_10000 &lt;dbl&gt; 1.35588511, 3.31111648, 6.69187313, 0.0000…
+## $ log_nei_2008_pm10_sum_15000 &lt;dbl&gt; 2.26783411, 3.31111648, 6.70127741, 3.3500…
+## $ log_nei_2008_pm10_sum_25000 &lt;dbl&gt; 5.628728, 3.311116, 7.148858, 5.171920, 4.…
+## $ popdens_county              &lt;dbl&gt; 44.265706, 8.906492, 35.460814, 35.330814,…
+## $ popdens_zcta                &lt;dbl&gt; 145.716431, 13.639555, 540.887040, 40.7189…
+## $ nohs                        &lt;dbl&gt; 3.3, 11.6, 7.3, 14.3, 4.3, 5.8, 7.1, 2.7, …
+## $ somehs                      &lt;dbl&gt; 4.9, 19.1, 15.8, 16.7, 13.3, 11.6, 17.1, 6…
+## $ hs                          &lt;dbl&gt; 25.1, 33.9, 30.6, 35.0, 27.8, 29.8, 37.2, …
+## $ somecollege                 &lt;dbl&gt; 19.7, 18.8, 20.9, 14.9, 29.2, 21.4, 23.5, …
+## $ associate                   &lt;dbl&gt; 8.2, 8.0, 7.6, 5.5, 10.1, 7.9, 7.3, 8.0, 4…
+## $ bachelor                    &lt;dbl&gt; 25.3, 5.5, 12.7, 7.9, 10.0, 13.7, 5.9, 17.…
+## $ grad                        &lt;dbl&gt; 13.5, 3.1, 5.1, 5.8, 5.4, 9.8, 2.0, 8.7, 2…
+## $ pov                         &lt;dbl&gt; 6.1, 19.5, 19.0, 13.8, 8.8, 15.6, 25.5, 7.…
+## $ hs_orless                   &lt;dbl&gt; 33.3, 64.6, 53.7, 66.0, 45.4, 47.2, 61.4, …
+## $ urc2013                     &lt;dbl&gt; 4, 6, 4, 6, 4, 4, 1, 1, 1, 1, 1, 1, 1, 2, …
+## $ urc2006                     &lt;dbl&gt; 5, 6, 4, 5, 4, 4, 1, 1, 1, 1, 1, 1, 1, 2, …
+## $ aod                         &lt;dbl&gt; 37.36364, 34.81818, 36.00000, 33.08333, 43…
+</pre>
 <p>
 We can see that there are 876 monitors (rows) and that we have 50 total variables (columns) - one of which is the outcome variable. In this case, the outcome variable is called <c>value</c>.
 </p>
@@ -3281,6 +3912,114 @@ pm &lt;-pm %&gt;%
 glimpse(pm)
   </input>
 </program>
+<pre>
+## 
+## Attaching package: 'magrittr'
+## Rows: 876
+## Columns: 50
+## $ id                          &lt;fct&gt; 1003.001, 1027.0001, 1033.1002, 1049.1003,…
+## $ value                       &lt;dbl&gt; 9.597647, 10.800000, 11.212174, 11.659091,…
+## $ fips                        &lt;fct&gt; 1003, 1027, 1033, 1049, 1055, 1069, 1073, …
+## $ lat                         &lt;dbl&gt; 30.49800, 33.28126, 34.75878, 34.28763, 33…
+## $ lon                         &lt;dbl&gt; -87.88141, -85.80218, -87.65056, -85.96830…
+## $ state                       &lt;chr&gt; "Alabama", "Alabama", "Alabama", "Alabama"…
+## $ county                      &lt;chr&gt; "Baldwin", "Clay", "Colbert", "DeKalb", "E…
+## $ city                        &lt;chr&gt; "Fairhope", "Ashland", "Muscle Shoals", "C…
+## $ CMAQ                        &lt;dbl&gt; 8.098836, 9.766208, 9.402679, 8.534772, 9.…
+## $ zcta                        &lt;fct&gt; 36532, 36251, 35660, 35962, 35901, 36303, …
+## $ zcta_area                   &lt;dbl&gt; 190980522, 374132430, 16716984, 203836235,…
+## $ zcta_pop                    &lt;dbl&gt; 27829, 5103, 9042, 8300, 20045, 30217, 901…
+## $ imp_a500                    &lt;dbl&gt; 0.01730104, 1.96972318, 19.17301038, 5.782…
+## $ imp_a1000                   &lt;dbl&gt; 1.4096021, 0.8531574, 11.1448962, 3.867647…
+## $ imp_a5000                   &lt;dbl&gt; 3.3360118, 0.9851479, 15.1786154, 1.231141…
+## $ imp_a10000                  &lt;dbl&gt; 1.9879187, 0.5208189, 9.7253870, 1.0316469…
+## $ imp_a15000                  &lt;dbl&gt; 1.4386207, 0.3359198, 5.2472094, 0.9730444…
+## $ county_area                 &lt;dbl&gt; 4117521611, 1564252280, 1534877333, 201266…
+## $ county_pop                  &lt;dbl&gt; 182265, 13932, 54428, 71109, 104430, 10154…
+## $ log_dist_to_prisec          &lt;dbl&gt; 4.648181, 7.219907, 5.760131, 3.721489, 5.…
+## $ log_pri_length_5000         &lt;dbl&gt; 8.517193, 8.517193, 8.517193, 8.517193, 9.…
+## $ log_pri_length_10000        &lt;dbl&gt; 9.210340, 9.210340, 9.274303, 10.409411, 1…
+## $ log_pri_length_15000        &lt;dbl&gt; 9.630228, 9.615805, 9.658899, 11.173626, 1…
+## $ log_pri_length_25000        &lt;dbl&gt; 11.32735, 10.12663, 10.15769, 11.90959, 12…
+## $ log_prisec_length_500       &lt;dbl&gt; 7.295356, 6.214608, 8.611945, 7.310155, 8.…
+## $ log_prisec_length_1000      &lt;dbl&gt; 8.195119, 7.600902, 9.735569, 8.585843, 9.…
+## $ log_prisec_length_5000      &lt;dbl&gt; 10.815042, 10.170878, 11.770407, 10.214200…
+## $ log_prisec_length_10000     &lt;dbl&gt; 11.88680, 11.40554, 12.84066, 11.50894, 12…
+## $ log_prisec_length_15000     &lt;dbl&gt; 12.205723, 12.042963, 13.282656, 12.353663…
+## $ log_prisec_length_25000     &lt;dbl&gt; 13.41395, 12.79980, 13.79973, 13.55979, 13…
+## $ log_nei_2008_pm25_sum_10000 &lt;dbl&gt; 0.318035438, 3.218632928, 6.573127301, 0.0…
+## $ log_nei_2008_pm25_sum_15000 &lt;dbl&gt; 1.967358961, 3.218632928, 6.581917457, 3.2…
+## $ log_nei_2008_pm25_sum_25000 &lt;dbl&gt; 5.067308, 3.218633, 6.875900, 4.887665, 4.…
+## $ log_nei_2008_pm10_sum_10000 &lt;dbl&gt; 1.35588511, 3.31111648, 6.69187313, 0.0000…
+## $ log_nei_2008_pm10_sum_15000 &lt;dbl&gt; 2.26783411, 3.31111648, 6.70127741, 3.3500…
+## $ log_nei_2008_pm10_sum_25000 &lt;dbl&gt; 5.628728, 3.311116, 7.148858, 5.171920, 4.…
+## $ popdens_county              &lt;dbl&gt; 44.265706, 8.906492, 35.460814, 35.330814,…
+## $ popdens_zcta                &lt;dbl&gt; 145.716431, 13.639555, 540.887040, 40.7189…
+## $ nohs                        &lt;dbl&gt; 3.3, 11.6, 7.3, 14.3, 4.3, 5.8, 7.1, 2.7, …
+## $ somehs                      &lt;dbl&gt; 4.9, 19.1, 15.8, 16.7, 13.3, 11.6, 17.1, 6…
+## $ hs                          &lt;dbl&gt; 25.1, 33.9, 30.6, 35.0, 27.8, 29.8, 37.2, …
+## $ somecollege                 &lt;dbl&gt; 19.7, 18.8, 20.9, 14.9, 29.2, 21.4, 23.5, …
+## $ associate                   &lt;dbl&gt; 8.2, 8.0, 7.6, 5.5, 10.1, 7.9, 7.3, 8.0, 4…
+## $ bachelor                    &lt;dbl&gt; 25.3, 5.5, 12.7, 7.9, 10.0, 13.7, 5.9, 17.…
+## $ grad                        &lt;dbl&gt; 13.5, 3.1, 5.1, 5.8, 5.4, 9.8, 2.0, 8.7, 2…
+## $ pov                         &lt;dbl&gt; 6.1, 19.5, 19.0, 13.8, 8.8, 15.6, 25.5, 7.…
+## $ hs_orless                   &lt;dbl&gt; 33.3, 64.6, 53.7, 66.0, 45.4, 47.2, 61.4, …
+## $ urc2013                     &lt;dbl&gt; 4, 6, 4, 6, 4, 4, 1, 1, 1, 1, 1, 1, 1, 2, …
+## $ urc2006                     &lt;dbl&gt; 5, 6, 4, 5, 4, 4, 1, 1, 1, 1, 1, 1, 1, 2, …
+## $ aod                         &lt;dbl&gt; 37.36364, 34.81818, 36.00000, 33.08333, 43…
+## Rows: 876
+## Columns: 50
+## $ id                          &lt;fct&gt; 1003.001, 1027.0001, 1033.1002, 1049.1003,…
+## $ value                       &lt;dbl&gt; 9.597647, 10.800000, 11.212174, 11.659091,…
+## $ fips                        &lt;fct&gt; 1003, 1027, 1033, 1049, 1055, 1069, 1073, …
+## $ lat                         &lt;dbl&gt; 30.49800, 33.28126, 34.75878, 34.28763, 33…
+## $ lon                         &lt;dbl&gt; -87.88141, -85.80218, -87.65056, -85.96830…
+## $ state                       &lt;chr&gt; "Alabama", "Alabama", "Alabama", "Alabama"…
+## $ county                      &lt;chr&gt; "Baldwin", "Clay", "Colbert", "DeKalb", "E…
+## $ city                        &lt;chr&gt; "Fairhope", "Ashland", "Muscle Shoals", "C…
+## $ CMAQ                        &lt;dbl&gt; 8.098836, 9.766208, 9.402679, 8.534772, 9.…
+## $ zcta                        &lt;fct&gt; 36532, 36251, 35660, 35962, 35901, 36303, …
+## $ zcta_area                   &lt;dbl&gt; 190980522, 374132430, 16716984, 203836235,…
+## $ zcta_pop                    &lt;dbl&gt; 27829, 5103, 9042, 8300, 20045, 30217, 901…
+## $ imp_a500                    &lt;dbl&gt; 0.01730104, 1.96972318, 19.17301038, 5.782…
+## $ imp_a1000                   &lt;dbl&gt; 1.4096021, 0.8531574, 11.1448962, 3.867647…
+## $ imp_a5000                   &lt;dbl&gt; 3.3360118, 0.9851479, 15.1786154, 1.231141…
+## $ imp_a10000                  &lt;dbl&gt; 1.9879187, 0.5208189, 9.7253870, 1.0316469…
+## $ imp_a15000                  &lt;dbl&gt; 1.4386207, 0.3359198, 5.2472094, 0.9730444…
+## $ county_area                 &lt;dbl&gt; 4117521611, 1564252280, 1534877333, 201266…
+## $ county_pop                  &lt;dbl&gt; 182265, 13932, 54428, 71109, 104430, 10154…
+## $ log_dist_to_prisec          &lt;dbl&gt; 4.648181, 7.219907, 5.760131, 3.721489, 5.…
+## $ log_pri_length_5000         &lt;dbl&gt; 8.517193, 8.517193, 8.517193, 8.517193, 9.…
+## $ log_pri_length_10000        &lt;dbl&gt; 9.210340, 9.210340, 9.274303, 10.409411, 1…
+## $ log_pri_length_15000        &lt;dbl&gt; 9.630228, 9.615805, 9.658899, 11.173626, 1…
+## $ log_pri_length_25000        &lt;dbl&gt; 11.32735, 10.12663, 10.15769, 11.90959, 12…
+## $ log_prisec_length_500       &lt;dbl&gt; 7.295356, 6.214608, 8.611945, 7.310155, 8.…
+## $ log_prisec_length_1000      &lt;dbl&gt; 8.195119, 7.600902, 9.735569, 8.585843, 9.…
+## $ log_prisec_length_5000      &lt;dbl&gt; 10.815042, 10.170878, 11.770407, 10.214200…
+## $ log_prisec_length_10000     &lt;dbl&gt; 11.88680, 11.40554, 12.84066, 11.50894, 12…
+## $ log_prisec_length_15000     &lt;dbl&gt; 12.205723, 12.042963, 13.282656, 12.353663…
+## $ log_prisec_length_25000     &lt;dbl&gt; 13.41395, 12.79980, 13.79973, 13.55979, 13…
+## $ log_nei_2008_pm25_sum_10000 &lt;dbl&gt; 0.318035438, 3.218632928, 6.573127301, 0.0…
+## $ log_nei_2008_pm25_sum_15000 &lt;dbl&gt; 1.967358961, 3.218632928, 6.581917457, 3.2…
+## $ log_nei_2008_pm25_sum_25000 &lt;dbl&gt; 5.067308, 3.218633, 6.875900, 4.887665, 4.…
+## $ log_nei_2008_pm10_sum_10000 &lt;dbl&gt; 1.35588511, 3.31111648, 6.69187313, 0.0000…
+## $ log_nei_2008_pm10_sum_15000 &lt;dbl&gt; 2.26783411, 3.31111648, 6.70127741, 3.3500…
+## $ log_nei_2008_pm10_sum_25000 &lt;dbl&gt; 5.628728, 3.311116, 7.148858, 5.171920, 4.…
+## $ popdens_county              &lt;dbl&gt; 44.265706, 8.906492, 35.460814, 35.330814,…
+## $ popdens_zcta                &lt;dbl&gt; 145.716431, 13.639555, 540.887040, 40.7189…
+## $ nohs                        &lt;dbl&gt; 3.3, 11.6, 7.3, 14.3, 4.3, 5.8, 7.1, 2.7, …
+## $ somehs                      &lt;dbl&gt; 4.9, 19.1, 15.8, 16.7, 13.3, 11.6, 17.1, 6…
+## $ hs                          &lt;dbl&gt; 25.1, 33.9, 30.6, 35.0, 27.8, 29.8, 37.2, …
+## $ somecollege                 &lt;dbl&gt; 19.7, 18.8, 20.9, 14.9, 29.2, 21.4, 23.5, …
+## $ associate                   &lt;dbl&gt; 8.2, 8.0, 7.6, 5.5, 10.1, 7.9, 7.3, 8.0, 4…
+## $ bachelor                    &lt;dbl&gt; 25.3, 5.5, 12.7, 7.9, 10.0, 13.7, 5.9, 17.…
+## $ grad                        &lt;dbl&gt; 13.5, 3.1, 5.1, 5.8, 5.4, 9.8, 2.0, 8.7, 2…
+## $ pov                         &lt;dbl&gt; 6.1, 19.5, 19.0, 13.8, 8.8, 15.6, 25.5, 7.…
+## $ hs_orless                   &lt;dbl&gt; 33.3, 64.6, 53.7, 66.0, 45.4, 47.2, 61.4, …
+## $ urc2013                     &lt;dbl&gt; 4, 6, 4, 6, 4, 4, 1, 1, 1, 1, 1, 1, 1, 2, …
+## $ urc2006                     &lt;dbl&gt; 5, 6, 4, 5, 4, 4, 1, 1, 1, 1, 1, 1, 1, 2, …
+## $ aod                         &lt;dbl&gt; 37.36364, 34.81818, 36.00000, 33.08333, 43…
+</pre>
 <p>
 Great! Now we can see that these variables are now factors as indicated by <c>&lt;fct&gt;</c> after the variable name.
 </p>
@@ -3326,6 +4065,22 @@ pm %&gt;%
   distinct(state) 
   </input>
 </program>
+<pre>
+## # A tibble: 49 × 1
+##    state               
+##    &lt;chr&gt;               
+##  1 Alabama             
+##  2 Arizona             
+##  3 Arkansas            
+##  4 California          
+##  5 Colorado            
+##  6 Connecticut         
+##  7 Delaware            
+##  8 District Of Columbia
+##  9 Florida             
+## 10 Georgia             
+## # ℹ 39 more rows
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-evaluate-correlation">
   <title>Evaluate Correlation</title>
@@ -3355,6 +4110,9 @@ PM_cor &lt;- cor(pm %&gt;% dplyr::select_if(is.numeric))
 corrplot::corrplot(PM_cor, tl.cex = 0.5)
   </input>
 </program>
+<pre>
+## corrplot 0.95 loaded
+</pre>
 <p>
 We can see that the development variables (<c>imp</c>) variables are correlated with each other as we might expect. We also see that the road density variables seem to be correlated with each other, and the emission variables seem to be correlated with each other.
 </p>
@@ -3375,6 +4133,11 @@ pm_split &lt;- rsample::initial_split(data = pm, prop = 2/3)
 pm_split
   </input>
 </program>
+<pre>
+## ── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──
+## &lt;Training/Testing/Total&gt;
+## &lt;584/292/876&gt;
+</pre>
 <p>
 We can see the number of monitors in our training, testing, and original data by typing in the name of our split object. The result will look like this: &lt;training data sample number, testing data sample number, original sample number&gt;
 </p>
@@ -3418,6 +4181,11 @@ simple_rec &lt;- train_pm %&gt;%
 simple_rec
   </input>
 </program>
+<pre>
+##
+##
+##
+</pre>
 <p>
 Now, let's get back to the <c>id</c> variable. Instead of including it as a predictor variable, we could also use the <c>update_role()</c> function of the <c>recipes</c> package.
 </p>
@@ -3461,6 +4229,9 @@ simple_rec %&gt;%
   
   </input>
 </program>
+<pre>
+##
+</pre>
 <p>
 Our <c>fips</c> variable includes a numeric code for state and county - and therefore is essentially a proxy for county. Since we already have county, we will just use it and keep the <c>fips</c> ID as another ID variable.
 </p>
@@ -3477,6 +4248,9 @@ simple_rec %&gt;%
   update_role("fips", new_role = "county id")
   </input>
 </program>
+<pre>
+##
+</pre>
 <p>
 We also want to remove variables that appear to be redundant and are highly correlated with others, as we know from our exploratory data analysis that many of our variables are correlated with one another. We can do this using the <c>step_corr()</c> function.
 </p>
@@ -3489,6 +4263,9 @@ simple_rec %&gt;%
   step_corr(all_predictors(), - CMAQ, - aod)
   </input>
 </program>
+<pre>
+##
+</pre>
 <p>
 It is also a good idea to remove variables with near-zero variance, which can be done with the <c>step_nzv()</c> function.
 </p>
@@ -3501,6 +4278,9 @@ simple_rec %&gt;%
   step_nzv(all_predictors(), - CMAQ, - aod)
   </input>
 </program>
+<pre>
+##
+</pre>
 <p>
 Let's put all this together now.
 </p>
@@ -3538,6 +4318,10 @@ prepped_rec &lt;- prep(simple_rec, verbose = TRUE, retain = TRUE)
 names(prepped_rec)
   </input>
 </program>
+<pre>
+## oper 1 step dummy [training] 
+## oper 2 step corr [training]
+</pre>
 <p>
 Since we retained our preprocessed training data (i.e. <c>prep(retain=TRUE)</c>), we can take a look at it by using the <c>bake()</c> function of the <c>recipes</c> package like this (this previously used the <c>juice()</c> function):
 </p>
@@ -3547,6 +4331,87 @@ preproc_train &lt;- bake(prepped_rec, new_data = NULL)
 glimpse(preproc_train)
   </input>
 </program>
+<pre>
+## Rows: 584
+## Columns: 37
+## $ id                          &lt;fct&gt; 18003.0004, 55041.0007, 6065.1003, 39009.0…
+## $ fips                        &lt;fct&gt; 18003, 55041, 6065, 39009, 39061, 24510, 6…
+## $ lat                         &lt;dbl&gt; 41.09497, 45.56300, 33.94603, 39.44217, 39…
+## $ lon                         &lt;dbl&gt; -85.10182, -88.80880, -117.40063, -81.9088…
+## $ CMAQ                        &lt;dbl&gt; 10.383231, 3.411247, 11.404085, 7.971165, …
+## $ zcta_area                   &lt;dbl&gt; 16696709, 370280916, 41957182, 132383592, …
+## $ zcta_pop                    &lt;dbl&gt; 21306, 4141, 44001, 1115, 6566, 934, 41192…
+## $ imp_a500                    &lt;dbl&gt; 28.9783737, 0.0000000, 30.3901384, 0.00000…
+## $ imp_a15000                  &lt;dbl&gt; 13.0547959, 0.3676404, 23.7457506, 0.33079…
+## $ county_area                 &lt;dbl&gt; 1702419942, 2626421270, 18664696661, 13043…
+## $ county_pop                  &lt;dbl&gt; 355329, 9304, 2189641, 64757, 802374, 6209…
+## $ log_dist_to_prisec          &lt;dbl&gt; 6.621891, 8.415468, 7.419762, 6.344681, 5.…
+## $ log_pri_length_5000         &lt;dbl&gt; 8.517193, 8.517193, 10.150514, 8.517193, 9…
+## $ log_pri_length_25000        &lt;dbl&gt; 12.77378, 10.16440, 13.14450, 10.12663, 13…
+## $ log_prisec_length_500       &lt;dbl&gt; 6.214608, 6.214608, 6.214608, 6.214608, 7.…
+## $ log_prisec_length_1000      &lt;dbl&gt; 9.240294, 7.600902, 7.600902, 8.793450, 8.…
+## $ log_prisec_length_5000      &lt;dbl&gt; 11.485093, 9.425537, 10.155961, 10.562382,…
+## $ log_prisec_length_10000     &lt;dbl&gt; 12.75582, 11.44833, 11.59563, 11.69093, 12…
+## $ log_nei_2008_pm10_sum_10000 &lt;dbl&gt; 4.91110140, 3.86982666, 4.03184660, 0.0000…
+## $ log_nei_2008_pm10_sum_15000 &lt;dbl&gt; 5.399131, 3.883689, 5.459257, 0.000000, 6.…
+## $ log_nei_2008_pm10_sum_25000 &lt;dbl&gt; 5.816047, 3.887264, 6.884537, 3.765635, 6.…
+## $ popdens_county              &lt;dbl&gt; 208.719947, 3.542463, 117.314577, 49.64834…
+## $ popdens_zcta                &lt;dbl&gt; 1276.059851, 11.183401, 1048.711994, 8.422…
+## $ nohs                        &lt;dbl&gt; 4.3, 5.1, 3.7, 4.8, 2.1, 0.0, 2.5, 7.7, 0.…
+## $ somehs                      &lt;dbl&gt; 6.7, 10.4, 5.9, 11.5, 10.5, 0.0, 4.3, 7.5,…
+## $ hs                          &lt;dbl&gt; 31.7, 40.3, 17.9, 47.3, 30.0, 0.0, 17.8, 2…
+## $ somecollege                 &lt;dbl&gt; 27.2, 24.1, 26.3, 20.0, 27.1, 0.0, 26.1, 2…
+## $ associate                   &lt;dbl&gt; 8.2, 7.4, 8.3, 3.1, 8.5, 71.4, 13.2, 7.6, …
+## $ bachelor                    &lt;dbl&gt; 15.0, 8.6, 20.2, 9.8, 14.2, 0.0, 23.4, 17.…
+## $ grad                        &lt;dbl&gt; 6.8, 4.2, 17.7, 3.5, 7.6, 28.6, 12.6, 12.3…
+## $ pov                         &lt;dbl&gt; 13.500, 18.900, 6.700, 14.400, 12.500, 3.5…
+## $ hs_orless                   &lt;dbl&gt; 42.7, 55.8, 27.5, 63.6, 42.6, 0.0, 24.6, 3…
+## $ urc2006                     &lt;dbl&gt; 3, 6, 1, 5, 1, 1, 2, 1, 2, 6, 4, 4, 4, 4, …
+## $ aod                         &lt;dbl&gt; 54.11111, 31.16667, 83.12500, 33.36364, 50…
+## $ value                       &lt;dbl&gt; 11.699065, 6.956780, 13.289744, 10.742000,…
+## $ state_California            &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, …
+## $ city_Not.in.a.city          &lt;dbl&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, …
+## Rows: 584
+## Columns: 38
+## $ id                          &lt;fct&gt; 18003.0004, 55041.0007, 6065.1003, 39009.0…
+## $ value                       &lt;dbl&gt; 11.699065, 6.956780, 13.289744, 10.742000,…
+## $ fips                        &lt;fct&gt; 18003, 55041, 6065, 39009, 39061, 24510, 6…
+## $ lat                         &lt;dbl&gt; 41.09497, 45.56300, 33.94603, 39.44217, 39…
+## $ lon                         &lt;dbl&gt; -85.10182, -88.80880, -117.40063, -81.9088…
+## $ CMAQ                        &lt;dbl&gt; 10.383231, 3.411247, 11.404085, 7.971165, …
+## $ zcta_area                   &lt;dbl&gt; 16696709, 370280916, 41957182, 132383592, …
+## $ zcta_pop                    &lt;dbl&gt; 21306, 4141, 44001, 1115, 6566, 934, 41192…
+## $ imp_a500                    &lt;dbl&gt; 28.9783737, 0.0000000, 30.3901384, 0.00000…
+## $ imp_a15000                  &lt;dbl&gt; 13.0547959, 0.3676404, 23.7457506, 0.33079…
+## $ county_area                 &lt;dbl&gt; 1702419942, 2626421270, 18664696661, 13043…
+## $ county_pop                  &lt;dbl&gt; 355329, 9304, 2189641, 64757, 802374, 6209…
+## $ log_dist_to_prisec          &lt;dbl&gt; 6.621891, 8.415468, 7.419762, 6.344681, 5.…
+## $ log_pri_length_5000         &lt;dbl&gt; 8.517193, 8.517193, 10.150514, 8.517193, 9…
+## $ log_pri_length_25000        &lt;dbl&gt; 12.77378, 10.16440, 13.14450, 10.12663, 13…
+## $ log_prisec_length_500       &lt;dbl&gt; 6.214608, 6.214608, 6.214608, 6.214608, 7.…
+## $ log_prisec_length_1000      &lt;dbl&gt; 9.240294, 7.600902, 7.600902, 8.793450, 8.…
+## $ log_prisec_length_5000      &lt;dbl&gt; 11.485093, 9.425537, 10.155961, 10.562382,…
+## $ log_prisec_length_10000     &lt;dbl&gt; 12.75582, 11.44833, 11.59563, 11.69093, 12…
+## $ log_prisec_length_25000     &lt;dbl&gt; 13.98749, 13.15082, 13.44293, 13.58697, 14…
+## $ log_nei_2008_pm10_sum_10000 &lt;dbl&gt; 4.91110140, 3.86982666, 4.03184660, 0.0000…
+## $ log_nei_2008_pm10_sum_15000 &lt;dbl&gt; 5.399131, 3.883689, 5.459257, 0.000000, 6.…
+## $ log_nei_2008_pm10_sum_25000 &lt;dbl&gt; 5.816047, 3.887264, 6.884537, 3.765635, 6.…
+## $ popdens_county              &lt;dbl&gt; 208.719947, 3.542463, 117.314577, 49.64834…
+## $ popdens_zcta                &lt;dbl&gt; 1276.059851, 11.183401, 1048.711994, 8.422…
+## $ nohs                        &lt;dbl&gt; 4.3, 5.1, 3.7, 4.8, 2.1, 0.0, 2.5, 7.7, 0.…
+## $ somehs                      &lt;dbl&gt; 6.7, 10.4, 5.9, 11.5, 10.5, 0.0, 4.3, 7.5,…
+## $ hs                          &lt;dbl&gt; 31.7, 40.3, 17.9, 47.3, 30.0, 0.0, 17.8, 2…
+## $ somecollege                 &lt;dbl&gt; 27.2, 24.1, 26.3, 20.0, 27.1, 0.0, 26.1, 2…
+## $ associate                   &lt;dbl&gt; 8.2, 7.4, 8.3, 3.1, 8.5, 71.4, 13.2, 7.6, …
+## $ bachelor                    &lt;dbl&gt; 15.0, 8.6, 20.2, 9.8, 14.2, 0.0, 23.4, 17.…
+## $ grad                        &lt;dbl&gt; 6.8, 4.2, 17.7, 3.5, 7.6, 28.6, 12.6, 12.3…
+## $ pov                         &lt;dbl&gt; 13.500, 18.900, 6.700, 14.400, 12.500, 3.5…
+## $ hs_orless                   &lt;dbl&gt; 42.7, 55.8, 27.5, 63.6, 42.6, 0.0, 24.6, 3…
+## $ urc2006                     &lt;dbl&gt; 3, 6, 1, 5, 1, 1, 2, 1, 2, 6, 4, 4, 4, 4, …
+## $ aod                         &lt;dbl&gt; 54.11111, 31.16667, 83.12500, 33.36364, 50…
+## $ state_California            &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, …
+## $ city_Not.in.a.city          &lt;dbl&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, …
+</pre>
 <p>
 Notice that this requires the <c>new_data = NULL</c> argument when we are using the training data.
 </p>
@@ -3602,6 +4467,10 @@ dim(dplyr::setdiff(traincities, testcities))
 dim(dplyr::intersect(traincities, testcities))
   </input>
 </program>
+<pre>
+## [1] 381   1
+## [1] 55  1
+</pre>
 <p>
 Indeed, there are lots of different cities in our test data that are not in our training data!
 </p>
@@ -3615,6 +4484,28 @@ pm %&gt;%
                           city != "Not in a city" ~ "In a city"))
   </input>
 </program>
+<pre>
+## # A tibble: 876 × 50
+##    id        value fips    lat   lon state   county  city   CMAQ zcta  zcta_area
+##    &lt;fct&gt;     &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;
+##  1 1003.001   9.60 1003   30.5 -87.9 Alabama Baldwin In a…  8.10 36532 190980522
+##  2 1027.0001 10.8  1027   33.3 -85.8 Alabama Clay    In a…  9.77 36251 374132430
+##  3 1033.1002 11.2  1033   34.8 -87.7 Alabama Colbert In a…  9.40 35660  16716984
+##  4 1049.1003 11.7  1049   34.3 -86.0 Alabama DeKalb  In a…  8.53 35962 203836235
+##  5 1055.001  12.4  1055   34.0 -86.0 Alabama Etowah  In a…  9.24 35901 154069359
+##  6 1069.0003 10.5  1069   31.2 -85.4 Alabama Houston In a…  9.12 36303 162685124
+##  7 1073.0023 15.6  1073   33.6 -86.8 Alabama Jeffer… In a… 10.2  35207  26929603
+##  8 1073.1005 12.4  1073   33.3 -87.0 Alabama Jeffer… Not … 10.2  35111 166239542
+##  9 1073.1009 11.1  1073   33.5 -87.3 Alabama Jeffer… Not …  8.16 35444 385566685
+## 10 1073.101  13.1  1073   33.5 -86.5 Alabama Jeffer… In a…  9.30 35094 148994881
+## # ℹ 866 more rows
+## # ℹ 39 more variables: zcta_pop &lt;dbl&gt;, imp_a500 &lt;dbl&gt;, imp_a1000 &lt;dbl&gt;,
+## #   imp_a5000 &lt;dbl&gt;, imp_a10000 &lt;dbl&gt;, imp_a15000 &lt;dbl&gt;, county_area &lt;dbl&gt;,
+## #   county_pop &lt;dbl&gt;, log_dist_to_prisec &lt;dbl&gt;, log_pri_length_5000 &lt;dbl&gt;,
+## #   log_pri_length_10000 &lt;dbl&gt;, log_pri_length_15000 &lt;dbl&gt;,
+## #   log_pri_length_25000 &lt;dbl&gt;, log_prisec_length_500 &lt;dbl&gt;,
+## #   log_prisec_length_1000 &lt;dbl&gt;, log_prisec_length_5000 &lt;dbl&gt;, …
+</pre>
 <p>
 Alternatively you could create a <url href="https://recipes.tidymodels.org/articles/Custom_Steps.html">custom step function</url> to do this and add this to your recipe, but that is beyond the scope of this case study.
 </p>
@@ -3643,6 +4534,10 @@ pm_split
  test_pm &lt;-rsample::testing(pm_split)
   </input>
 </program>
+<pre>
+## &lt;Training/Testing/Total&gt;
+## &lt;584/292/876&gt;
+</pre>
 <p>
 Now we will create a new recipe:
 </p>
@@ -3671,6 +4566,10 @@ baked_test_pm &lt;- recipes::bake(prepped_rec, new_data = test_pm)
 glimpse(baked_test_pm)
   </input>
 </program>
+<pre>
+## oper 1 step dummy [training] 
+## oper 2 step corr [training]
+</pre>
 <p>
 Great, now we no longer have <c>NA</c> values!
 </p>
@@ -3690,6 +4589,11 @@ PM_model &lt;- parsnip::linear_reg() # PM was used in the name for particulate m
 PM_model
   </input>
 </program>
+<pre>
+## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
+</pre>
 <p>
 OK. So far, all we have defined is that we want to use a linear regression... Let's tell <c>parsnip</c> more about what we want.
 </p>
@@ -3708,6 +4612,11 @@ lm_PM_model &lt;-
 lm_PM_model
   </input>
 </program>
+<pre>
+## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
+</pre>
 <p>
 Here, we aim to predict the air pollution. You can do this with the <c>set_mode()</c> function of the <c>parsnip</c> package, by using either <c>set_mode("classification")</c> or <c>set_mode("regression")</c>.
 </p>
@@ -3735,6 +4644,23 @@ PM_wflow &lt;-workflows::workflow() %&gt;%
 PM_wflow
   </input>
 </program>
+<pre>
+## ══ Workflow ════════════════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: linear_reg()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 3 Recipe Steps
+## 
+## • step_dummy()
+## • step_corr()
+## • step_nzv()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
+</pre>
 <p>
 Ah, nice. Notice how it tells us about both our preprocessing steps and our model specifications.
 </p>
@@ -3747,6 +4673,63 @@ PM_wflow_fit &lt;- parsnip::fit(PM_wflow, data = train_pm)
 PM_wflow_fit
   </input>
 </program>
+<pre>
+## Warning in stats::cor(x, use = use, method = method): the standard deviation is
+## zero
+## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: linear_reg()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 3 Recipe Steps
+## 
+## • step_dummy()
+## • step_corr()
+## • step_nzv()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## 
+## Call:
+## stats::lm(formula = ..y ~ ., data = data)
+## 
+## Coefficients:
+##                 (Intercept)                          lat  
+##                   2.936e+02                    3.261e-02  
+##                         lon                         CMAQ  
+##                   1.586e-02                    2.463e-01  
+##                   zcta_area                     zcta_pop  
+##                  -3.433e-10                    1.013e-05  
+##                    imp_a500                   imp_a15000  
+##                   5.064e-03                   -3.066e-03  
+##                 county_area                   county_pop  
+##                  -2.324e-11                   -7.576e-08  
+##          log_dist_to_prisec          log_pri_length_5000  
+##                   6.214e-02                   -2.006e-01  
+##        log_pri_length_25000        log_prisec_length_500  
+##                  -5.411e-02                    2.204e-01  
+##      log_prisec_length_1000       log_prisec_length_5000  
+##                   1.154e-01                    2.374e-01  
+##     log_prisec_length_10000      log_prisec_length_25000  
+##                  -3.436e-02                    5.224e-01  
+## log_nei_2008_pm10_sum_10000  log_nei_2008_pm10_sum_15000  
+##                   1.829e-01                   -2.355e-02  
+## log_nei_2008_pm10_sum_25000               popdens_county  
+##                   2.403e-02                    2.203e-05  
+##                popdens_zcta                         nohs  
+##                  -2.132e-06                   -2.983e+00  
+##                      somehs                           hs  
+##                  -2.956e+00                   -2.962e+00  
+##                 somecollege                    associate  
+##                  -2.967e+00                   -2.999e+00  
+##                    bachelor                         grad  
+##                  -2.979e+00                   -2.978e+00  
+##                         pov                    hs_orless  
+##                   1.859e-03                           NA  
+##                     urc2006                          aod  
+##                   2.577e-01                    1.535e-02  
+##            state_California           city_Not.in.a.city  
+##                   3.114e+00                   -4.250e-02
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-assessing-the-model-fit">
   <title>Assessing the Model Fit</title>
@@ -3770,6 +4753,22 @@ wflowoutput &lt;- PM_wflow_fit %&gt;%
   wflowoutput
   </input>
 </program>
+<pre>
+## # A tibble: 36 × 5
+##    term         estimate std.error statistic       p.value
+##    &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+##  1 (Intercept)  2.94e+ 2  1.18e+ 2     2.49  0.0130       
+##  2 lat          3.26e- 2  2.28e- 2     1.43  0.153        
+##  3 lon          1.59e- 2  1.01e- 2     1.58  0.115        
+##  4 CMAQ         2.46e- 1  3.97e- 2     6.20  0.00000000108
+##  5 zcta_area   -3.43e-10  1.60e-10    -2.15  0.0320       
+##  6 zcta_pop     1.01e- 5  5.33e- 6     1.90  0.0578       
+##  7 imp_a500     5.06e- 3  7.42e- 3     0.683 0.495        
+##  8 imp_a15000  -3.07e- 3  1.16e- 2    -0.263 0.792        
+##  9 county_area -2.32e-11  1.97e-11    -1.18  0.238        
+## 10 county_pop  -7.58e- 8  9.29e- 8    -0.815 0.415        
+## # ℹ 26 more rows
+</pre>
 <p>
 We have fit our model on our training data, which means we have created a model to predict values of air pollution based on the predictors that we have included. Yay!
 </p>
@@ -3791,6 +4790,10 @@ PM_wflow_fit %&gt;%
   vip(num_features = 10)
   </input>
 </program>
+<pre>
+## 
+## Attaching package: 'vip'
+</pre>
 <p>
 The state in which the monitor was located (in this case if it was in California or not),the CMAQ model, and the aod satellite information appear to be the most important for predicting the air pollution at a given monitor.
 </p>
@@ -3818,6 +4821,10 @@ wf_fitted_values &lt;- wf_fit$fit$fitted.values
 head(wf_fitted_values)
   </input>
 </program>
+<pre>
+##         1         2         3         4         5         6 
+## 12.186782  9.139406 12.646119 10.377628 11.909934  9.520860
+</pre>
 <p>
 Alternatively, we can get the fitted values using the <c>augment()</c> function of the <c>broom</c> package using the output from <c>workflows</c>:
 </p>
@@ -3843,6 +4850,25 @@ values_pred_train
 
   </input>
 </program>
+<pre>
+## Warning in predict.lm(object = object$fit, newdata = new_data, type =
+## "response", : prediction from rank-deficient fit; consider predict(.,
+## rankdeficient="NA")
+## # A tibble: 584 × 5
+##    .pred value fips  county           id        
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt; &lt;chr&gt;            &lt;fct&gt;     
+##  1 12.2  11.7  18003 Allen            18003.0004
+##  2  9.14  6.96 55041 Forest           55041.0007
+##  3 12.6  13.3  6065  Riverside        6065.1003 
+##  4 10.4  10.7  39009 Athens           39009.0003
+##  5 11.9  14.5  39061 Hamilton         39061.8001
+##  6  9.52 12.2  24510 Baltimore (City) 24510.0006
+##  7 12.6  11.2  6061  Placer           6061.0006 
+##  8 10.3   6.98 6065  Riverside        6065.5001 
+##  9  8.74  6.61 44003 Kent             44003.0002
+## 10 10.0  11.6  37111 McDowell         37111.0004
+## # ℹ 574 more rows
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-visualizing-model-performance">
   <title>Visualizing Model Performance</title>
@@ -3886,6 +4912,14 @@ yardstick::metrics(wf_fitted_values,
                    truth = value, estimate = .fitted)
   </input>
 </program>
+<pre>
+## # A tibble: 3 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard       1.98 
+## 2 rsq     standard       0.392
+## 3 mae     standard       1.47
+</pre>
 <p>
 Alternatively if you only wanted one metric you could use the <c>mae()</c>, <c>rsq()</c>, or <c>rmse()</c> functions, respectively.
 </p>
@@ -3895,6 +4929,12 @@ yardstick::rmse(wf_fitted_values,
                truth = value, estimate = .fitted)
   </input>
 </program>
+<pre>
+## # A tibble: 1 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard        1.98
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-assessing-model-performance-on-v-folds-using-tune">
   <title>Assessing Model Performance on $v$-folds Using <c>tune</c></title>
@@ -3913,6 +4953,61 @@ vfold_pm
 pull(vfold_pm, splits)
   </input>
 </program>
+<pre>
+## #  10-fold cross-validation 
+## # A tibble: 10 × 2
+##    splits           id    
+##    &lt;list&gt;           &lt;chr&gt; 
+##  1 &lt;split [525/59]&gt; Fold01
+##  2 &lt;split [525/59]&gt; Fold02
+##  3 &lt;split [525/59]&gt; Fold03
+##  4 &lt;split [525/59]&gt; Fold04
+##  5 &lt;split [526/58]&gt; Fold05
+##  6 &lt;split [526/58]&gt; Fold06
+##  7 &lt;split [526/58]&gt; Fold07
+##  8 &lt;split [526/58]&gt; Fold08
+##  9 &lt;split [526/58]&gt; Fold09
+## 10 &lt;split [526/58]&gt; Fold10
+## [[1]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;525/59/584&gt;
+## 
+## [[2]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;525/59/584&gt;
+## 
+## [[3]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;525/59/584&gt;
+## 
+## [[4]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;525/59/584&gt;
+## 
+## [[5]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;526/58/584&gt;
+## 
+## [[6]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;526/58/584&gt;
+## 
+## [[7]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;526/58/584&gt;
+## 
+## [[8]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;526/58/584&gt;
+## 
+## [[9]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;526/58/584&gt;
+## 
+## [[10]]
+## &lt;Analysis/Assess/Total&gt;
+## &lt;526/58/584&gt;
+</pre>
 <p>
 We can fit the model to our cross validation folds using the <c>fit_resamples()</c> function of the <c>tune</c> package, by specifying our <c>workflow</c> object and the cross validation fold object we just created. See <url href="https://tidymodels.github.io/tune/reference/fit_resamples.html">here</url> for more information.
 </p>
@@ -4003,6 +5098,15 @@ PMtree_model &lt;-
 PMtree_model
   </input>
 </program>
+<pre>
+## Random Forest Model Specification (unknown mode)
+## 
+## Main Arguments:
+##   mtry = 10
+##   min_n = 4
+## 
+## Computational engine: ranger
+</pre>
 <p>
 Next, we set the engine and mode:
 </p>
@@ -4026,6 +5130,16 @@ RF_PM_model &lt;-
 RF_PM_model
   </input>
 </program>
+<pre>
+## randomForest 4.7-1.2
+## Random Forest Model Specification (regression)
+## 
+## Main Arguments:
+##   mtry = 10
+##   min_n = 4
+## 
+## Computational engine: randomForest
+</pre>
 <p>
 Then, we put this all together into a <c>workflow</c>:
 </p>
@@ -4037,6 +5151,30 @@ RF_wflow &lt;- workflows::workflow() %&gt;%
 RF_wflow
   </input>
 </program>
+<pre>
+## ══ Workflow ════════════════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: rand_forest()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 6 Recipe Steps
+## 
+## • step_novel()
+## • step_string2factor()
+## • step_rm()
+## • step_rm()
+## • step_corr()
+## • step_nzv()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## Random Forest Model Specification (regression)
+## 
+## Main Arguments:
+##   mtry = 10
+##   min_n = 4
+## 
+## Computational engine: randomForest
+</pre>
 <p>
 Finally, we fit the data to the model:
 </p>
@@ -4045,6 +5183,32 @@ Finally, we fit the data to the model:
 RF_wflow_fit &lt;- parsnip::fit(RF_wflow, data = train_pm)
   </input>
 </program>
+<pre>
+## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: rand_forest()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 6 Recipe Steps
+## 
+## • step_novel()
+## • step_string2factor()
+## • step_rm()
+## • step_rm()
+## • step_corr()
+## • step_nzv()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## 
+## Call:
+##  randomForest(x = maybe_data_frame(x), y = y, mtry = min_cols(~10,      x), nodesize = min_rows(~4, x)) 
+##                Type of random forest: regression
+##                      Number of trees: 500
+## No. of variables tried at each split: 10
+## 
+##           Mean of squared residuals: 2.66909
+##                     % Var explained: 58.74
+</pre>
 <program language="r">
   <input>
 RF_wflow_fit
@@ -4114,6 +5278,15 @@ RF_PM_model &lt;-
 RF_PM_model
   </input>
 </program>
+<pre>
+## Random Forest Model Specification (regression)
+## 
+## Main Arguments:
+##   mtry = 10
+##   min_n = 4
+## 
+## Computational engine: randomForest
+</pre>
 <p>
 Now instead of specifying a value for the <c>mtry</c> and <c>min_n</c> arguments, we can use the <c>tune()</c> function of the <c>tune</c> package like so: <c>mtry = tune()</c>. This indicates that these hyperparameters are to be tuned.
 </p>
@@ -4129,6 +5302,15 @@ tune_RF_model
 
   </input>
 </program>
+<pre>
+## Random Forest Model Specification (regression)
+## 
+## Main Arguments:
+##   mtry = tune()
+##   min_n = tune()
+## 
+## Computational engine: randomForest
+</pre>
 <p>
 Again we will add this to a workflow, the only difference here is that we are using a different model specification with <c>tune_RF_model</c> instead of <c>RF_model</c>:
 </p>
@@ -4142,6 +5324,30 @@ RF_tune_wflow
 
   </input>
 </program>
+<pre>
+## ══ Workflow ════════════════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: rand_forest()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 6 Recipe Steps
+## 
+## • step_novel()
+## • step_string2factor()
+## • step_rm()
+## • step_rm()
+## • step_corr()
+## • step_nzv()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## Random Forest Model Specification (regression)
+## 
+## Main Arguments:
+##   mtry = tune()
+##   min_n = tune()
+## 
+## Computational engine: randomForest
+</pre>
 <p>
 Now we can use the <c>tune_grid()</c> function of the <c>tune</c> package to evaluate different combinations of values for <c>mtry</c> and <c>min_n</c> using our cross validation samples of our training set (<c>vfold_pm</c>) to see what combination of values performs best.
 </p>
@@ -4163,6 +5369,9 @@ library(parallel)
 parallel::detectCores()
   </input>
 </program>
+<pre>
+## [1] 8
+</pre>
 <p>
 The <c>registerDoParallel()</c> function will use the number for cores specified using the <c>cores=</c> argument, or it will assign it automatically to one-half of the number of cores detected by the <c>parallel</c> package.
 </p>
@@ -4181,6 +5390,30 @@ tune_RF_results &lt;- tune_grid(object = RF_tune_wflow, resamples = vfold_pm, gr
 tune_RF_results
   </input>
 </program>
+<pre>
+## i Creating pre-processing data to finalize unknown parameter: mtry
+## # Tuning results
+## # 10-fold cross-validation 
+## # A tibble: 10 × 4
+##    splits           id     .metrics          .notes          
+##    &lt;list&gt;           &lt;chr&gt;  &lt;list&gt;            &lt;list&gt;          
+##  1 &lt;split [525/59]&gt; Fold01 &lt;tibble [40 × 6]&gt; &lt;tibble [0 × 3]&gt;
+##  2 &lt;split [525/59]&gt; Fold02 &lt;tibble [40 × 6]&gt; &lt;tibble [1 × 3]&gt;
+##  3 &lt;split [525/59]&gt; Fold03 &lt;tibble [40 × 6]&gt; &lt;tibble [0 × 3]&gt;
+##  4 &lt;split [525/59]&gt; Fold04 &lt;tibble [40 × 6]&gt; &lt;tibble [0 × 3]&gt;
+##  5 &lt;split [526/58]&gt; Fold05 &lt;tibble [40 × 6]&gt; &lt;tibble [0 × 3]&gt;
+##  6 &lt;split [526/58]&gt; Fold06 &lt;tibble [40 × 6]&gt; &lt;tibble [0 × 3]&gt;
+##  7 &lt;split [526/58]&gt; Fold07 &lt;tibble [40 × 6]&gt; &lt;tibble [0 × 3]&gt;
+##  8 &lt;split [526/58]&gt; Fold08 &lt;tibble [40 × 6]&gt; &lt;tibble [0 × 3]&gt;
+##  9 &lt;split [526/58]&gt; Fold09 &lt;tibble [40 × 6]&gt; &lt;tibble [1 × 3]&gt;
+## 10 &lt;split [526/58]&gt; Fold10 &lt;tibble [40 × 6]&gt; &lt;tibble [0 × 3]&gt;
+## 
+## There were issues with some computations:
+## 
+##   - Warning(s) x2: ! 36 columns were requested but there were 35 predictors in the d...
+## 
+## Run `show_notes(.Last.tune.result)` for more information.
+</pre>
 <p>
 See <url href="https://tidymodels.github.io/tune/articles/getting_started.html">the tune getting started guide </url> for more information about implementing this in <c>tidymodels</c>.
 </p>
@@ -4200,6 +5433,17 @@ tune_RF_results%&gt;%
   head()
   </input>
 </program>
+<pre>
+## # A tibble: 6 × 8
+##    mtry min_n .metric .estimator  mean     n std_err .config              
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                
+## 1     1    14 rmse    standard   1.95     10  0.119  Preprocessor1_Model01
+## 2     1    14 rsq     standard   0.483    10  0.0323 Preprocessor1_Model01
+## 3     2    24 rmse    standard   1.84     10  0.124  Preprocessor1_Model02
+## 4     2    24 rsq     standard   0.539    10  0.0362 Preprocessor1_Model02
+## 5     4    34 rmse    standard   1.75     10  0.127  Preprocessor1_Model03
+## 6     4    34 rsq     standard   0.573    10  0.0352 Preprocessor1_Model03
+</pre>
 <p>
 We can now use the <c>show_best()</c> function as it was truly intended, to see what values for <c>min_n</c> and <c>mtry</c> resulted in the best performance.
 </p>
@@ -4208,6 +5452,12 @@ We can now use the <c>show_best()</c> function as it was truly intended, to see 
 show_best(tune_RF_results, metric = "rmse", n =1)
   </input>
 </program>
+<pre>
+## # A tibble: 1 × 8
+##    mtry min_n .metric .estimator  mean     n std_err .config              
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                
+## 1    15     2 rmse    standard    1.58    10   0.116 Preprocessor1_Model09
+</pre>
 <p>
 There we have it... looks like an <c>mtry</c> of 17 and <c>min_n</c> of 4 had the best <c>rmse</c> value. You can verify this in the above output, but it is easier to just pull this row out using this function. We can see that the mean <c>rmse</c> value across the cross validation sets was 1.68. Before tuning it was 1.68 with a similar <c>std_err</c> so the performance was in this particular case wasn't really improved, but that will not always be the case.
 </p>
@@ -4229,6 +5479,14 @@ tuned_RF_values&lt;- select_best(tune_RF_results)
 tuned_RF_values
   </input>
 </program>
+<pre>
+## Warning in select_best(tune_RF_results): No value of `metric` was given; "rmse"
+## will be used.
+## # A tibble: 1 × 3
+##    mtry min_n .config              
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                
+## 1    15     2 Preprocessor1_Model09
+</pre>
 <p>
 Now we can finalize the model/workflow that we we used for tuning with these values.
 </p>
@@ -4280,6 +5538,17 @@ test_predictions &lt;-collect_predictions(overallfit)
 head(test_predictions)
   </input>
 </program>
+<pre>
+## # A tibble: 6 × 5
+##   .pred id                .row value .config             
+##   &lt;dbl&gt; &lt;chr&gt;            &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;               
+## 1  12.0 train/test split     3  11.2 Preprocessor1_Model1
+## 2  11.7 train/test split     5  12.4 Preprocessor1_Model1
+## 3  11.0 train/test split     6  10.5 Preprocessor1_Model1
+## 4  13.1 train/test split     7  15.6 Preprocessor1_Model1
+## 5  12.0 train/test split     8  12.4 Preprocessor1_Model1
+## 6  10.7 train/test split     9  11.1 Preprocessor1_Model1
+</pre>
 <p>
 Nice!
 </p>
@@ -4296,6 +5565,9 @@ test_predictions %&gt;%
   geom_smooth(method = "lm")
   </input>
 </program>
+<pre>
+## `geom_smooth()` using formula = 'y ~ x'
+</pre>
 <p>
 Great!
 </p>
