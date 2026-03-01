@@ -65,6 +65,22 @@ library(tidyverse)
 airquality <- as_tibble(airquality)
 airquality
 ]]></input></program>
+<pre>
+## # A tibble: 153 × 6
+##    Ozone Solar.R  Wind  Temp Month   Day
+##    &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1    41     190   7.4    67     5     1
+##  2    36     118   8      72     5     2
+##  3    12     149  12.6    74     5     3
+##  4    18     313  11.5    62     5     4
+##  5    NA      NA  14.3    56     5     5
+##  6    28      NA  14.9    66     5     6
+##  7    23     299   8.6    65     5     7
+##  8    19      99  13.8    59     5     8
+##  9     8      19  20.1    61     5     9
+## 10    NA     194   8.6    69     5    10
+## # … with 143 more rows
+</pre>
 <p>Again, wide data are easy to decipher at a glance. We can see that we have six different variables for each day, with each one of these variables (measurements) being stored in a separate column.</p>
 <subsubsection xml:id="tidyr">
 <title><c>tidyr</c></title>
@@ -86,6 +102,22 @@ gathered <- airquality %>%
 ## take a look at first few rows of long data
 gathered
 ]]></input></program>
+<pre>
+## # A tibble: 918 × 2
+##    name    value
+##    &lt;chr&gt;   &lt;dbl&gt;
+##  1 Ozone    41  
+##  2 Solar.R 190  
+##  3 Wind      7.4
+##  4 Temp     67  
+##  5 Month     5  
+##  6 Day       1  
+##  7 Ozone    36  
+##  8 Solar.R 118  
+##  9 Wind      8  
+## 10 Temp     72  
+## # … with 908 more rows
+</pre>
 <figure>
   <caption>Longer dataset</caption>
   <image source="images/gslides/089.png"/>
@@ -100,6 +132,22 @@ gathered <- airquality %>%
 ## take a look at first few rows of long data
 gathered 
 ]]></input></program>
+<pre>
+## # A tibble: 918 × 2
+##    variable value
+##    &lt;chr&gt;    &lt;dbl&gt;
+##  1 Ozone     41  
+##  2 Solar.R  190  
+##  3 Wind       7.4
+##  4 Temp      67  
+##  5 Month      5  
+##  6 Day        1  
+##  7 Ozone     36  
+##  8 Solar.R  118  
+##  9 Wind       8  
+## 10 Temp      72  
+## # … with 908 more rows
+</pre>
 <figure>
   <caption>gather column names changed</caption>
   <image source="images/gslides/090.png"/>
@@ -117,6 +165,22 @@ gathered <- airquality %>%
 ## take a look at first few rows of long data
 gathered
 ]]></input></program>
+<pre>
+## # A tibble: 612 × 4
+##    Month   Day variable value
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;
+##  1     5     1 Ozone     41  
+##  2     5     1 Solar.R  190  
+##  3     5     1 Wind       7.4
+##  4     5     1 Temp      67  
+##  5     5     2 Ozone     36  
+##  6     5     2 Solar.R  118  
+##  7     5     2 Wind       8  
+##  8     5     2 Temp      72  
+##  9     5     3 Ozone     12  
+## 10     5     3 Solar.R  149  
+## # … with 602 more rows
+</pre>
 <figure>
   <caption>gather specifying which variables to include in long format</caption>
   <image source="images/gslides/091.png"/>
@@ -138,6 +202,36 @@ spread_data
 ## compare that back to the original
 airquality
 ]]></input></program>
+<pre>
+## # A tibble: 153 × 6
+##    Month   Day Ozone Solar.R  Wind  Temp
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     5     1    41     190   7.4    67
+##  2     5     2    36     118   8      72
+##  3     5     3    12     149  12.6    74
+##  4     5     4    18     313  11.5    62
+##  5     5     5    NA      NA  14.3    56
+##  6     5     6    28      NA  14.9    66
+##  7     5     7    23     299   8.6    65
+##  8     5     8    19      99  13.8    59
+##  9     5     9     8      19  20.1    61
+## 10     5    10    NA     194   8.6    69
+## # … with 143 more rows
+## # A tibble: 153 × 6
+##    Ozone Solar.R  Wind  Temp Month   Day
+##    &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1    41     190   7.4    67     5     1
+##  2    36     118   8      72     5     2
+##  3    12     149  12.6    74     5     3
+##  4    18     313  11.5    62     5     4
+##  5    NA      NA  14.3    56     5     5
+##  6    28      NA  14.9    66     5     6
+##  7    23     299   8.6    65     5     7
+##  8    19      99  13.8    59     5     8
+##  9     8      19  20.1    61     5     9
+## 10    NA     194   8.6    69     5    10
+## # … with 143 more rows
+</pre>
 <figure>
   <caption>spread data</caption>
   <image source="images/gslides/092.png"/>
@@ -264,11 +358,47 @@ glimpse(msleep)
 msleep %>%
   filter(order == "Primates")
 ]]></input></program>
+<pre>
+## # A tibble: 12 × 11
+##    name   genus vore  order conservation sleep_total sleep_rem sleep_cycle awake
+##    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+##  1 Owl m… Aotus omni  Prim… &lt;NA&gt;                17         1.8      NA       7  
+##  2 Grivet Cerc… omni  Prim… lc                  10         0.7      NA      14  
+##  3 Patas… Eryt… omni  Prim… lc                  10.9       1.1      NA      13.1
+##  4 Galago Gala… omni  Prim… &lt;NA&gt;                 9.8       1.1       0.55   14.2
+##  5 Human  Homo  omni  Prim… &lt;NA&gt;                 8         1.9       1.5    16  
+##  6 Mongo… Lemur herbi Prim… vu                   9.5       0.9      NA      14.5
+##  7 Macaq… Maca… omni  Prim… &lt;NA&gt;                10.1       1.2       0.75   13.9
+##  8 Slow … Nyct… carni Prim… &lt;NA&gt;                11        NA        NA      13  
+##  9 Chimp… Pan   omni  Prim… &lt;NA&gt;                 9.7       1.4       1.42   14.3
+## 10 Baboon Papio omni  Prim… &lt;NA&gt;                 9.4       1         0.667  14.6
+## 11 Potto  Pero… omni  Prim… lc                  11        NA        NA      13  
+## 12 Squir… Saim… omni  Prim… &lt;NA&gt;                 9.6       1.4      NA      14.4
+## # … with 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+</pre>
 <p>Note that we are using the equality <c>==</c> comparison operator that you learned about in the previous course. Also note that we have used the pipe operator to feed the <c>msleep</c> data frame into the <c>filter()</c> function.</p>
 <p>The above is shorthand for:</p>
 <program language="r"><input><![CDATA[
 filter(msleep, order == "Primates")
 ]]></input></program>
+<pre>
+## # A tibble: 12 × 11
+##    name   genus vore  order conservation sleep_total sleep_rem sleep_cycle awake
+##    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+##  1 Owl m… Aotus omni  Prim… &lt;NA&gt;                17         1.8      NA       7  
+##  2 Grivet Cerc… omni  Prim… lc                  10         0.7      NA      14  
+##  3 Patas… Eryt… omni  Prim… lc                  10.9       1.1      NA      13.1
+##  4 Galago Gala… omni  Prim… &lt;NA&gt;                 9.8       1.1       0.55   14.2
+##  5 Human  Homo  omni  Prim… &lt;NA&gt;                 8         1.9       1.5    16  
+##  6 Mongo… Lemur herbi Prim… vu                   9.5       0.9      NA      14.5
+##  7 Macaq… Maca… omni  Prim… &lt;NA&gt;                10.1       1.2       0.75   13.9
+##  8 Slow … Nyct… carni Prim… &lt;NA&gt;                11        NA        NA      13  
+##  9 Chimp… Pan   omni  Prim… &lt;NA&gt;                 9.7       1.4       1.42   14.3
+## 10 Baboon Papio omni  Prim… &lt;NA&gt;                 9.4       1         0.667  14.6
+## 11 Potto  Pero… omni  Prim… lc                  11        NA        NA      13  
+## 12 Squir… Saim… omni  Prim… &lt;NA&gt;                 9.6       1.4      NA      14.4
+## # … with 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+</pre>
 <p>The output is the same as above here, but the code is slightly less readable. This is why we use the pipe (<c>%&gt;%</c>)!</p>
 <figure>
   <caption>Filtered to only include Primates</caption>
@@ -280,6 +410,17 @@ filter(msleep, order == "Primates")
 msleep %>%
   filter(order == "Primates", sleep_total > 10)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 11
+##   name   genus  vore  order conservation sleep_total sleep_rem sleep_cycle awake
+##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 Owl m… Aotus  omni  Prim… &lt;NA&gt;                17         1.8       NA      7  
+## 2 Patas… Eryth… omni  Prim… lc                  10.9       1.1       NA     13.1
+## 3 Macaq… Macaca omni  Prim… &lt;NA&gt;                10.1       1.2        0.75  13.9
+## 4 Slow … Nycti… carni Prim… &lt;NA&gt;                11        NA         NA     13  
+## 5 Potto  Perod… omni  Prim… lc                  11        NA         NA     13  
+## # … with 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+</pre>
 <p>Note that we have used the "greater than" comparison operator with <c>sleep_total</c>.</p>
 <p>Now, we have a dataset focused in on only 5 mammals, all of which are primates who sleep for more than 10 hours a night total.</p>
 <figure>
@@ -291,6 +432,17 @@ msleep %>%
 msleep %>%
   filter(order == "Primates" & sleep_total > 10)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 11
+##   name   genus  vore  order conservation sleep_total sleep_rem sleep_cycle awake
+##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 Owl m… Aotus  omni  Prim… &lt;NA&gt;                17         1.8       NA      7  
+## 2 Patas… Eryth… omni  Prim… lc                  10.9       1.1       NA     13.1
+## 3 Macaq… Macaca omni  Prim… &lt;NA&gt;                10.1       1.2        0.75  13.9
+## 4 Slow … Nycti… carni Prim… &lt;NA&gt;                11        NA         NA     13  
+## 5 Potto  Perod… omni  Prim… lc                  11        NA         NA     13  
+## # … with 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+</pre>
 <p>Note that the number of columns hasn't changed. All 11 variables are still shown in columns because the function <c>filter()</c> filters on rows, not columns.</p>
 </subsubsection>
 <subsubsection xml:id="selecting-columns">
@@ -302,6 +454,16 @@ msleep %>%
   filter(order == "Primates", sleep_total > 10) %>%
   select(name, sleep_total, sleep_rem, sleep_cycle)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 4
+##   name         sleep_total sleep_rem sleep_cycle
+##   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Owl monkey          17         1.8       NA   
+## 2 Patas monkey        10.9       1.1       NA   
+## 3 Macaque             10.1       1.2        0.75
+## 4 Slow loris          11        NA         NA   
+## 5 Potto               11        NA         NA
+</pre>
 <figure>
   <caption>Data with selected columns</caption>
   <image source="images/gslides/096.png"/>
@@ -320,6 +482,16 @@ msleep %>%
   filter(order == "Primates", sleep_total > 10) %>%
   select(name, total = sleep_total, rem = sleep_rem, cycle = sleep_cycle)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 4
+##   name         total   rem cycle
+##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Owl monkey    17     1.8 NA   
+## 2 Patas monkey  10.9   1.1 NA   
+## 3 Macaque       10.1   1.2  0.75
+## 4 Slow loris    11    NA   NA   
+## 5 Potto         11    NA   NA
+</pre>
 <figure>
   <caption>Data with renamed columns names with `select()`</caption>
   <image source="images/gslides/097.png"/>
@@ -330,6 +502,16 @@ msleep %>%
   filter(order == "Primates", sleep_total > 10) %>%
   rename(total = sleep_total, rem = sleep_rem, cycle = sleep_cycle)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 11
+##   name    genus  vore  order conservation total   rem cycle awake brainwt bodywt
+##   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Owl mo… Aotus  omni  Prim… &lt;NA&gt;          17     1.8 NA      7    0.0155   0.48
+## 2 Patas … Eryth… omni  Prim… lc            10.9   1.1 NA     13.1  0.115   10   
+## 3 Macaque Macaca omni  Prim… &lt;NA&gt;          10.1   1.2  0.75  13.9  0.179    6.8 
+## 4 Slow l… Nycti… carni Prim… &lt;NA&gt;          11    NA   NA     13    0.0125   1.4 
+## 5 Potto   Perod… omni  Prim… lc            11    NA   NA     13   NA        1.1
+</pre>
 <figure>
   <caption>Data with renamed columns names using `rename()`</caption>
   <image source="images/gslides/098.png"/>
@@ -347,6 +529,16 @@ msleep %>%
   filter(order == "Primates", sleep_total > 10) %>%
   select(name, sleep_rem, sleep_cycle, sleep_total)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 4
+##   name         sleep_rem sleep_cycle sleep_total
+##   &lt;chr&gt;            &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Owl monkey         1.8       NA           17  
+## 2 Patas monkey       1.1       NA           10.9
+## 3 Macaque            1.2        0.75        10.1
+## 4 Slow loris        NA         NA           11  
+## 5 Potto             NA         NA           11
+</pre>
 <p>Here we see that sleep_rem <c>name</c> is displayed first followed by <c>sleep_rem</c>, <c>sleep_cycle</c>, and <c>sleep_total</c>, just as it was specified within <c>select()</c>.</p>
 <figure>
   <caption>Data with reordered columns names</caption>
@@ -362,6 +554,16 @@ msleep %>%
   select(name, sleep_rem, sleep_cycle, sleep_total) %>%
   arrange(sleep_total)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 4
+##   name         sleep_rem sleep_cycle sleep_total
+##   &lt;chr&gt;            &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Macaque            1.2        0.75        10.1
+## 2 Patas monkey       1.1       NA           10.9
+## 3 Slow loris        NA         NA           11  
+## 4 Potto             NA         NA           11  
+## 5 Owl monkey         1.8       NA           17
+</pre>
 <figure>
   <caption>Data arranged by total sleep in ascending order</caption>
   <image source="images/gslides/100.png"/>
@@ -373,6 +575,16 @@ msleep %>%
   select(name, sleep_rem, sleep_cycle, sleep_total) %>%
   arrange(desc(sleep_total))
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 4
+##   name         sleep_rem sleep_cycle sleep_total
+##   &lt;chr&gt;            &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Owl monkey         1.8       NA           17  
+## 2 Slow loris        NA         NA           11  
+## 3 Potto             NA         NA           11  
+## 4 Patas monkey       1.1       NA           10.9
+## 5 Macaque            1.2        0.75        10.1
+</pre>
 <p>By putting <c>sleep_total</c> within <c>desc()</c>, <c>arrange()</c> will now sort your data from the primates with the longest total sleep to the shortest.</p>
 <figure>
   <caption>Data arranged by total sleep in descending order</caption>
@@ -385,6 +597,16 @@ msleep %>%
   select(name, sleep_rem, sleep_cycle, sleep_total) %>%
   arrange(name)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 4
+##   name         sleep_rem sleep_cycle sleep_total
+##   &lt;chr&gt;            &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Macaque            1.2        0.75        10.1
+## 2 Owl monkey         1.8       NA           17  
+## 3 Patas monkey       1.1       NA           10.9
+## 4 Potto             NA         NA           11  
+## 5 Slow loris        NA         NA           11
+</pre>
 <figure>
   <caption>Data arranged alphabetically by name</caption>
   <image source="images/gslides/102.png"/>
@@ -396,6 +618,16 @@ msleep %>%
   select(name, sleep_rem, sleep_cycle, sleep_total) %>%
   arrange(name, sleep_total)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 4
+##   name         sleep_rem sleep_cycle sleep_total
+##   &lt;chr&gt;            &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Macaque            1.2        0.75        10.1
+## 2 Owl monkey         1.8       NA           17  
+## 3 Patas monkey       1.1       NA           10.9
+## 4 Potto             NA         NA           11  
+## 5 Slow loris        NA         NA           11
+</pre>
 </subsubsection>
 </subsection>
 <subsection xml:id="creating-new-columns">
@@ -409,6 +641,16 @@ msleep %>%
   arrange(name) %>%
   mutate(sleep_total_min = sleep_total * 60)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 5
+##   name         sleep_rem sleep_cycle sleep_total sleep_total_min
+##   &lt;chr&gt;            &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
+## 1 Macaque            1.2        0.75        10.1             606
+## 2 Owl monkey         1.8       NA           17              1020
+## 3 Patas monkey       1.1       NA           10.9             654
+## 4 Potto             NA         NA           11               660
+## 5 Slow loris        NA         NA           11               660
+</pre>
 <figure>
   <caption>Mutate to add new column to data</caption>
   <image source="images/gslides/103.png"/>
@@ -425,6 +667,22 @@ conservation <- read_csv("https://raw.githubusercontent.com/suzanbaert/Dplyr_Tut
 ## take a look at this file
 conservation
 ]]></input></program>
+<pre>
+## # A tibble: 11 × 1
+##    `conservation abbreviation`                  
+##    &lt;chr&gt;                                        
+##  1 EX = Extinct                                 
+##  2 EW = Extinct in the wild                     
+##  3 CR = Critically Endangered                   
+##  4 EN = Endangered                              
+##  5 VU = Vulnerable                              
+##  6 NT = Near Threatened                         
+##  7 LC = Least Concern                           
+##  8 DD = Data deficient                          
+##  9 NE = Not evaluated                           
+## 10 PE = Probably extinct (informal)             
+## 11 PEW = Probably extinct in the wild (informal)
+</pre>
 <figure>
   <caption>Conservation dataset</caption>
   <image source="images/gslides/104.png"/>
@@ -436,6 +694,22 @@ conservation %>%
   separate(`conservation abbreviation`, 
            into = c("abbreviation", "description"), sep = " = ")
 ]]></input></program>
+<pre>
+## # A tibble: 11 × 2
+##    abbreviation description                            
+##    &lt;chr&gt;        &lt;chr&gt;                                  
+##  1 EX           Extinct                                
+##  2 EW           Extinct in the wild                    
+##  3 CR           Critically Endangered                  
+##  4 EN           Endangered                             
+##  5 VU           Vulnerable                             
+##  6 NT           Near Threatened                        
+##  7 LC           Least Concern                          
+##  8 DD           Data deficient                         
+##  9 NE           Not evaluated                          
+## 10 PE           Probably extinct (informal)            
+## 11 PEW          Probably extinct in the wild (informal)
+</pre>
 <p>The output of this code shows that we now have two separate columns with the information in the original column separated out into <c>abbreviation</c> and <c>description</c>.</p>
 <figure>
   <caption>Output of separate()</caption>
@@ -451,6 +725,22 @@ conservation %>%
            into = c("abbreviation", "description"), sep = " = ") %>%
   unite(united_col, abbreviation, description, sep = " = ")
 ]]></input></program>
+<pre>
+## # A tibble: 11 × 1
+##    united_col                                   
+##    &lt;chr&gt;                                        
+##  1 EX = Extinct                                 
+##  2 EW = Extinct in the wild                     
+##  3 CR = Critically Endangered                   
+##  4 EN = Endangered                              
+##  5 VU = Vulnerable                              
+##  6 NT = Near Threatened                         
+##  7 LC = Least Concern                           
+##  8 DD = Data deficient                          
+##  9 NE = Not evaluated                           
+## 10 PE = Probably extinct (informal)             
+## 11 PEW = Probably extinct in the wild (informal)
+</pre>
 <figure>
   <caption>Output of unite()</caption>
   <image source="images/gslides/106.png"/>
@@ -469,6 +759,22 @@ conservation %>%
 conservation %>%
   clean_names()
 ]]></input></program>
+<pre>
+## # A tibble: 11 × 1
+##    conservation_abbreviation                    
+##    &lt;chr&gt;                                        
+##  1 EX = Extinct                                 
+##  2 EW = Extinct in the wild                     
+##  3 CR = Critically Endangered                   
+##  4 EN = Endangered                              
+##  5 VU = Vulnerable                              
+##  6 NT = Near Threatened                         
+##  7 LC = Least Concern                           
+##  8 DD = Data deficient                          
+##  9 NE = Not evaluated                           
+## 10 PE = Probably extinct (informal)             
+## 11 PEW = Probably extinct in the wild (informal)
+</pre>
 <figure>
   <caption>clean_names() output</caption>
   <image source="images/gslides/108.png"/>
@@ -531,12 +837,24 @@ msleep %>%
   select(genus) %>%
   summarize(N=n())
 ]]></input></program>
+<pre>
+## # A tibble: 1 × 1
+##       N
+##   &lt;int&gt;
+## 1    83
+</pre>
 <program language="r"><input><![CDATA[
 msleep %>%
 # here we select the column called vore, any column would work
   select(vore) %>%
   summarize(N=n())
 ]]></input></program>
+<pre>
+## # A tibble: 1 × 1
+##       N
+##   &lt;int&gt;
+## 1    83
+</pre>
 <p>This provides a summary of the data with the new column name we specified above (<c>N</c>) and the number of samples in the dataset. Note that we could also obtain the same information by directly obtaining the number of rows in the data frame with <c>nrow(msleep)</c>.</p>
 <figure>
   <caption>Summarize with n()</caption>
@@ -549,6 +867,30 @@ msleep %>%
   select(order) %>%
   summarize(N=n())
 ]]></input></program>
+<pre>
+## # A tibble: 19 × 2
+##    order               N
+##    &lt;chr&gt;           &lt;int&gt;
+##  1 Afrosoricida        1
+##  2 Artiodactyla        6
+##  3 Carnivora          12
+##  4 Cetacea             3
+##  5 Chiroptera          2
+##  6 Cingulata           2
+##  7 Didelphimorphia     2
+##  8 Diprotodontia       2
+##  9 Erinaceomorpha      2
+## 10 Hyracoidea          3
+## 11 Lagomorpha          1
+## 12 Monotremata         1
+## 13 Perissodactyla      3
+## 14 Pilosa              1
+## 15 Primates           12
+## 16 Proboscidea         2
+## 17 Rodentia           22
+## 18 Scandentia          1
+## 19 Soricomorpha        5
+</pre>
 <p>The output from this, like above, includes the column name we specified in summarize (<c>N</c>). However, it includes the number of samples in the group_by variable we specified (<c>order</c>).</p>
 <figure>
   <caption>group_by() and summarize with n()</caption>
@@ -562,6 +904,30 @@ msleep %>%
   select(order, sleep_total) %>%
   summarize(N=n(), mean_sleep=mean(sleep_total))
 ]]></input></program>
+<pre>
+## # A tibble: 19 × 3
+##    order               N mean_sleep
+##    &lt;chr&gt;           &lt;int&gt;      &lt;dbl&gt;
+##  1 Afrosoricida        1      15.6 
+##  2 Artiodactyla        6       4.52
+##  3 Carnivora          12      10.1 
+##  4 Cetacea             3       4.5 
+##  5 Chiroptera          2      19.8 
+##  6 Cingulata           2      17.8 
+##  7 Didelphimorphia     2      18.7 
+##  8 Diprotodontia       2      12.4 
+##  9 Erinaceomorpha      2      10.2 
+## 10 Hyracoidea          3       5.67
+## 11 Lagomorpha          1       8.4 
+## 12 Monotremata         1       8.6 
+## 13 Perissodactyla      3       3.47
+## 14 Pilosa              1      14.4 
+## 15 Primates           12      10.5 
+## 16 Proboscidea         2       3.6 
+## 17 Rodentia           22      12.5 
+## 18 Scandentia          1       8.9 
+## 19 Soricomorpha        5      11.1
+</pre>
 <figure>
   <caption>summarize using mean()</caption>
   <image source="images/gslides/113.png"/>
@@ -575,6 +941,28 @@ msleep %>%
 msleep %>%
   tabyl(order)
 ]]></input></program>
+<pre>
+##            order  n    percent
+##     Afrosoricida  1 0.01204819
+##     Artiodactyla  6 0.07228916
+##        Carnivora 12 0.14457831
+##          Cetacea  3 0.03614458
+##       Chiroptera  2 0.02409639
+##        Cingulata  2 0.02409639
+##  Didelphimorphia  2 0.02409639
+##    Diprotodontia  2 0.02409639
+##   Erinaceomorpha  2 0.02409639
+##       Hyracoidea  3 0.03614458
+##       Lagomorpha  1 0.01204819
+##      Monotremata  1 0.01204819
+##   Perissodactyla  3 0.03614458
+##           Pilosa  1 0.01204819
+##         Primates 12 0.14457831
+##      Proboscidea  2 0.02409639
+##         Rodentia 22 0.26506024
+##       Scandentia  1 0.01204819
+##     Soricomorpha  5 0.06024096
+</pre>
 <figure>
   <caption>summarize using tabyl() from janitor</caption>
   <image source="images/gslides/114.png"/>
@@ -583,6 +971,10 @@ msleep %>%
 <program language="r"><input><![CDATA[
 summary(msleep$awake)
 ]]></input></program>
+<pre>
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    4.10   10.25   13.90   13.57   16.15   22.10
+</pre>
 <figure>
   <caption>summarize numeric variables</caption>
   <image source="images/gslides/115.png"/>
@@ -595,6 +987,12 @@ summary(msleep$awake)
 msleep %>%
   tally()
 ]]></input></program>
+<pre>
+## # A tibble: 1 × 1
+##       n
+##   &lt;int&gt;
+## 1    83
+</pre>
 <p>We can see that this is very similar to our previous use of summarize.</p>
 <program language="r"><input><![CDATA[
 msleep %>%
@@ -602,23 +1000,44 @@ msleep %>%
   select(genus) %>% 
   summarize(N=n())
 ]]></input></program>
+<pre>
+## # A tibble: 1 × 1
+##       N
+##   &lt;int&gt;
+## 1    83
+</pre>
 <p>We can also use this function to get a sum of the values of a column (if the values are numeric).</p>
 <program language="r"><input><![CDATA[
 msleep %>%
 tally(sleep_total)
 ]]></input></program>
+<pre>
+## # A tibble: 1 × 1
+##       n
+##   &lt;dbl&gt;
+## 1   866
+</pre>
 <p>Thus overall, all the animals in the dataset sleep 866 hours in total.</p>
 <p>This is the equivalent to using the <c>sum()</c> function with the <c>summarize()</c> function.</p>
 <program language="r"><input><![CDATA[
 msleep %>%
   summarize(sum_sleep_total = sum(sleep_total))
 ]]></input></program>
+<pre>
+## # A tibble: 1 × 1
+##   sum_sleep_total
+##             &lt;dbl&gt;
+## 1             866
+</pre>
 <p>We could also use the <c>pull()</c> function of the <c>dplyr</c> package, to get the sum of just the <c>sleep_total</c> column, as the <c>pull()</c> function extracts or "pulls" the values of a column.</p>
 <program language="r"><input><![CDATA[
 msleep %>%
 pull(sleep_total)%>%
   sum()
 ]]></input></program>
+<pre>
+## [1] 866
+</pre>
 </subsubsection>
 <subsubsection xml:id="add_tally">
 <title><c>add_tally()</c></title>
@@ -628,6 +1047,22 @@ msleep %>%
   add_tally() %>%
   glimpse()
 ]]></input></program>
+<pre>
+## Rows: 83
+## Columns: 12
+## $ name         &lt;chr&gt; "Cheetah", "Owl monkey", "Mountain beaver", "Greater shor…
+## $ genus        &lt;chr&gt; "Acinonyx", "Aotus", "Aplodontia", "Blarina", "Bos", "Bra…
+## $ vore         &lt;chr&gt; "carni", "omni", "herbi", "omni", "herbi", "herbi", "carn…
+## $ order        &lt;chr&gt; "Carnivora", "Primates", "Rodentia", "Soricomorpha", "Art…
+## $ conservation &lt;chr&gt; "lc", NA, "nt", "lc", "domesticated", NA, "vu", NA, "dome…
+## $ sleep_total  &lt;dbl&gt; 12.1, 17.0, 14.4, 14.9, 4.0, 14.4, 8.7, 7.0, 10.1, 3.0, 5…
+## $ sleep_rem    &lt;dbl&gt; NA, 1.8, 2.4, 2.3, 0.7, 2.2, 1.4, NA, 2.9, NA, 0.6, 0.8, …
+## $ sleep_cycle  &lt;dbl&gt; NA, NA, NA, 0.1333333, 0.6666667, 0.7666667, 0.3833333, N…
+## $ awake        &lt;dbl&gt; 11.9, 7.0, 9.6, 9.1, 20.0, 9.6, 15.3, 17.0, 13.9, 21.0, 1…
+## $ brainwt      &lt;dbl&gt; NA, 0.01550, NA, 0.00029, 0.42300, NA, NA, NA, 0.07000, 0…
+## $ bodywt       &lt;dbl&gt; 50.000, 0.480, 1.350, 0.019, 600.000, 3.850, 20.490, 0.04…
+## $ n            &lt;int&gt; 83, 83, 83, 83, 83, 83, 83, 83, 83, 83, 83, 83, 83, 83, 8…
+</pre>
 <p>Notice the new column called "n" that repeats the total number of samples for each row.</p>
 <p>Or we can add a column that repeats the total hours of sleep of all the animals.</p>
 <program language="r"><input><![CDATA[
@@ -635,6 +1070,22 @@ msleep %>%
   add_tally(sleep_total) %>%
   glimpse()
 ]]></input></program>
+<pre>
+## Rows: 83
+## Columns: 12
+## $ name         &lt;chr&gt; "Cheetah", "Owl monkey", "Mountain beaver", "Greater shor…
+## $ genus        &lt;chr&gt; "Acinonyx", "Aotus", "Aplodontia", "Blarina", "Bos", "Bra…
+## $ vore         &lt;chr&gt; "carni", "omni", "herbi", "omni", "herbi", "herbi", "carn…
+## $ order        &lt;chr&gt; "Carnivora", "Primates", "Rodentia", "Soricomorpha", "Art…
+## $ conservation &lt;chr&gt; "lc", NA, "nt", "lc", "domesticated", NA, "vu", NA, "dome…
+## $ sleep_total  &lt;dbl&gt; 12.1, 17.0, 14.4, 14.9, 4.0, 14.4, 8.7, 7.0, 10.1, 3.0, 5…
+## $ sleep_rem    &lt;dbl&gt; NA, 1.8, 2.4, 2.3, 0.7, 2.2, 1.4, NA, 2.9, NA, 0.6, 0.8, …
+## $ sleep_cycle  &lt;dbl&gt; NA, NA, NA, 0.1333333, 0.6666667, 0.7666667, 0.3833333, N…
+## $ awake        &lt;dbl&gt; 11.9, 7.0, 9.6, 9.1, 20.0, 9.6, 15.3, 17.0, 13.9, 21.0, 1…
+## $ brainwt      &lt;dbl&gt; NA, 0.01550, NA, 0.00029, 0.42300, NA, NA, NA, 0.07000, 0…
+## $ bodywt       &lt;dbl&gt; 50.000, 0.480, 1.350, 0.019, 600.000, 3.850, 20.490, 0.04…
+## $ n            &lt;dbl&gt; 866, 866, 866, 866, 866, 866, 866, 866, 866, 866, 866, 86…
+</pre>
 </subsubsection>
 <subsubsection xml:id="count">
 <title><c>count()</c></title>
@@ -643,18 +1094,54 @@ msleep %>%
 msleep %>%
   count(vore)
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 2
+##   vore        n
+##   &lt;chr&gt;   &lt;int&gt;
+## 1 carni      19
+## 2 herbi      32
+## 3 insecti     5
+## 4 omni       20
+## 5 &lt;NA&gt;        7
+</pre>
 <p>This is the same as using group_by() with tally()</p>
 <program language="r"><input><![CDATA[
 msleep %>%
   group_by(vore) %>%
   tally()
 ]]></input></program>
+<pre>
+## # A tibble: 5 × 2
+##   vore        n
+##   &lt;chr&gt;   &lt;int&gt;
+## 1 carni      19
+## 2 herbi      32
+## 3 insecti     5
+## 4 omni       20
+## 5 &lt;NA&gt;        7
+</pre>
 <p>Multiple variables can be specified with <c>count()</c>.</p>
 <p>This can be really useful when getting to know your data.</p>
 <program language="r"><input><![CDATA[
 msleep %>%
   count(vore, order)
 ]]></input></program>
+<pre>
+## # A tibble: 32 × 3
+##    vore  order               n
+##    &lt;chr&gt; &lt;chr&gt;           &lt;int&gt;
+##  1 carni Carnivora          12
+##  2 carni Cetacea             3
+##  3 carni Cingulata           1
+##  4 carni Didelphimorphia     1
+##  5 carni Primates            1
+##  6 carni Rodentia            1
+##  7 herbi Artiodactyla        5
+##  8 herbi Diprotodontia       1
+##  9 herbi Hyracoidea          2
+## 10 herbi Lagomorpha          1
+## # … with 22 more rows
+</pre>
 </subsubsection>
 <subsubsection xml:id="add_count">
 <title><c>add_count()</c></title>
@@ -664,6 +1151,22 @@ msleep %>%
   add_count(vore, order) %>%
   glimpse()
 ]]></input></program>
+<pre>
+## Rows: 83
+## Columns: 12
+## $ name         &lt;chr&gt; "Cheetah", "Owl monkey", "Mountain beaver", "Greater shor…
+## $ genus        &lt;chr&gt; "Acinonyx", "Aotus", "Aplodontia", "Blarina", "Bos", "Bra…
+## $ vore         &lt;chr&gt; "carni", "omni", "herbi", "omni", "herbi", "herbi", "carn…
+## $ order        &lt;chr&gt; "Carnivora", "Primates", "Rodentia", "Soricomorpha", "Art…
+## $ conservation &lt;chr&gt; "lc", NA, "nt", "lc", "domesticated", NA, "vu", NA, "dome…
+## $ sleep_total  &lt;dbl&gt; 12.1, 17.0, 14.4, 14.9, 4.0, 14.4, 8.7, 7.0, 10.1, 3.0, 5…
+## $ sleep_rem    &lt;dbl&gt; NA, 1.8, 2.4, 2.3, 0.7, 2.2, 1.4, NA, 2.9, NA, 0.6, 0.8, …
+## $ sleep_cycle  &lt;dbl&gt; NA, NA, NA, 0.1333333, 0.6666667, 0.7666667, 0.3833333, N…
+## $ awake        &lt;dbl&gt; 11.9, 7.0, 9.6, 9.1, 20.0, 9.6, 15.3, 17.0, 13.9, 21.0, 1…
+## $ brainwt      &lt;dbl&gt; NA, 0.01550, NA, 0.00029, 0.42300, NA, NA, NA, 0.07000, 0…
+## $ bodywt       &lt;dbl&gt; 50.000, 0.480, 1.350, 0.019, 600.000, 3.850, 20.490, 0.04…
+## $ n            &lt;int&gt; 12, 10, 16, 3, 5, 1, 12, 3, 12, 5, 5, 16, 10, 16, 3, 2, 3…
+</pre>
 </subsubsection>
 <subsubsection xml:id="get_dupes">
 <title><c>get_dupes()</c></title>
@@ -674,6 +1177,23 @@ msleep %>%
 msleep %>% 
   get_dupes(genus, vore)
 ]]></input></program>
+<pre>
+## # A tibble: 10 × 12
+##    genus        vore  dupe_count name   order conservation sleep_total sleep_rem
+##    &lt;chr&gt;        &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Equus        herbi          2 Horse  Peri… domesticated         2.9       0.6
+##  2 Equus        herbi          2 Donkey Peri… domesticated         3.1       0.4
+##  3 Panthera     carni          3 Tiger  Carn… en                  15.8      NA  
+##  4 Panthera     carni          3 Jaguar Carn… nt                  10.4      NA  
+##  5 Panthera     carni          3 Lion   Carn… vu                  13.5      NA  
+##  6 Spermophilus herbi          3 Arcti… Rode… lc                  16.6      NA  
+##  7 Spermophilus herbi          3 Thirt… Rode… lc                  13.8       3.4
+##  8 Spermophilus herbi          3 Golde… Rode… lc                  15.9       3  
+##  9 Vulpes       carni          2 Arcti… Carn… &lt;NA&gt;                12.5      NA  
+## 10 Vulpes       carni          2 Red f… Carn… &lt;NA&gt;                 9.8       2.4
+## # … with 4 more variables: sleep_cycle &lt;dbl&gt;, awake &lt;dbl&gt;, brainwt &lt;dbl&gt;,
+## #   bodywt &lt;dbl&gt;
+</pre>
 <p>The output demonstrates there are 10 mammals that overlap in their genus and vore. Note that the third column of the output counts <em>how many</em> duplicate observations there are. This can be very helpful when you're checking your data!</p>
 </subsubsection>
 <subsubsection xml:id="skim">
@@ -716,6 +1236,12 @@ skim(msleep) %>%
 airquality %>%
   summarize(across(Ozone:Temp, mean, na.rm = TRUE))
 ]]></input></program>
+<pre>
+## # A tibble: 1 × 4
+##   Ozone Solar.R  Wind  Temp
+##   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  42.1    186.  9.96  77.9
+</pre>
 <p>The <c>across()</c> function can be used in conjunction with the <c>mutate()</c> and <c>filter()</c> functions to construct joint operations across different columns of a data frame. For example, suppose we wanted to filter the rows of the <c>airquality</c> data frame so that we only retain rows that do not have missing values for <c>Ozone</c> and <c>Solar.R</c>. Generally, we might use the <c>filter()</c> function for this, as follows:</p>
 <program language="r"><input><![CDATA[
 airquality %>%
@@ -728,17 +1254,65 @@ airquality %>%
 airquality %>%
   filter(across(Ozone:Solar.R, ~ !is.na(.)))
 ]]></input></program>
+<pre>
+## # A tibble: 111 × 6
+##    Ozone Solar.R  Wind  Temp Month   Day
+##    &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1    41     190   7.4    67     5     1
+##  2    36     118   8      72     5     2
+##  3    12     149  12.6    74     5     3
+##  4    18     313  11.5    62     5     4
+##  5    23     299   8.6    65     5     7
+##  6    19      99  13.8    59     5     8
+##  7     8      19  20.1    61     5     9
+##  8    16     256   9.7    69     5    12
+##  9    11     290   9.2    66     5    13
+## 10    14     274  10.9    68     5    14
+## # … with 101 more rows
+</pre>
 <p>Here, the <c>~</c> in the call to <c>across()</c> indicates that we are passing an anonymous function (see the section on Functional Programming for more details) and the <c>.</c> is a stand-in for the name of the column.</p>
 <p>If we wanted to filter the data frame to remove rows with missing values in <c>Ozone</c>, <c>Solar.R</c>, <c>Wind</c>, and <c>Temp</c>, we only need to make a small change.</p>
 <program language="r"><input><![CDATA[
 airquality %>%
   filter(across(Ozone:Temp, ~ !is.na(.)))
 ]]></input></program>
+<pre>
+## # A tibble: 111 × 6
+##    Ozone Solar.R  Wind  Temp Month   Day
+##    &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1    41     190   7.4    67     5     1
+##  2    36     118   8      72     5     2
+##  3    12     149  12.6    74     5     3
+##  4    18     313  11.5    62     5     4
+##  5    23     299   8.6    65     5     7
+##  6    19      99  13.8    59     5     8
+##  7     8      19  20.1    61     5     9
+##  8    16     256   9.7    69     5    12
+##  9    11     290   9.2    66     5    13
+## 10    14     274  10.9    68     5    14
+## # … with 101 more rows
+</pre>
 <p>The <c>across()</c> function can also be used with <c>mutate()</c> if we want to apply the same transformation to multiple columns. For example, suppose we want to cycle through each column and replace all missing values (<c>NA</c>s) with zeros. We could use <c>across()</c> to accomplish this.</p>
 <program language="r"><input><![CDATA[
 airquality %>%
   mutate(across(Ozone:Temp, ~ replace_na(., 0)))
 ]]></input></program>
+<pre>
+## # A tibble: 153 × 6
+##    Ozone Solar.R  Wind  Temp Month   Day
+##    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
+##  1    41     190   7.4    67     5     1
+##  2    36     118   8      72     5     2
+##  3    12     149  12.6    74     5     3
+##  4    18     313  11.5    62     5     4
+##  5     0       0  14.3    56     5     5
+##  6    28       0  14.9    66     5     6
+##  7    23     299   8.6    65     5     7
+##  8    19      99  13.8    59     5     8
+##  9     8      19  20.1    61     5     9
+## 10     0     194   8.6    69     5    10
+## # … with 143 more rows
+</pre>
 <p>Again, the <c>.</c> is used as a stand-in for the name of the column. This expression essentially applies the <c>replace_na()</c> function to each of the columns between <c>Ozone</c> and <c>Temp</c> in the data frame.</p>
 </subsection>
 </section>
@@ -766,6 +1340,9 @@ some_months <- c("Mar", "Dec", "Jan",  "Apr", "Jul")
 # alphabetical sort
 sort(some_months)
 ]]></input></program>
+<pre>
+## [1] "Apr" "Dec" "Jan" "Jul" "Mar"
+</pre>
 <figure>
   <caption>sort sorts variable alphabetically</caption>
   <image source="images/gslides/118.png"/>
@@ -781,6 +1358,12 @@ mon
 # look at sorted factor
 sort(mon)
 ]]></input></program>
+<pre>
+## [1] Mar Dec Jan Apr Jul
+## Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+## [1] Jan Mar Apr Jul Dec
+## Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+</pre>
 <figure>
   <caption>defining the factor levels sorts this variable sensibly</caption>
   <image source="images/gslides/119.png"/>
@@ -799,6 +1382,12 @@ mon_relevel
 # releleveld and sorted
 sort(mon_relevel)
 ]]></input></program>
+<pre>
+## [1] Mar Dec Jan Apr Jul
+## Levels: Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr May Jun
+## [1] Jul Dec Jan Mar Apr
+## Levels: Jul Aug Sep Oct Nov Dec Jan Feb Mar Apr May Jun
+</pre>
 <figure>
   <caption>fct_relevel enables you to change the order of your factor levels</caption>
   <image source="images/gslides/120.png"/>
@@ -818,6 +1407,12 @@ mon_inorder
 # sorted 
 sort(mon_inorder)
 ]]></input></program>
+<pre>
+## [1] Mar Dec Jan Apr Jul
+## Levels: Mar Dec Jan Apr Jul
+## [1] Mar Dec Jan Apr Jul
+## Levels: Mar Dec Jan Apr Jul
+</pre>
 <figure>
   <caption>fct_inorder() assigns levels in the same order the level is seen in the data</caption>
   <image source="images/gslides/121.png"/>
@@ -843,6 +1438,17 @@ tabyl(chickwts$feed)
 ## order levels by frequency 
 fct_infreq(chickwts$feed) %>% head()
 ]]></input></program>
+<pre>
+##  chickwts$feed  n   percent
+##         casein 12 0.1690141
+##      horsebean 10 0.1408451
+##        linseed 12 0.1690141
+##       meatmeal 11 0.1549296
+##        soybean 14 0.1971831
+##      sunflower 12 0.1690141
+## [1] horsebean horsebean horsebean horsebean horsebean horsebean
+## Levels: soybean casein linseed sunflower meatmeal horsebean
+</pre>
 <figure>
   <caption>fct_infreq orders levels based on frequency in dataset</caption>
   <image source="images/gslides/123.png"/>
@@ -856,6 +1462,10 @@ fct_infreq(chickwts$feed) %>% head()
 ## reverse factor level order
 fct_rev(fct_infreq(chickwts$feed)) %>% head()
 ]]></input></program>
+<pre>
+## [1] horsebean horsebean horsebean horsebean horsebean horsebean
+## Levels: horsebean meatmeal sunflower linseed casein soybean
+</pre>
 <figure>
   <caption>fct_rev() reverses the factor level order</caption>
   <image source="images/gslides/124.png"/>
@@ -895,6 +1505,13 @@ chickwts %>%
   )) %>%
   tabyl(feed_recode)
 ]]></input></program>
+<pre>
+##  feed_recode  n   percent
+##       casein 12 0.1690141
+##         bean 24 0.3380282
+##         seed 24 0.3380282
+##         meal 11 0.1549296
+</pre>
 <figure>
   <caption>fct_recode() can be used to group multiple levels into a single level and/or to rename levels</caption>
   <image source="images/gslides/126.png"/>
@@ -910,6 +1527,11 @@ chickwts %>%
            weight_recode = factor(weight_recode)) %>%
     tabyl(weight_recode)
 ]]></input></program>
+<pre>
+##  weight_recode  n   percent
+##           high 54 0.7605634
+##            low 17 0.2394366
+</pre>
 <figure>
   <caption>converting a numeric type variable to a factor</caption>
   <image source="images/gslides/127.png"/>
@@ -944,6 +1566,11 @@ mdy("September 29th, 1988")
 #day-month-year
 dmy("29-Sep-1988")
 ]]></input></program>
+<pre>
+## [1] "1988-09-29"
+## [1] "1988-09-29"
+## [1] "1988-09-29"
+</pre>
 <figure>
   <caption>creating date and date-time objects</caption>
   <image source="images/gslides/128.png"/>
@@ -952,6 +1579,9 @@ dmy("29-Sep-1988")
 <program language="r"><input><![CDATA[
 ymd_hms("1988-09-29 20:11:59")
 ]]></input></program>
+<pre>
+## [1] "1988-09-29 20:11:59 UTC"
+</pre>
 </subsubsection>
 <subsubsection xml:id="from-individual-parts">
 <title>From individual parts</title>
@@ -969,6 +1599,22 @@ flights %>%
   select(year, month, day) %>% 
   mutate(departure = make_date(year, month, day))
 ]]></input></program>
+<pre>
+## # A tibble: 336,776 × 4
+##     year month   day departure 
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;date&gt;    
+##  1  2013     1     1 2013-01-01
+##  2  2013     1     1 2013-01-01
+##  3  2013     1     1 2013-01-01
+##  4  2013     1     1 2013-01-01
+##  5  2013     1     1 2013-01-01
+##  6  2013     1     1 2013-01-01
+##  7  2013     1     1 2013-01-01
+##  8  2013     1     1 2013-01-01
+##  9  2013     1     1 2013-01-01
+## 10  2013     1     1 2013-01-01
+## # … with 336,766 more rows
+</pre>
 <figure>
   <caption>mutate() and make_date() create a new column -- departure -- with a date object</caption>
   <image source="images/gslides/129.png"/>
@@ -981,6 +1627,22 @@ flights %>%
   select(year, month, day, hour, minute) %>% 
   mutate(departure = make_datetime(year, month, day, hour, minute))
 ]]></input></program>
+<pre>
+## # A tibble: 336,776 × 6
+##     year month   day  hour minute departure          
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dttm&gt;             
+##  1  2013     1     1     5     15 2013-01-01 05:15:00
+##  2  2013     1     1     5     29 2013-01-01 05:29:00
+##  3  2013     1     1     5     40 2013-01-01 05:40:00
+##  4  2013     1     1     5     45 2013-01-01 05:45:00
+##  5  2013     1     1     6      0 2013-01-01 06:00:00
+##  6  2013     1     1     5     58 2013-01-01 05:58:00
+##  7  2013     1     1     6      0 2013-01-01 06:00:00
+##  8  2013     1     1     6      0 2013-01-01 06:00:00
+##  9  2013     1     1     6      0 2013-01-01 06:00:00
+## 10  2013     1     1     6      0 2013-01-01 06:00:00
+## # … with 336,766 more rows
+</pre>
 <figure>
   <caption>mutate() and make_datetime() create a new column -- departure -- with a date-time object</caption>
   <image source="images/gslides/130.png"/>
@@ -1028,6 +1690,10 @@ age
 ## a duration object can get this information in years
 as.duration(age)
 ]]></input></program>
+<pre>
+## Time difference of 12026 days
+## [1] "1039046400s (~32.93 years)"
+</pre>
 <figure>
   <caption>dates and date-times can be operated upon</caption>
   <image source="images/gslides/132.png"/>
@@ -1076,6 +1742,9 @@ objectA <- c( "This sentence is a string.", "Short String", "Third string" )
 
 str_length(objectA)
 ]]></input></program>
+<pre>
+## [1] 26 12 12
+</pre>
 <figure>
   <caption>`str_length()` output</caption>
   <image source="images/gslides/134.png"/>
@@ -1088,6 +1757,9 @@ str_length(objectA)
 <program language="r"><input><![CDATA[
 str_c( "Good", "Morning")
 ]]></input></program>
+<pre>
+## [1] "GoodMorning"
+</pre>
 <figure>
   <caption>`str_c()`</caption>
   <image source="images/gslides/135.png"/>
@@ -1096,6 +1768,9 @@ str_c( "Good", "Morning")
 <program language="r"><input><![CDATA[
 str_c( "Good", "Morning", sep=" ")
 ]]></input></program>
+<pre>
+## [1] "Good Morning"
+</pre>
 </subsubsection>
 <subsubsection xml:id="subsetting-strings-str_sub">
 <title>Subsetting strings: <c>str_sub()</c></title>
@@ -1105,6 +1780,9 @@ object <- c( "Good", "Morning")
 
 str_sub(object, 1, 3)
 ]]></input></program>
+<pre>
+## [1] "Goo" "Mor"
+</pre>
 <figure>
   <caption>`str_sub()` output</caption>
   <image source="images/gslides/136.png"/>
@@ -1115,6 +1793,9 @@ object <- c( "Good", "Morning")
 
 str_sub(object, -3, -1)
 ]]></input></program>
+<pre>
+## [1] "ood" "ing"
+</pre>
 <figure>
   <caption>`str_sub()` output counting from end of string</caption>
   <image source="images/gslides/137.png"/>
@@ -1128,6 +1809,9 @@ names <- c("Keisha", "Mohammed", "Jane")
 
 str_sort(names)
 ]]></input></program>
+<pre>
+## [1] "Jane"     "Keisha"   "Mohammed"
+</pre>
 <figure>
   <caption>`str_sort()` output sorts strings</caption>
   <image source="images/gslides/138.png"/>
@@ -1212,6 +1896,9 @@ str_count(names, "^M")
 ## return count of the number of times string matches pattern
 str_count(names, "m")
 ]]></input></program>
+<pre>
+## [1] 0 2 0 0
+</pre>
 <figure>
   <caption>`str_count()` strings that have an m in them</caption>
   <image source="images/gslides/144.png"/>
@@ -1225,6 +1912,9 @@ str_count(names, "m")
 ## return TRUE if they do; FALSE otherwise
 str_detect(names, "^M")
 ]]></input></program>
+<pre>
+## [1] FALSE  TRUE FALSE  TRUE
+</pre>
 <figure>
   <caption>str_detect() returns TRUE for strings that match the specified pattern; FALSE otherwise</caption>
   <image source="images/gslides/145.png"/>
@@ -1238,6 +1928,9 @@ str_detect(names, "^M")
 ## return whole string
 str_subset(names, "^M")
 ]]></input></program>
+<pre>
+## [1] "Mohammed" "Mathieu"
+</pre>
 <figure>
   <caption>`str_subset()` returns the strings that match the pattern specified</caption>
   <image source="images/gslides/146.png"/>
@@ -1251,6 +1944,9 @@ str_subset(names, "^M")
 ## otherwise, return NA
 str_extract(names, "^M")
 ]]></input></program>
+<pre>
+## [1] NA  "M" NA  "M"
+</pre>
 <figure>
   <caption>`str_extract()` returns the portions of the strings that match the pattern specified</caption>
   <image source="images/gslides/147.png"/>
@@ -1263,6 +1959,9 @@ str_extract(names, "^M")
 ## replace capital M with a question mark
 str_replace(names, "^M", "?")
 ]]></input></program>
+<pre>
+## [1] "Keisha"   "?ohammed" "Jane"     "?athieu"
+</pre>
 <figure>
   <caption>`str_replace()` replaces regex with specified characters</caption>
   <image source="images/gslides/148.png"/>
@@ -1416,6 +2115,9 @@ library(glue)
 topic <- 'tidyverse'
 glue('My favorite thing to learn about is the {topic}!')
 ]]></input></program>
+<pre>
+## My favorite thing to learn about is the tidyverse!
+</pre>
 <p>Note that the code above interprets the variable <c>topic</c> within the string specified in the <c>glue()</c> function. The variable is specified within curly braces: <c>{}</c>.</p>
 <p>This becomes particularly helpful when combining information within a data frame.</p>
 <p>For example, if we return to the <c>msleep</c> dataset with information about mammalian sleep, we could use <c>mutate()</c> to add a column summarizing the name of the animal, how many minutes the animal spends asleep and how many awake. Note that these columns are currently in hours, so we're going to convert that to minutes within the glue statement here:</p>
@@ -1425,6 +2127,22 @@ msleep %>%
   mutate(description = glue("The {name} typically sleeps for {sleep_total * 60} minutes and is awake for {awake * 60} minutes each day.")) %>% 
   select(name, sleep_total, awake, description)
 ]]></input></program>
+<pre>
+## # A tibble: 83 × 4
+##    name                       sleep_total awake description                     
+##    &lt;chr&gt;                            &lt;dbl&gt; &lt;dbl&gt; &lt;glue&gt;                          
+##  1 Cheetah                           12.1  11.9 The Cheetah typically sleeps fo…
+##  2 Owl monkey                        17     7   The Owl monkey typically sleeps…
+##  3 Mountain beaver                   14.4   9.6 The Mountain beaver typically s…
+##  4 Greater short-tailed shrew        14.9   9.1 The Greater short-tailed shrew …
+##  5 Cow                                4    20   The Cow typically sleeps for 24…
+##  6 Three-toed sloth                  14.4   9.6 The Three-toed sloth typically …
+##  7 Northern fur seal                  8.7  15.3 The Northern fur seal typically…
+##  8 Vesper mouse                       7    17   The Vesper mouse typically slee…
+##  9 Dog                               10.1  13.9 The Dog typically sleeps for 60…
+## 10 Roe deer                           3    21   The Roe deer typically sleeps f…
+## # … with 73 more rows
+</pre>
 <p>Note that we've selected the four columns used in this example with <c>select()</c> to focus on the output created using <c>glue()</c> in the <c>description</c> column. For each observation the information in description utilizes the appropriate information for that observation and the columns specified within the curly braces within the <c>glue()</c> function.</p>
 </subsection>
 </section>
@@ -1452,6 +2170,12 @@ carrots <- c("They say that carrots are good for your eyes",
 
 carrots
 ]]></input></program>
+<pre>
+## [1] "They say that carrots are good for your eyes"
+## [2] "They swear that they improve your sight"     
+## [3] "But I'm seein' worse than I did last night -"
+## [4] "You think maybe I ain't usin' em right?"
+</pre>
 <p>For analysis, we'd need to get this into a tidy data format. So, first things first, let's get it into a data frame:</p>
 <program language="r"><input><![CDATA[
 library(tibble)
@@ -1459,11 +2183,36 @@ text_df <- tibble(line = 1:4, text = carrots)
 
 text_df
 ]]></input></program>
+<pre>
+## # A tibble: 4 × 2
+##    line text                                        
+##   &lt;int&gt; &lt;chr&gt;                                       
+## 1     1 They say that carrots are good for your eyes
+## 2     2 They swear that they improve your sight     
+## 3     3 But I'm seein' worse than I did last night -
+## 4     4 You think maybe I ain't usin' em right?
+</pre>
 <p>At this point we have a tibble with each line of the poem in a separate row. Now, we want to convert this using <c>unnest_tokens()</c> so that each row contains a single token, where, for this example, our token will be an individual word. This process is known as <em>tokenization</em>.</p>
 <program language="r"><input><![CDATA[
 text_df %>% 
   unnest_tokens(word, text)
 ]]></input></program>
+<pre>
+## # A tibble: 33 × 2
+##     line word   
+##    &lt;int&gt; &lt;chr&gt;  
+##  1     1 they   
+##  2     1 say    
+##  3     1 that   
+##  4     1 carrots
+##  5     1 are    
+##  6     1 good   
+##  7     1 for    
+##  8     1 your   
+##  9     1 eyes   
+## 10     2 they   
+## # … with 23 more rows
+</pre>
 <p>Notice that the two arguments to the <c>unnest_tokens()</c> function. The first (<c>word</c> in our example) is the name of the token column in the output. The second (<c>text</c> in our example) is the name of the column in the input data frame (<c>text_df</c>) that should be used for tokenization.</p>
 <p>In the output we see that there is a single word (token) in each row, so our data are now in a tidy format, which makes further analysis simpler.</p>
 <p>Finally, note that, by default <c>unnest_tokens()</c> strips punctuation and converts the tokens to lowercase.</p>
@@ -1482,6 +2231,22 @@ library(textdata)
 # see information stored in NRC lexicon
 get_sentiments('nrc')
 ]]></input></program>
+<pre>
+## # A tibble: 13,901 × 2
+##    word        sentiment
+##    &lt;chr&gt;       &lt;chr&gt;    
+##  1 abacus      trust    
+##  2 abandon     fear     
+##  3 abandon     negative 
+##  4 abandon     sadness  
+##  5 abandoned   anger    
+##  6 abandoned   fear     
+##  7 abandoned   negative 
+##  8 abandoned   sadness  
+##  9 abandonment anger    
+## 10 abandonment fear     
+## # … with 13,891 more rows
+</pre>
 <p>Note: The first time you use this function R will prompt you to verify that you want to download the lexicon.</p>
 <p>In the output you'll see words in the first column and the sentiment attached to each word in the <c>sentiment</c> column. Notice that the same word can have multiple sentiments attached to it. All told, there are more than 13,000 word-sentiment pairs in this lexicon.</p>
 <p>Let's quantify the sentiment in the "Carrots" poem from above:</p>
@@ -1490,6 +2255,9 @@ text_df %>%
   unnest_tokens(word, text) %>% 
   inner_join(get_sentiments('nrc'))
 ]]></input></program>
+<pre>
+## Joining, by = "word"
+</pre>
 <p>Notice that the sentiments applied to each word are dependent upon the sentiments defined within the lexicon. Words that are missing or that are used differently than anticipated by those who generated the lexicon <em>could</em> be misclassified. Additionally, since we're using single word tokens, qualifiers are removed from context. So in the carrots poem, the word good in "are good for your eyes" would be given the same sentiment as good if the phrase were "are <em>not</em> good for your eyes." Thus, a lot context and nuance is lost in this approach. It's always important to consider the limitations of your analytical approach!</p>
 <p>Above we found the sentiments for each token, but let's summarize that by counting the number of times each sentiment appears.</p>
 <program language="r"><input><![CDATA[
@@ -1498,6 +2266,9 @@ text_df %>%
   inner_join(get_sentiments('nrc')) %>%
   count(sentiment, sort = TRUE)
 ]]></input></program>
+<pre>
+## Joining, by = "word"
+</pre>
 <p>As we're analyzing a short poem, we see that only a few sentiments show up multiple times; however, using sentiment analysis on this poem suggests that the poem is generally positive, including words that convey trust, anticipation, and joy.</p>
 <p>Analyzing a four line poem, however, is not typically what one would do. They would instead analyze the text across chapters in a book or across multiple books. Here, we've just demonstrated the concepts behind how you would go about carrying out sentiment analysis.</p>
 </subsection>
@@ -1520,6 +2291,18 @@ invitation <- tibble(line = 1:7, text = invitation, title = "Invitation")
 
 invitation
 ]]></input></program>
+<pre>
+## # A tibble: 7 × 3
+##    line text                                        title     
+##   &lt;int&gt; &lt;chr&gt;                                       &lt;chr&gt;     
+## 1     1 If you are a dreamer, come in,              Invitation
+## 2     2 If you are a dreamer, a wisher, a liar      Invitation
+## 3     3 A hope-er, a pray-er, a magic bean buyer…   Invitation
+## 4     4 If you’re a pretender, come sit by my fire  Invitation
+## 5     5 For we have some flax-golden tales to spin. Invitation
+## 6     6 Come in!                                    Invitation
+## 7     7 Come in!                                    Invitation
+</pre>
 <p>And, here is masks:</p>
 <program language="r"><input><![CDATA[
 masks <- c("She had blue skin.", 
@@ -1535,6 +2318,19 @@ masks <- tibble(line = 1:8, text = masks, title = "Masks")
 
 masks
 ]]></input></program>
+<pre>
+## # A tibble: 8 × 3
+##    line text                     title
+##   &lt;int&gt; &lt;chr&gt;                    &lt;chr&gt;
+## 1     1 She had blue skin.       Masks
+## 2     2 And so did he.           Masks
+## 3     3 He kept it hid           Masks
+## 4     4 And so did she.          Masks
+## 5     5 They searched for blue   Masks
+## 6     6 Their whole life through Masks
+## 7     7 Then passed right by—    Masks
+## 8     8 And never knew           Masks
+</pre>
 <p>We'll combine all three poems into a single data frame for TF-IDF analysis. To do so, we'll first add a column to our carrots example from above so that it has a column for <c>title</c>:</p>
 <program language="r"><input><![CDATA[
 # add title to carrots poem
@@ -1559,6 +2355,23 @@ total_words <- poem_words %>%
 poem_words <- left_join(poem_words, total_words)
 poem_words
 ]]></input></program>
+<pre>
+## Joining, by = "title"
+## # A tibble: 82 × 4
+##    title      word      n total
+##    &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+##  1 Invitation a         8    48
+##  2 Invitation come      4    48
+##  3 Carrots    they      3    33
+##  4 Invitation if        3    48
+##  5 Invitation in        3    48
+##  6 Masks      and       3    31
+##  7 Carrots    i         2    33
+##  8 Carrots    that      2    33
+##  9 Carrots    your      2    33
+## 10 Invitation are       2    48
+## # … with 72 more rows
+</pre>
 <p>Note that there are a different number of total words in each document, which is important to consider when you're comparing relative frequency between documents.</p>
 <p>We could visualize the number of times a word appears relative to document length as follows:</p>
 <program language="r"><input><![CDATA[
@@ -1586,12 +2399,44 @@ poem_words <- poem_words %>%
 poem_words %>%
   arrange(tf_idf)
 ]]></input></program>
+<pre>
+## # A tibble: 82 × 7
+##    title      word      n total     tf   idf  tf_idf
+##    &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Carrots    for       1    33 0.0303 0     0      
+##  2 Invitation for       1    48 0.0208 0     0      
+##  3 Masks      for       1    31 0.0323 0     0      
+##  4 Invitation by        1    48 0.0208 0.405 0.00845
+##  5 Carrots    are       1    33 0.0303 0.405 0.0123 
+##  6 Carrots    did       1    33 0.0303 0.405 0.0123 
+##  7 Carrots    right     1    33 0.0303 0.405 0.0123 
+##  8 Carrots    you       1    33 0.0303 0.405 0.0123 
+##  9 Masks      by        1    31 0.0323 0.405 0.0131 
+## 10 Masks      right     1    31 0.0323 0.405 0.0131 
+## # … with 72 more rows
+</pre>
 <p>If we sort this output in ascending order by <c>tf_idf</c>, you'll notice that the word "for" has a <c>tf_idf</c> of 0. The data indicates that this word shows up with equal frequency across all three poems. It is <em>not</em> a word unique to any one poem.</p>
 <program language="r"><input><![CDATA[
 # sort descending
 poem_words %>%
   arrange(desc(tf_idf))
 ]]></input></program>
+<pre>
+## # A tibble: 82 × 7
+##    title      word      n total     tf   idf tf_idf
+##    &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Invitation a         8    48 0.167   1.10 0.183 
+##  2 Masks      and       3    31 0.0968  1.10 0.106 
+##  3 Invitation come      4    48 0.0833  1.10 0.0916
+##  4 Masks      blue      2    31 0.0645  1.10 0.0709
+##  5 Masks      he        2    31 0.0645  1.10 0.0709
+##  6 Masks      she       2    31 0.0645  1.10 0.0709
+##  7 Masks      so        2    31 0.0645  1.10 0.0709
+##  8 Invitation if        3    48 0.0625  1.10 0.0687
+##  9 Invitation in        3    48 0.0625  1.10 0.0687
+## 10 Carrots    i         2    33 0.0606  1.10 0.0666
+## # … with 72 more rows
+</pre>
 <p>Alternatively, here we see the words most unique to the individual poems. "a" and "come" are most unique to <em>Invitation</em>, while "and" and "blue" are most unique to <em>Masks</em>. If we had removed stop words, we would have lost the fact that some common words are really unique in one of these poems relative to the others.</p>
 <p>Again, we're looking at a limited amount of text here, but this analysis can be applied to novels, works by different authors, or articles written in a newspaper.</p>
 <p>We can summarize these tf-idf results by visualizing the words with the highest tf-idf in each of these poems:</p>
@@ -1608,6 +2453,9 @@ poem_words %>%
   facet_wrap(~title, ncol = 3, scales = "free") +
   coord_flip()
 ]]></input></program>
+<pre>
+## Selecting by tf_idf
+</pre>
 </subsection>
 </section>
 <section xml:id="functional-programming">
@@ -1624,6 +2472,22 @@ poem_words %>%
 trees <- as_tibble(trees)
 trees
 ]]></input></program>
+<pre>
+## # A tibble: 31 × 3
+##    Girth Height Volume
+##    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1   8.3     70   10.3
+##  2   8.6     65   10.3
+##  3   8.8     63   10.2
+##  4  10.5     72   16.4
+##  5  10.7     81   18.8
+##  6  10.8     83   19.7
+##  7  11       66   15.6
+##  8  11       75   18.2
+##  9  11.1     80   22.6
+## 10  11.2     75   19.9
+## # … with 21 more rows
+</pre>
 <p>The dataset contains the diameter, height, and volume of 31 Black Cherry trees.</p>
 <subsubsection xml:id="copy-paste-approach">
 <title>Copy + Paste Approach</title>
@@ -1636,6 +2500,11 @@ median(trees$Height)
 
 median(trees$Volume)
 ]]></input></program>
+<pre>
+## [1] 12.9
+## [1] 76
+## [1] 24.2
+</pre>
 <p>This would get you your answer; however, this breaks the programming rule that you shouldn't copy and paste more than once. And, you could imagine that if you had more than three columns, this would be a <em>huge</em> pain and involve a whole lot of copy and pasting and editing.</p>
 </subsubsection>
 <subsubsection xml:id="for-loop-approach">
@@ -1651,6 +2520,9 @@ for (i in seq_along(trees)) {
 }
 output
 ]]></input></program>
+<pre>
+## [1] 12.9 76.0 24.2
+</pre>
 <p>This allows us to obtain the same information as the copy + paste method; however, it scales better if there are more than three columns in your data frame, making it a better option than the copy + paste method.</p>
 <p>But, what if you frequently want to take the median of the columns in your data frame? What if you want to do this more than once? You would have to go in, copy + paste this code and change the name of the data frame each time. This would break the don't copy + paste more than once rule.</p>
 </subsubsection>
@@ -1670,6 +2542,9 @@ col_median <- function(df) {
 # execute function
 col_median(trees)
 ]]></input></program>
+<pre>
+## [1] 12.9 76.0 24.2
+</pre>
 <p>Again, the output information from trees is the same for this specific example, but now we see that we could use the <c>col_median()</c> function any time we want to calculate the medians across columns within a data frame!</p>
 <p>This is a much better approach as it allows you to generalize your code, <em>but</em> the above solution still requires you to loop through each column, making the code harder to read and understand at a glance. It fails to take advantage of R's functional programming capabilities.</p>
 </subsubsection>
@@ -1690,12 +2565,20 @@ library(purrr)
 # use purrr to calculate median
 map_dbl(trees, median)
 ]]></input></program>
+<pre>
+##  Girth Height Volume 
+##   12.9   76.0   24.2
+</pre>
 <p>Here, we use the <c>map_dbl()</c> function from <c>purrr</c> to iterate over the columns of trees and calculate the median. And, it even displays the variable name in the output for us - all in a single function call.</p>
 <p>Note the flexibility! We've just passed the <c>median()</c> function <em>into</em> another function: <c>map_dbl</c>. This means that if we changed our minds and wanted mean instead, we could accomplish that with ease:</p>
 <program language="r"><input><![CDATA[
 # use purrr to calculate mean
 map_dbl(trees, mean)
 ]]></input></program>
+<pre>
+##    Girth   Height   Volume 
+## 13.24839 76.00000 30.17097
+</pre>
 <p>This function exists because looping to do something to each element and saving the results is such a common task, that there is  family of functions (one of which is <c>map_dbl</c>) to do it for you to accomplish such tasks in <c>purrr</c>.</p>
 <p>We'll note here that <c>purrr</c>'s functions are all implemented in the C programming language, making them faster than the function we generated previously.</p>
 <p>In the example above <c>mean</c> could have been any function, denoted in the <c>purrr</c> documentation as <c>.f</c>. This specifies the function you'd like to apply to the vector you've specified.</p>
@@ -1704,6 +2587,10 @@ map_dbl(trees, mean)
 # use purrr to calculate mean
 map_dbl(trees, mean, na.rm = TRUE)
 ]]></input></program>
+<pre>
+##    Girth   Height   Volume 
+## 13.24839 76.00000 30.17097
+</pre>
 </subsubsection>
 </subsection>
 <subsection xml:id="map-functions">
@@ -1723,6 +2610,12 @@ map_dbl(trees, mean, na.rm = TRUE)
 # use map_dfr to calculate mean and create a dataframe
 map_dfr(trees, mean, na.rm = TRUE)
 ]]></input></program>
+<pre>
+## # A tibble: 1 × 3
+##   Girth Height Volume
+##   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1  13.2     76   30.2
+</pre>
 </subsection>
 <subsection xml:id="multiple-vectors">
 <title>Multiple Vectors</title>
@@ -1754,10 +2647,22 @@ volume <- function(diameter, height){
 # calculate volume
 map2_dbl(trees$Girth, trees$Height, volume)
 ]]></input></program>
+<pre>
+##  [1]  26.30157  26.22030  26.60929  43.29507  50.58013  52.80232  43.55687
+##  [8]  49.49645  53.76050  51.31268  55.01883  53.87046  53.87046  51.51672
+## [15]  58.90486  67.16431  77.14819  82.97153  72.68200  66.47610  83.38311
+## [22]  87.98205  84.85845 100.53096 111.58179 132.22227 136.96744 139.80524
+## [29] 141.37167 141.37167 201.36365
+</pre>
 <p>Here the output is on the same order as the <c>Volume</c> column from the dataset, but the numbers are off, suggesting that the dataset calculated volume of the tree differently than we did in our approach.</p>
 <program language="r"><input><![CDATA[
 trees$Volume
 ]]></input></program>
+<pre>
+##  [1] 10.3 10.3 10.2 16.4 18.8 19.7 15.6 18.2 22.6 19.9 24.2 21.0 21.4 21.3 19.1
+## [16] 22.2 33.8 27.4 25.7 24.9 34.5 31.7 36.3 38.3 42.6 55.4 55.7 58.3 51.5 51.0
+## [31] 77.0
+</pre>
 <p>Note that there are all the same variations that exist for <c>map_</c> exist for <c>map2()</c>, so you're able to use <c>map2_chr()</c> and <c>map2_dbl()</c>, etc.</p>
 <p>Additionally, the <c>map</c> functions work well within our <c>dplyr</c> approach to working with data. Here, we add the output for our volume calculation to the trees dataset as well as a column (<c>volume_diff</c>) that displays the difference between our volume calculation and that reported in the dataset:</p>
 <program language="r"><input><![CDATA[
@@ -1766,6 +2671,22 @@ trees %>%
   mutate(volume_cylinder = map2_dbl(trees$Girth, trees$Height, volume),
          volume_diff = Volume - volume_cylinder)
 ]]></input></program>
+<pre>
+## # A tibble: 31 × 5
+##    Girth Height Volume volume_cylinder volume_diff
+##    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;
+##  1   8.3     70   10.3            26.3       -16.0
+##  2   8.6     65   10.3            26.2       -15.9
+##  3   8.8     63   10.2            26.6       -16.4
+##  4  10.5     72   16.4            43.3       -26.9
+##  5  10.7     81   18.8            50.6       -31.8
+##  6  10.8     83   19.7            52.8       -33.1
+##  7  11       66   15.6            43.6       -28.0
+##  8  11       75   18.2            49.5       -31.3
+##  9  11.1     80   22.6            53.8       -31.2
+## 10  11.2     75   19.9            51.3       -31.4
+## # … with 21 more rows
+</pre>
 </subsubsection>
 <subsubsection xml:id="pmap">
 <title><c>pmap</c></title>
@@ -1784,11 +2705,25 @@ pmap(LIST_OF_INPUT_LISTS, FUNCTION_TO_APPLY, OPTIONAL_OTHER_STUFF)
 <program language="r"><input><![CDATA[
 map2_dbl(trees$Girth, trees$Height, function(x,y){ pi * ((x/2)/12)^2 * y})
 ]]></input></program>
+<pre>
+##  [1]  26.30157  26.22030  26.60929  43.29507  50.58013  52.80232  43.55687
+##  [8]  49.49645  53.76050  51.31268  55.01883  53.87046  53.87046  51.51672
+## [15]  58.90486  67.16431  77.14819  82.97153  72.68200  66.47610  83.38311
+## [22]  87.98205  84.85845 100.53096 111.58179 132.22227 136.96744 139.80524
+## [29] 141.37167 141.37167 201.36365
+</pre>
 <p>In this example, we create the anonymous function within the <c>map2_dbl()</c> call. This allows volume to be calculated as before, but does so without having to define a function.</p>
 <p>This becomes particularly helpful within <c>purrr</c> if you want to refer to the individual elements of your <c>map</c> call directly. This is done by specifying <c>.x</c> and <c>.y</c> to refer to the first and second input vectors, respectively:</p>
 <program language="r"><input><![CDATA[
 map2_dbl(trees$Girth, trees$Height, ~ pi * ((.x/2)/12)^2 * .y)
 ]]></input></program>
+<pre>
+##  [1]  26.30157  26.22030  26.60929  43.29507  50.58013  52.80232  43.55687
+##  [8]  49.49645  53.76050  51.31268  55.01883  53.87046  53.87046  51.51672
+## [15]  58.90486  67.16431  77.14819  82.97153  72.68200  66.47610  83.38311
+## [22]  87.98205  84.85845 100.53096 111.58179 132.22227 136.96744 139.80524
+## [29] 141.37167 141.37167 201.36365
+</pre>
 <p>Here, we see the same output; however, the syntax defines an anonymous function using the formula syntax.</p>
 </subsection>
 </section>
@@ -1869,6 +2804,23 @@ share <- df %>%
   mutate(freq = n / sum(n)) %>%
   filter(Sex == "F")
 ]]></input></program>
+<pre>
+## # A tibble: 34 × 4
+## # Groups:   Year [34]
+##     Year Sex       n    freq
+##    &lt;dbl&gt; &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;
+##  1  1900 F        33 0.0170 
+##  2  1904 F        16 0.0123 
+##  3  1906 F        11 0.00635
+##  4  1908 F        47 0.0152 
+##  5  1912 F        87 0.0215 
+##  6  1920 F       134 0.0312 
+##  7  1924 F       261 0.0458 
+##  8  1928 F       437 0.0784 
+##  9  1932 F       369 0.111  
+## 10  1936 F       549 0.0742 
+## # … with 24 more rows
+</pre>
 <program language="r"><input><![CDATA[
 share
 ]]></input></program>
@@ -1927,6 +2879,9 @@ load(here::here("data","raw_data", "case_study_1.rda"))
 load(here::here("data", "raw_data", "case_study_2.rda"))
 #This loads all the data objects that we previously saved in our raw_data directory. Recall that this directory is located within a directory called data that is located within the directory where our project is located. 
 ]]></input></program>
+<pre>
+## here() starts at /Users/carriewright/Documents/GitHub/Coursera/tidyversecourse
+</pre>
 <p>Now, we will work to get the data into two tidy formatted datasets that will include the information needed to answer our questions of interest.</p>
 <subsection xml:id="case-study-1-health-expenditures">
 <title>Case Study #1: Health Expenditures</title>
@@ -1944,6 +2899,28 @@ load(here::here("data", "raw_data", "case_study_2.rda"))
 <program language="r"><input><![CDATA[
 coverage
 ]]></input></program>
+<pre>
+## # A tibble: 52 × 29
+##    Location  `2013__Employer` `2013__Non-Grou… `2013__Medicaid` `2013__Medicare`
+##    &lt;chr&gt;                &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1 United S…        155696900         13816000         54919100         40876300
+##  2 Alabama            2126500           174200           869700           783000
+##  3 Alaska              364900            24000            95000            55200
+##  4 Arizona            2883800           170800          1346100           842000
+##  5 Arkansas           1128800           155600           600800           515200
+##  6 Californ…         17747300          1986400          8344800          3828500
+##  7 Colorado           2852500           426300           697300           549700
+##  8 Connecti…          2030500           126800           532000           475300
+##  9 Delaware            473700            25100           192700           141300
+## 10 District…           324300            30400           174900            59900
+## # … with 42 more rows, and 24 more variables: 2013__Other Public &lt;chr&gt;,
+## #   2013__Uninsured &lt;dbl&gt;, 2013__Total &lt;dbl&gt;, 2014__Employer &lt;dbl&gt;,
+## #   2014__Non-Group &lt;dbl&gt;, 2014__Medicaid &lt;dbl&gt;, 2014__Medicare &lt;dbl&gt;,
+## #   2014__Other Public &lt;chr&gt;, 2014__Uninsured &lt;dbl&gt;, 2014__Total &lt;dbl&gt;,
+## #   2015__Employer &lt;dbl&gt;, 2015__Non-Group &lt;dbl&gt;, 2015__Medicaid &lt;dbl&gt;,
+## #   2015__Medicare &lt;dbl&gt;, 2015__Other Public &lt;chr&gt;, 2015__Uninsured &lt;dbl&gt;,
+## #   2015__Total &lt;dbl&gt;, 2016__Employer &lt;dbl&gt;, 2016__Non-Group &lt;dbl&gt;, …
+</pre>
 <p>At a glance, we see that state-level information is stored in rows (with the exception of the first row, which stores country-level information) with columns corresponding to the amount of money spent on each type of health care, by year.</p>
 <paragraphs xml:id="states-data">
 <title>States Data</title>
@@ -1953,6 +2930,21 @@ library(datasets)
 data(state)
 state.name
 ]]></input></program>
+<pre>
+##  [1] "Alabama"        "Alaska"         "Arizona"        "Arkansas"      
+##  [5] "California"     "Colorado"       "Connecticut"    "Delaware"      
+##  [9] "Florida"        "Georgia"        "Hawaii"         "Idaho"         
+## [13] "Illinois"       "Indiana"        "Iowa"           "Kansas"        
+## [17] "Kentucky"       "Louisiana"      "Maine"          "Maryland"      
+## [21] "Massachusetts"  "Michigan"       "Minnesota"      "Mississippi"   
+## [25] "Missouri"       "Montana"        "Nebraska"       "Nevada"        
+## [29] "New Hampshire"  "New Jersey"     "New Mexico"     "New York"      
+## [33] "North Carolina" "North Dakota"   "Ohio"           "Oklahoma"      
+## [37] "Oregon"         "Pennsylvania"   "Rhode Island"   "South Carolina"
+## [41] "South Dakota"   "Tennessee"      "Texas"          "Utah"          
+## [45] "Vermont"        "Virginia"       "Washington"     "West Virginia" 
+## [49] "Wisconsin"      "Wyoming"
+</pre>
 <p>Before going any further, let's add some information about Washington, D.C, the nation's capital, which is not a state, but a territory.</p>
 <program language="r"><input><![CDATA[
 state.abb <- c(state.abb, "DC")
@@ -1963,10 +2955,38 @@ state_data <- tibble(Location = state.name,
                      region = state.region)
 state_data
 ]]></input></program>
+<pre>
+## # A tibble: 51 × 3
+##    Location    abb   region   
+##    &lt;chr&gt;       &lt;chr&gt; &lt;fct&gt;    
+##  1 Alabama     AL    South    
+##  2 Alaska      AK    West     
+##  3 Arizona     AZ    West     
+##  4 Arkansas    AR    South    
+##  5 California  CA    West     
+##  6 Colorado    CO    West     
+##  7 Connecticut CT    Northeast
+##  8 Delaware    DE    South    
+##  9 Florida     FL    South    
+## 10 Georgia     GA    South    
+## # … with 41 more rows
+</pre>
 <p>If we focus in on the columns within this dataframe, we see that we have a number of different types of health care (i.e. employer, medicare, medicaid, etc.) for each year between 2013 and 2016:</p>
 <program language="r"><input><![CDATA[
 names(coverage)
 ]]></input></program>
+<pre>
+##  [1] "Location"           "2013__Employer"     "2013__Non-Group"   
+##  [4] "2013__Medicaid"     "2013__Medicare"     "2013__Other Public"
+##  [7] "2013__Uninsured"    "2013__Total"        "2014__Employer"    
+## [10] "2014__Non-Group"    "2014__Medicaid"     "2014__Medicare"    
+## [13] "2014__Other Public" "2014__Uninsured"    "2014__Total"       
+## [16] "2015__Employer"     "2015__Non-Group"    "2015__Medicaid"    
+## [19] "2015__Medicare"     "2015__Other Public" "2015__Uninsured"   
+## [22] "2015__Total"        "2016__Employer"     "2016__Non-Group"   
+## [25] "2016__Medicaid"     "2016__Medicare"     "2016__Other Public"
+## [28] "2016__Uninsured"    "2016__Total"
+</pre>
 <p>While a lot of information in here will be helpful, it's not in a tidy format. This is because, each variable is not in a separate column. For example, each column includes year, the type of coverage <em>and</em> the amount spent by state. We'll want to use each piece of information separately downstream as we start to visualize and analyze these data. So, let's work to get these pieces of information separated out now.</p>
 <p>To accomplish this, the first thing we'll have to do is reshape the data, using the <c>pivot_longer()</c> function from the <c>tidyr</c> package. As a reminder, this function gathers multiple columns and collapses them into new name-value pairs. This transform data from wide format into a long format, where:</p>
 <ul>
@@ -1984,6 +3004,29 @@ coverage <- coverage %>%
                values_to = "tot_coverage")
 coverage
 ]]></input></program>
+<pre>
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+
+## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion
+## # A tibble: 1,456 × 3
+##    Location      year_type          tot_coverage
+##    &lt;chr&gt;         &lt;chr&gt;                     &lt;int&gt;
+##  1 United States 2013__Employer        155696900
+##  2 United States 2013__Non-Group        13816000
+##  3 United States 2013__Medicaid         54919100
+##  4 United States 2013__Medicare         40876300
+##  5 United States 2013__Other Public      6295400
+##  6 United States 2013__Uninsured        41795100
+##  7 United States 2013__Total           313401200
+##  8 United States 2014__Employer        154347500
+##  9 United States 2014__Non-Group        19313000
+## 10 United States 2014__Medicaid         61650400
+## # … with 1,446 more rows
+</pre>
 <p>Great! We still have <c>Location</c> stored in a single column, but we've separated out <c>year_type</c> and <c>tot_coverage</c> into their own columns, storing all of the information in a <term>long</term> data format.</p>
 <p>Unfortunately, the <c>year_type</c> column still contains two pieces of information. We'll want to separate these out to ensure that the data are in a properly tidy format. To do this, we'll use the <c>separate()</c> function, which allows us to separate out the information stored in a single column into two columns. We'll also use the <c>convert=TRUE</c> argument to convert the character to an integer.</p>
 <program language="r"><input><![CDATA[
@@ -1994,6 +3037,22 @@ coverage <- coverage %>%
 
 coverage
 ]]></input></program>
+<pre>
+## # A tibble: 1,456 × 4
+##    Location       year type         tot_coverage
+##    &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;               &lt;int&gt;
+##  1 United States  2013 Employer        155696900
+##  2 United States  2013 Non-Group        13816000
+##  3 United States  2013 Medicaid         54919100
+##  4 United States  2013 Medicare         40876300
+##  5 United States  2013 Other Public      6295400
+##  6 United States  2013 Uninsured        41795100
+##  7 United States  2013 Total           313401200
+##  8 United States  2014 Employer        154347500
+##  9 United States  2014 Non-Group        19313000
+## 10 United States  2014 Medicaid         61650400
+## # … with 1,446 more rows
+</pre>
 <p>Perfect! We now have the four columns we wanted, each storing a separate piece of information, <em>and</em> the year column is an integer, as you would want it to be!</p>
 <p>Let's go one step further and add in the state-level abbreviations and region for each row. We'll utilize our <c>state</c> datasets that we read in previously to accomplish this! Because we formatted the state data as a tibble, we can simply join it with our <c>coverage</c> dataset to get the state and region information.</p>
 <program language="r"><input><![CDATA[
@@ -2002,6 +3061,22 @@ coverage <- coverage %>%
 
 coverage
 ]]></input></program>
+<pre>
+## # A tibble: 1,456 × 6
+##    Location       year type         tot_coverage abb   region
+##    &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;               &lt;int&gt; &lt;chr&gt; &lt;fct&gt; 
+##  1 United States  2013 Employer        155696900 &lt;NA&gt;  &lt;NA&gt;  
+##  2 United States  2013 Non-Group        13816000 &lt;NA&gt;  &lt;NA&gt;  
+##  3 United States  2013 Medicaid         54919100 &lt;NA&gt;  &lt;NA&gt;  
+##  4 United States  2013 Medicare         40876300 &lt;NA&gt;  &lt;NA&gt;  
+##  5 United States  2013 Other Public      6295400 &lt;NA&gt;  &lt;NA&gt;  
+##  6 United States  2013 Uninsured        41795100 &lt;NA&gt;  &lt;NA&gt;  
+##  7 United States  2013 Total           313401200 &lt;NA&gt;  &lt;NA&gt;  
+##  8 United States  2014 Employer        154347500 &lt;NA&gt;  &lt;NA&gt;  
+##  9 United States  2014 Non-Group        19313000 &lt;NA&gt;  &lt;NA&gt;  
+## 10 United States  2014 Medicaid         61650400 &lt;NA&gt;  &lt;NA&gt;  
+## # … with 1,446 more rows
+</pre>
 <p>Perfect! At this point, each row is an observation and each column stores a single piece of information. This dataset is now in good shape!</p>
 </paragraphs>
 </subsubsection>
@@ -2011,6 +3086,28 @@ coverage
 <program language="r"><input><![CDATA[
 spending
 ]]></input></program>
+<pre>
+## # A tibble: 52 × 25
+##    Location  `1991__Total He… `1992__Total He… `1993__Total He… `1994__Total He…
+##    &lt;chr&gt;                &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1 United S…           675896           731455           778684           820172
+##  2 Alabama              10393            11284            12028            12742
+##  3 Alaska                1458             1558             1661             1728
+##  4 Arizona               9269             9815            10655            11364
+##  5 Arkansas              5632             6022             6397             6810
+##  6 Californ…            81438            87949            91963            94245
+##  7 Colorado              8460             9215             9803            10382
+##  8 Connecti…            10950            11635            12081            12772
+##  9 Delaware              1938             2111             2285             2489
+## 10 District…             2800             3098             3240             3255
+## # … with 42 more rows, and 20 more variables:
+## #   1995__Total Health Spending &lt;dbl&gt;, 1996__Total Health Spending &lt;dbl&gt;,
+## #   1997__Total Health Spending &lt;dbl&gt;, 1998__Total Health Spending &lt;dbl&gt;,
+## #   1999__Total Health Spending &lt;dbl&gt;, 2000__Total Health Spending &lt;dbl&gt;,
+## #   2001__Total Health Spending &lt;dbl&gt;, 2002__Total Health Spending &lt;dbl&gt;,
+## #   2003__Total Health Spending &lt;dbl&gt;, 2004__Total Health Spending &lt;dbl&gt;,
+## #   2005__Total Health Spending &lt;dbl&gt;, 2006__Total Health Spending &lt;dbl&gt;, …
+</pre>
 <p>Here, we reshape the data using <c>year</c> and <c>tot_spending</c> for the key and value. We also want to keep <c>Location</c> like before. Then, in the <c>separate()</c> function, we create two new columns called <c>year</c> and <c>name.</c> Then, we ask to return all the columns, <em>except</em> name. To select all the columns except a specific column, use the <c>-</c> (subtraction) operator. (This process is also referred to as negative indexing.)</p>
 <program language="r"><input><![CDATA[
 # take spending data from wide to long
@@ -2029,6 +3126,22 @@ spending <- spending %>%
 # look at the data
 spending
 ]]></input></program>
+<pre>
+## # A tibble: 1,248 × 3
+##    Location       year tot_spending
+##    &lt;chr&gt;         &lt;int&gt;        &lt;dbl&gt;
+##  1 United States  1991       675896
+##  2 United States  1992       731455
+##  3 United States  1993       778684
+##  4 United States  1994       820172
+##  5 United States  1995       869578
+##  6 United States  1996       917540
+##  7 United States  1997       969531
+##  8 United States  1998      1026103
+##  9 United States  1999      1086280
+## 10 United States  2000      1162035
+## # … with 1,238 more rows
+</pre>
 <p>Perfect, we have a tidy dataset and the type of information stored in each column is appropriate for the information being stored in the column!</p>
 </subsubsection>
 <subsubsection xml:id="join-the-data">
@@ -2042,6 +3155,22 @@ hc <- inner_join(coverage, spending,
 
 hc
 ]]></input></program>
+<pre>
+## # A tibble: 728 × 7
+##    Location       year type         tot_coverage abb   region tot_spending
+##    &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;               &lt;int&gt; &lt;chr&gt; &lt;fct&gt;         &lt;dbl&gt;
+##  1 United States  2013 Employer        155696900 &lt;NA&gt;  &lt;NA&gt;        2435624
+##  2 United States  2013 Non-Group        13816000 &lt;NA&gt;  &lt;NA&gt;        2435624
+##  3 United States  2013 Medicaid         54919100 &lt;NA&gt;  &lt;NA&gt;        2435624
+##  4 United States  2013 Medicare         40876300 &lt;NA&gt;  &lt;NA&gt;        2435624
+##  5 United States  2013 Other Public      6295400 &lt;NA&gt;  &lt;NA&gt;        2435624
+##  6 United States  2013 Uninsured        41795100 &lt;NA&gt;  &lt;NA&gt;        2435624
+##  7 United States  2013 Total           313401200 &lt;NA&gt;  &lt;NA&gt;        2435624
+##  8 United States  2014 Employer        154347500 &lt;NA&gt;  &lt;NA&gt;        2562824
+##  9 United States  2014 Non-Group        19313000 &lt;NA&gt;  &lt;NA&gt;        2562824
+## 10 United States  2014 Medicaid         61650400 &lt;NA&gt;  &lt;NA&gt;        2562824
+## # … with 718 more rows
+</pre>
 <p>Great, we've combined the information in our datasets. But, we've got a bit of extraneous information remaining. For example, we want to look only at the state-level. So, let's filter out the country-level summary row:</p>
 <program language="r"><input><![CDATA[
 # filter to only include state level
@@ -2053,6 +3182,13 @@ hc <- hc %>%
 table(hc$type)
 
 ]]></input></program>
+<pre>
+## 
+##     Employer     Medicaid     Medicare    Non-Group Other Public        Total 
+##          102          102          102          102          102          102 
+##    Uninsured 
+##          102
+</pre>
 <p>The "Total" type is not really a formal type of health care coverage. It really represents just the total number of people in the state. This is useful information and we can include it as a column called <c>tot_pop</c>. To accomplish this, we'll first store this information in a data frame called <c>pop</c>.</p>
 <program language="r"><input><![CDATA[
 pop <- hc %>% 
@@ -2061,6 +3197,22 @@ pop <- hc %>%
 
 pop
 ]]></input></program>
+<pre>
+## # A tibble: 102 × 3
+##    Location    year tot_coverage
+##    &lt;chr&gt;      &lt;int&gt;        &lt;int&gt;
+##  1 Alabama     2013      4763900
+##  2 Alabama     2014      4768000
+##  3 Alaska      2013       702000
+##  4 Alaska      2014       695700
+##  5 Arizona     2013      6603100
+##  6 Arizona     2014      6657200
+##  7 Arkansas    2013      2904800
+##  8 Arkansas    2014      2896000
+##  9 California  2013     38176400
+## 10 California  2014     38701300
+## # … with 92 more rows
+</pre>
 <p>We can then, using a <c>left_join</c> to ensure we keep all of the rows in the <c>hc</c> data frame in tact, add this population level information while simultaneously removing the rows where <c>type</c> is "Total" from the dataset. Finally, we'll rename the columns to be informative of the information stored within:</p>
 <program language="r"><input><![CDATA[
 # ad population level information
@@ -2072,6 +3224,22 @@ hc <- hc %>%
 
 hc
 ]]></input></program>
+<pre>
+## # A tibble: 612 × 8
+##    Location  year type         tot_coverage abb   region tot_spending tot_pop
+##    &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;               &lt;int&gt; &lt;chr&gt; &lt;fct&gt;         &lt;dbl&gt;   &lt;int&gt;
+##  1 Alabama   2013 Employer          2126500 AL    South         33788 4763900
+##  2 Alabama   2013 Non-Group          174200 AL    South         33788 4763900
+##  3 Alabama   2013 Medicaid           869700 AL    South         33788 4763900
+##  4 Alabama   2013 Medicare           783000 AL    South         33788 4763900
+##  5 Alabama   2013 Other Public        85600 AL    South         33788 4763900
+##  6 Alabama   2013 Uninsured          724800 AL    South         33788 4763900
+##  7 Alabama   2014 Employer          2202800 AL    South         35263 4768000
+##  8 Alabama   2014 Non-Group          288900 AL    South         35263 4768000
+##  9 Alabama   2014 Medicaid           891900 AL    South         35263 4768000
+## 10 Alabama   2014 Medicare           718400 AL    South         35263 4768000
+## # … with 602 more rows
+</pre>
 <p>From here, instead of only storing the absolute number of people who are covered (<c>tot_coverage</c>), we will calculate the proportion of people who are coverage in each state, year and type, storing this information in <c>prop_coverage</c>.</p>
 <program language="r"><input><![CDATA[
 # add proportion covered
@@ -2080,6 +3248,22 @@ hc <- hc %>%
 
 hc
 ]]></input></program>
+<pre>
+## # A tibble: 612 × 9
+##    Location  year type         tot_coverage abb   region tot_spending tot_pop
+##    &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;               &lt;int&gt; &lt;chr&gt; &lt;fct&gt;         &lt;dbl&gt;   &lt;int&gt;
+##  1 Alabama   2013 Employer          2126500 AL    South         33788 4763900
+##  2 Alabama   2013 Non-Group          174200 AL    South         33788 4763900
+##  3 Alabama   2013 Medicaid           869700 AL    South         33788 4763900
+##  4 Alabama   2013 Medicare           783000 AL    South         33788 4763900
+##  5 Alabama   2013 Other Public        85600 AL    South         33788 4763900
+##  6 Alabama   2013 Uninsured          724800 AL    South         33788 4763900
+##  7 Alabama   2014 Employer          2202800 AL    South         35263 4768000
+##  8 Alabama   2014 Non-Group          288900 AL    South         35263 4768000
+##  9 Alabama   2014 Medicaid           891900 AL    South         35263 4768000
+## 10 Alabama   2014 Medicare           718400 AL    South         35263 4768000
+## # … with 602 more rows, and 1 more variable: prop_coverage &lt;dbl&gt;
+</pre>
 <p>The <c>tot_spending</c> column is reported in millions (1e6). Therefore, to calculate <c>spending_capita</c> we will need to adjust for this scaling factor to report it on the original scale (just dollars) and then divide by <c>tot_pop.</c> We can again use <c>mutate()</c> to accomplish this:</p>
 <program language="r"><input><![CDATA[
 # get spending capita in dollars
@@ -2088,6 +3272,23 @@ hc <- hc %>%
 
 hc
 ]]></input></program>
+<pre>
+## # A tibble: 612 × 10
+##    Location  year type         tot_coverage abb   region tot_spending tot_pop
+##    &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;               &lt;int&gt; &lt;chr&gt; &lt;fct&gt;         &lt;dbl&gt;   &lt;int&gt;
+##  1 Alabama   2013 Employer          2126500 AL    South         33788 4763900
+##  2 Alabama   2013 Non-Group          174200 AL    South         33788 4763900
+##  3 Alabama   2013 Medicaid           869700 AL    South         33788 4763900
+##  4 Alabama   2013 Medicare           783000 AL    South         33788 4763900
+##  5 Alabama   2013 Other Public        85600 AL    South         33788 4763900
+##  6 Alabama   2013 Uninsured          724800 AL    South         33788 4763900
+##  7 Alabama   2014 Employer          2202800 AL    South         35263 4768000
+##  8 Alabama   2014 Non-Group          288900 AL    South         35263 4768000
+##  9 Alabama   2014 Medicaid           891900 AL    South         35263 4768000
+## 10 Alabama   2014 Medicare           718400 AL    South         35263 4768000
+## # … with 602 more rows, and 2 more variables: prop_coverage &lt;dbl&gt;,
+## #   spending_capita &lt;dbl&gt;
+</pre>
 <p>Yes! At this point we have a single tidy data frame storing all the information we'll need to answer our questions!</p>
 <p>Let's save our new tidy data for case study #1.</p>
 <program language="r"><input><![CDATA[
@@ -2104,6 +3305,25 @@ save(hc, file = here::here("data", "tidy_data", "case_study_1_tidy.rda"))
 <program language="r"><input><![CDATA[
 census
 ]]></input></program>
+<pre>
+## # A tibble: 236,844 × 19
+##    SUMLEV REGION DIVISION STATE NAME      SEX ORIGIN  RACE   AGE CENSUS2010POP
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
+##  1 040         3        6 01    Alabama     0      0     1     0         37991
+##  2 040         3        6 01    Alabama     0      0     1     1         38150
+##  3 040         3        6 01    Alabama     0      0     1     2         39738
+##  4 040         3        6 01    Alabama     0      0     1     3         39827
+##  5 040         3        6 01    Alabama     0      0     1     4         39353
+##  6 040         3        6 01    Alabama     0      0     1     5         39520
+##  7 040         3        6 01    Alabama     0      0     1     6         39813
+##  8 040         3        6 01    Alabama     0      0     1     7         39695
+##  9 040         3        6 01    Alabama     0      0     1     8         40012
+## 10 040         3        6 01    Alabama     0      0     1     9         42073
+## # … with 236,834 more rows, and 9 more variables: ESTIMATESBASE2010 &lt;dbl&gt;,
+## #   POPESTIMATE2010 &lt;dbl&gt;, POPESTIMATE2011 &lt;dbl&gt;, POPESTIMATE2012 &lt;dbl&gt;,
+## #   POPESTIMATE2013 &lt;dbl&gt;, POPESTIMATE2014 &lt;dbl&gt;, POPESTIMATE2015 &lt;dbl&gt;,
+## #   POPESTIMATE2016 &lt;dbl&gt;, POPESTIMATE2017 &lt;dbl&gt;
+</pre>
 <p>These data look reasonably tidy to start; however, the information stored in each column is not particularly clear at a glance. For example, what is a RACE of 1? What does that mean?</p>
 <p>Well, if we look at the data dictionary in the document <url href="https://github.com/opencasestudies/ocs-police-shootings-firearm-legislation/blob/master/data/sc-est2017-alldata6.pdf">sc-est2017-alldata6.pdf</url>, we learn that:</p>
 <p>The key for <c>SEX</c> is as follows:</p>
@@ -2164,6 +3384,22 @@ census_stats$NAME <- tolower(census_stats$NAME)
 
 census_stats
 ]]></input></program>
+<pre>
+## # A tibble: 51 × 6
+##    NAME                 white black hispanic  male total_pop
+##    &lt;chr&gt;                &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+##  1 alabama               69.5 26.7      4.13  48.5   4850858
+##  2 alaska                66.5  3.67     6.82  52.4    737979
+##  3 arizona               83.5  4.80    30.9   49.7   6802262
+##  4 arkansas              79.6 15.7      7.18  49.1   2975626
+##  5 california            73.0  6.49    38.7   49.7  39032444
+##  6 colorado              87.6  4.47    21.3   50.3   5440445
+##  7 connecticut           80.9 11.6     15.3   48.8   3593862
+##  8 delaware              70.3 22.5      8.96  48.4    944107
+##  9 district of columbia  44.1 48.5     10.7   47.4    672736
+## 10 florida               77.7 16.9     24.7   48.9  20268567
+## # … with 41 more rows
+</pre>
 <p>We can approach the age data similarly, where we get the number of people within each state at each age:</p>
 <program language="r"><input><![CDATA[
 # get state-level age information
@@ -2174,6 +3410,24 @@ age_stats <- census %>%
 
 age_stats
 ]]></input></program>
+<pre>
+## `summarise()` has grouped output by 'NAME'. You can override using the `.groups` argument.
+## # A tibble: 4,386 × 3
+## # Groups:   NAME [51]
+##    NAME      AGE sum_ages
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+##  1 Alabama     0    59080
+##  2 Alabama     1    58738
+##  3 Alabama     2    57957
+##  4 Alabama     3    58800
+##  5 Alabama     4    59329
+##  6 Alabama     5    59610
+##  7 Alabama     6    59977
+##  8 Alabama     7    62282
+##  9 Alabama     8    62175
+## 10 Alabama     9    61249
+## # … with 4,376 more rows
+</pre>
 <p>This information is in a long format, but it likely makes more sense to store this information in a wide format, where each column is a different state and each row is an age. To do this:</p>
 <program language="r"><input><![CDATA[
 age_stats <- age_stats %>%
@@ -2182,6 +3436,28 @@ age_stats <- age_stats %>%
   
 age_stats
 ]]></input></program>
+<pre>
+## # A tibble: 86 × 52
+##      AGE Alabama Alaska Arizona Arkansas California Colorado Connecticut
+##    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+##  1     0   59080  11253   86653    38453     500834    66222       36414
+##  2     1   58738  11109   86758    38005     499070    66528       36559
+##  3     2   57957  11009   86713    37711     499614    66144       36887
+##  4     3   58800  10756   86914    38381     498536    67065       37745
+##  5     4   59329  10895   87624    38443     510026    68443       38962
+##  6     5   59610  10537   87234    38582     498754    69823       39182
+##  7     6   59977  10352   89215    38630     497444    69691       39871
+##  8     7   62282  10431   93236    40141     516916    71415       41438
+##  9     8   62175  10302   93866    40677     518117    72384       42359
+## 10     9   61249  10055   92531    39836     511610    72086       43032
+## # … with 76 more rows, and 44 more variables: Delaware &lt;dbl&gt;,
+## #   District of Columbia &lt;dbl&gt;, Florida &lt;dbl&gt;, Georgia &lt;dbl&gt;, Hawaii &lt;dbl&gt;,
+## #   Idaho &lt;dbl&gt;, Illinois &lt;dbl&gt;, Indiana &lt;dbl&gt;, Iowa &lt;dbl&gt;, Kansas &lt;dbl&gt;,
+## #   Kentucky &lt;dbl&gt;, Louisiana &lt;dbl&gt;, Maine &lt;dbl&gt;, Maryland &lt;dbl&gt;,
+## #   Massachusetts &lt;dbl&gt;, Michigan &lt;dbl&gt;, Minnesota &lt;dbl&gt;, Mississippi &lt;dbl&gt;,
+## #   Missouri &lt;dbl&gt;, Montana &lt;dbl&gt;, Nebraska &lt;dbl&gt;, Nevada &lt;dbl&gt;,
+## #   New Hampshire &lt;dbl&gt;, New Jersey &lt;dbl&gt;, New Mexico &lt;dbl&gt;, New York &lt;dbl&gt;, …
+</pre>
 <p>Now that we’ve made the data easier to work with, we need to find a way to get the median. One method is to take the cumulative sum of each column and then divide all the rows by the last row in each respective column, calculating a percentile/quantile for each age. To do this, we first remove the AGE column, as we don't want to calculate the median for this column. We then apply the <c>cumsum()</c> function and an anonymous function using <c>purrr</c>'s <c>map_dfc</c> function. This is a special variation of the <c>map()</c> function that returns a dataframe instead of a list by combining the data by column. But, of course, we do still want the AGE information in there, so we add that column back in using <c>mutate()</c> and then reorder the columns so that AGE is at the front again using <c>select()</c>.</p>
 <p>First let's see what would happen if we used <c>map()</c> instead of <c>map_dfc()</c>:</p>
 <program language="r"><input><![CDATA[
@@ -2191,6 +3467,60 @@ age_stats
   map(function(x) x/x[nrow(age_stats)]) %>%
   glimpse
 ]]></input></program>
+<pre>
+## List of 51
+##  $ Alabama             : num [1:86] 0.0122 0.0243 0.0362 0.0484 0.0606 ...
+##  $ Alaska              : num [1:86] 0.0152 0.0303 0.0452 0.0598 0.0746 ...
+##  $ Arizona             : num [1:86] 0.0127 0.0255 0.0382 0.051 0.0639 ...
+##  $ Arkansas            : num [1:86] 0.0129 0.0257 0.0384 0.0513 0.0642 ...
+##  $ California          : num [1:86] 0.0128 0.0256 0.0384 0.0512 0.0643 ...
+##  $ Colorado            : num [1:86] 0.0122 0.0244 0.0366 0.0489 0.0615 ...
+##  $ Connecticut         : num [1:86] 0.0101 0.0203 0.0306 0.0411 0.0519 ...
+##  $ Delaware            : num [1:86] 0.0116 0.0233 0.0348 0.0466 0.0587 ...
+##  $ District of Columbia: num [1:86] 0.0146 0.0276 0.0407 0.0533 0.0657 ...
+##  $ Florida             : num [1:86] 0.011 0.0219 0.0328 0.0437 0.0547 ...
+##  $ Georgia             : num [1:86] 0.0128 0.0256 0.0384 0.0514 0.0647 ...
+##  $ Hawaii              : num [1:86] 0.0128 0.0258 0.039 0.0519 0.065 ...
+##  $ Idaho               : num [1:86] 0.0139 0.0274 0.0413 0.0549 0.069 ...
+##  $ Illinois            : num [1:86] 0.0123 0.0245 0.0366 0.0488 0.0611 ...
+##  $ Indiana             : num [1:86] 0.0126 0.0253 0.038 0.0507 0.0635 ...
+##  $ Iowa                : num [1:86] 0.0127 0.0254 0.038 0.0506 0.063 ...
+##  $ Kansas              : num [1:86] 0.0133 0.0268 0.0404 0.054 0.0677 ...
+##  $ Kentucky            : num [1:86] 0.0126 0.0251 0.0376 0.05 0.0624 ...
+##  $ Louisiana           : num [1:86] 0.0137 0.0272 0.0405 0.0536 0.0667 ...
+##  $ Maine               : num [1:86] 0.00949 0.01906 0.02881 0.0386 0.04839 ...
+##  $ Maryland            : num [1:86] 0.0123 0.0245 0.0367 0.049 0.0614 ...
+##  $ Massachusetts       : num [1:86] 0.0106 0.0213 0.0319 0.0427 0.0536 ...
+##  $ Michigan            : num [1:86] 0.0114 0.023 0.0345 0.046 0.0577 ...
+##  $ Minnesota           : num [1:86] 0.0127 0.0256 0.0383 0.0511 0.0639 ...
+##  $ Mississippi         : num [1:86] 0.0128 0.0255 0.0382 0.0512 0.0641 ...
+##  $ Missouri            : num [1:86] 0.0123 0.0248 0.0371 0.0494 0.0618 ...
+##  $ Montana             : num [1:86] 0.0123 0.0244 0.0364 0.0484 0.0604 ...
+##  $ Nebraska            : num [1:86] 0.0141 0.0281 0.042 0.0557 0.0696 ...
+##  $ Nevada              : num [1:86] 0.0125 0.0248 0.0374 0.0498 0.0626 ...
+##  $ New Hampshire       : num [1:86] 0.00932 0.01866 0.02852 0.03814 0.04831 ...
+##  $ New Jersey          : num [1:86] 0.0115 0.0232 0.0349 0.0468 0.0589 ...
+##  $ New Mexico          : num [1:86] 0.0124 0.025 0.0376 0.0504 0.0634 ...
+##  $ New York            : num [1:86] 0.0122 0.0241 0.036 0.0478 0.0598 ...
+##  $ North Carolina      : num [1:86] 0.012 0.024 0.0359 0.0479 0.06 ...
+##  $ North Dakota        : num [1:86] 0.015 0.0296 0.0438 0.0576 0.0709 ...
+##  $ Ohio                : num [1:86] 0.012 0.024 0.036 0.048 0.0601 ...
+##  $ Oklahoma            : num [1:86] 0.0136 0.0272 0.0409 0.0546 0.0683 ...
+##  $ Oregon              : num [1:86] 0.0114 0.0229 0.0344 0.046 0.0577 ...
+##  $ Pennsylvania        : num [1:86] 0.0111 0.0222 0.0333 0.0445 0.0558 ...
+##  $ Rhode Island        : num [1:86] 0.0103 0.0205 0.0309 0.0413 0.0518 ...
+##  $ South Carolina      : num [1:86] 0.0118 0.0236 0.0354 0.0474 0.0594 ...
+##  $ South Dakota        : num [1:86] 0.0144 0.029 0.0433 0.0575 0.0714 ...
+##  $ Tennessee           : num [1:86] 0.0123 0.0245 0.0367 0.049 0.0612 ...
+##  $ Texas               : num [1:86] 0.0146 0.0292 0.0435 0.0578 0.0724 ...
+##  $ Utah                : num [1:86] 0.0171 0.034 0.051 0.0676 0.0846 ...
+##  $ Vermont             : num [1:86] 0.0096 0.0195 0.0292 0.039 0.0489 ...
+##  $ Virginia            : num [1:86] 0.0123 0.0245 0.0367 0.0489 0.0612 ...
+##  $ Washington          : num [1:86] 0.0124 0.0248 0.0373 0.0497 0.0623 ...
+##  $ West Virginia       : num [1:86] 0.0108 0.0219 0.0331 0.0443 0.0554 ...
+##  $ Wisconsin           : num [1:86] 0.0116 0.0232 0.0349 0.0467 0.0586 ...
+##  $ Wyoming             : num [1:86] 0.0132 0.0262 0.0392 0.0523 0.0655 ...
+</pre>
 <p>We can see that we create a list of vectors for each state.</p>
 <p>Now let's use <c>map_dfc()</c>:</p>
 <program language="r"><input><![CDATA[
@@ -2204,6 +3534,62 @@ age_stats <- age_stats %>%
 
 glimpse(age_stats)
 ]]></input></program>
+<pre>
+## Rows: 86
+## Columns: 52
+## $ AGE                    &lt;dbl&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1…
+## $ Alabama                &lt;dbl&gt; 0.01217929, 0.02428807, 0.03623586, 0.04835742,…
+## $ Alaska                 &lt;dbl&gt; 0.01524840, 0.03030168, 0.04521944, 0.05979438,…
+## $ Arizona                &lt;dbl&gt; 0.01273885, 0.02549314, 0.03824081, 0.05101803,…
+## $ Arkansas               &lt;dbl&gt; 0.01292266, 0.02569476, 0.03836806, 0.05126652,…
+## $ California             &lt;dbl&gt; 0.01283122, 0.02561725, 0.03841722, 0.05118957,…
+## $ Colorado               &lt;dbl&gt; 0.01217217, 0.02440058, 0.03655841, 0.04888552,…
+## $ Connecticut            &lt;dbl&gt; 0.01013228, 0.02030490, 0.03056879, 0.04107142,…
+## $ Delaware               &lt;dbl&gt; 0.01163322, 0.02326537, 0.03477678, 0.04661654,…
+## $ `District of Columbia` &lt;dbl&gt; 0.01457035, 0.02759032, 0.04071434, 0.05331661,…
+## $ Florida                &lt;dbl&gt; 0.01095628, 0.02192577, 0.03277035, 0.04371311,…
+## $ Georgia                &lt;dbl&gt; 0.01284902, 0.02562823, 0.03837038, 0.05144559,…
+## $ Hawaii                 &lt;dbl&gt; 0.01275029, 0.02580557, 0.03896040, 0.05191402,…
+## $ Idaho                  &lt;dbl&gt; 0.01390752, 0.02744397, 0.04125812, 0.05494312,…
+## $ Illinois               &lt;dbl&gt; 0.01233645, 0.02447549, 0.03656625, 0.04878623,…
+## $ Indiana                &lt;dbl&gt; 0.01264485, 0.02525899, 0.03798841, 0.05071888,…
+## $ Iowa                   &lt;dbl&gt; 0.01267030, 0.02538518, 0.03802630, 0.05063696,…
+## $ Kansas                 &lt;dbl&gt; 0.01334268, 0.02681406, 0.04039729, 0.05398568,…
+## $ Kentucky               &lt;dbl&gt; 0.01257763, 0.02509149, 0.03759246, 0.05002287,…
+## $ Louisiana              &lt;dbl&gt; 0.01366990, 0.02722998, 0.04047237, 0.05358525,…
+## $ Maine                  &lt;dbl&gt; 0.00949098, 0.01906255, 0.02881486, 0.03860408,…
+## $ Maryland               &lt;dbl&gt; 0.01233418, 0.02449538, 0.03670807, 0.04897542,…
+## $ Massachusetts          &lt;dbl&gt; 0.01064012, 0.02127391, 0.03194332, 0.04267411,…
+## $ Michigan               &lt;dbl&gt; 0.01142560, 0.02298902, 0.03448267, 0.04603339,…
+## $ Minnesota              &lt;dbl&gt; 0.01271147, 0.02555680, 0.03831076, 0.05107128,…
+## $ Mississippi            &lt;dbl&gt; 0.01277126, 0.02554419, 0.03822836, 0.05115873,…
+## $ Missouri               &lt;dbl&gt; 0.01232034, 0.02475678, 0.03708173, 0.04938873,…
+## $ Montana                &lt;dbl&gt; 0.01225303, 0.02440298, 0.03639442, 0.04838391,…
+## $ Nebraska               &lt;dbl&gt; 0.01411096, 0.02814111, 0.04197798, 0.05572191,…
+## $ Nevada                 &lt;dbl&gt; 0.01250131, 0.02483232, 0.03739746, 0.04979506,…
+## $ `New Hampshire`        &lt;dbl&gt; 0.009324624, 0.018656767, 0.028516676, 0.038139…
+## $ `New Jersey`           &lt;dbl&gt; 0.01153672, 0.02318527, 0.03489888, 0.04677209,…
+## $ `New Mexico`           &lt;dbl&gt; 0.01241485, 0.02496946, 0.03762395, 0.05035577,…
+## $ `New York`             &lt;dbl&gt; 0.01217189, 0.02407385, 0.03599014, 0.04784986,…
+## $ `North Carolina`       &lt;dbl&gt; 0.01200077, 0.02400872, 0.03589836, 0.04789096,…
+## $ `North Dakota`         &lt;dbl&gt; 0.01498293, 0.02957241, 0.04375387, 0.05755379,…
+## $ Ohio                   &lt;dbl&gt; 0.01195482, 0.02398530, 0.03604946, 0.04804797,…
+## $ Oklahoma               &lt;dbl&gt; 0.01360302, 0.02720220, 0.04094481, 0.05455859,…
+## $ Oregon                 &lt;dbl&gt; 0.01137846, 0.02290605, 0.03443489, 0.04598165,…
+## $ Pennsylvania           &lt;dbl&gt; 0.01105806, 0.02218984, 0.03332365, 0.04452838,…
+## $ `Rhode Island`         &lt;dbl&gt; 0.01029817, 0.02052152, 0.03085757, 0.04130916,…
+## $ `South Carolina`       &lt;dbl&gt; 0.01182747, 0.02361386, 0.03537920, 0.04736508,…
+## $ `South Dakota`         &lt;dbl&gt; 0.01441743, 0.02898356, 0.04325579, 0.05748470,…
+## $ Tennessee              &lt;dbl&gt; 0.01234189, 0.02454161, 0.03672630, 0.04900204,…
+## $ Texas                  &lt;dbl&gt; 0.01460720, 0.02916560, 0.04354217, 0.05781300,…
+## $ Utah                   &lt;dbl&gt; 0.01705642, 0.03397314, 0.05104564, 0.06758513,…
+## $ Vermont                &lt;dbl&gt; 0.009603574, 0.019524225, 0.029198261, 0.039019…
+## $ Virginia               &lt;dbl&gt; 0.01229627, 0.02446226, 0.03665131, 0.04888352,…
+## $ Washington             &lt;dbl&gt; 0.01241119, 0.02476856, 0.03725623, 0.04972054,…
+## $ `West Virginia`        &lt;dbl&gt; 0.01083507, 0.02189516, 0.03312702, 0.04427952,…
+## $ Wisconsin              &lt;dbl&gt; 0.01158854, 0.02323645, 0.03492551, 0.04674149,…
+## $ Wyoming                &lt;dbl&gt; 0.01320760, 0.02620022, 0.03920990, 0.05229295,…
+</pre>
 <p>Great, we have a tidy dataframe with a column for each state storing important census information for both ethnicity and age. Now onto the other datasets!</p>
 </subsubsection>
 <subsubsection xml:id="violent-crime">
@@ -2212,10 +3598,54 @@ glimpse(age_stats)
 <program language="r"><input><![CDATA[
 crime
 ]]></input></program>
+<pre>
+## # A tibble: 510 × 14
+##    State   Area       ...3     Population  `Violent\ncrime… `Murder and \nnonne…
+##    &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                  &lt;dbl&gt;                &lt;dbl&gt;
+##  1 ALABAMA Metropoli… &lt;NA&gt;     3708033                   NA                   NA
+##  2 &lt;NA&gt;    &lt;NA&gt;       Area ac… 0.97099999…            18122                  283
+##  3 &lt;NA&gt;    &lt;NA&gt;       Estimat… 1                      18500                  287
+##  4 &lt;NA&gt;    Cities ou… &lt;NA&gt;     522241                    NA                   NA
+##  5 &lt;NA&gt;    &lt;NA&gt;       Area ac… 0.97399999…             3178                   32
+##  6 &lt;NA&gt;    &lt;NA&gt;       Estimat… 1                       3240                   33
+##  7 &lt;NA&gt;    Nonmetrop… &lt;NA&gt;     628705                    NA                   NA
+##  8 &lt;NA&gt;    &lt;NA&gt;       Area ac… 0.99399999…             1205                   28
+##  9 &lt;NA&gt;    &lt;NA&gt;       Estimat… 1                       1212                   28
+## 10 &lt;NA&gt;    State Tot… &lt;NA&gt;     4858979                22952                  348
+## # … with 500 more rows, and 8 more variables: Rape
+## (revised
+## definition)2 &lt;dbl&gt;,
+## #   Rape
+## (legacy
+## definition)3 &lt;dbl&gt;, Robbery &lt;dbl&gt;, Aggravated 
+## assault &lt;dbl&gt;,
+## #   Property 
+## crime &lt;dbl&gt;, Burglary &lt;dbl&gt;, Larceny-
+## theft &lt;dbl&gt;,
+## #   Motor 
+## vehicle 
+## theft &lt;dbl&gt;
+</pre>
 <p>If we take a look at what information is stored in each column...</p>
 <program language="r"><input><![CDATA[
 colnames(crime)
 ]]></input></program>
+<pre>
+##  [1] "State"                                   
+##  [2] "Area"                                    
+##  [3] "...3"                                    
+##  [4] "Population"                              
+##  [5] "Violent\ncrime1"                         
+##  [6] "Murder and \nnonnegligent \nmanslaughter"
+##  [7] "Rape\n(revised\ndefinition)2"            
+##  [8] "Rape\n(legacy\ndefinition)3"             
+##  [9] "Robbery"                                 
+## [10] "Aggravated \nassault"                    
+## [11] "Property \ncrime"                        
+## [12] "Burglary"                                
+## [13] "Larceny-\ntheft"                         
+## [14] "Motor \nvehicle \ntheft"
+</pre>
 <p>you see that it's kind of a mess and there's a whole bunch of information in there that we're not necessarily interested in for this analysis.</p>
 <p>Because of the messy names here (we'll clean them up in a bit), we'll see the column index to select columns instead of the complicated names. Also, we print a specified row of violent crime to observe the <c>X__1</c> group we are looking for – Rate per 100,000 inhabitants (per the study.)</p>
 <program language="r"><input><![CDATA[
@@ -2224,6 +3654,22 @@ violentcrime <- crime %>%
 
 violentcrime
 ]]></input></program>
+<pre>
+## # A tibble: 510 × 3
+##    State   ...3                    `Violent\ncrime1`
+##    &lt;chr&gt;   &lt;chr&gt;                               &lt;dbl&gt;
+##  1 ALABAMA &lt;NA&gt;                                   NA
+##  2 &lt;NA&gt;    Area actually reporting             18122
+##  3 &lt;NA&gt;    Estimated total                     18500
+##  4 &lt;NA&gt;    &lt;NA&gt;                                   NA
+##  5 &lt;NA&gt;    Area actually reporting              3178
+##  6 &lt;NA&gt;    Estimated total                      3240
+##  7 &lt;NA&gt;    &lt;NA&gt;                                   NA
+##  8 &lt;NA&gt;    Area actually reporting              1205
+##  9 &lt;NA&gt;    Estimated total                      1212
+## 10 &lt;NA&gt;    &lt;NA&gt;                                22952
+## # … with 500 more rows
+</pre>
 <p>Great, so we're starting to home in on the data we're interested in but we're ultimately interested in Rate per 100,000 inhabitants, so we need get all rows where the second column is equal to <c>Rate per 100,000 inhabitants</c>.</p>
 <p>However, as we can see above, the value for State in these rows is <c>NA</c>, so we need to <c>fill()</c> that value with the state name that is listed in a previous row. Then we can select the rows where the second column is <c>Rate per 100,000 inhabitants</c>. After that, we no longer need the second column, so we'll remove it.</p>
 <program language="r"><input><![CDATA[
@@ -2235,10 +3681,29 @@ violentcrime <- violentcrime %>%
   
 violentcrime
 ]]></input></program>
+<pre>
+## # A tibble: 52 × 2
+##    State                 violent_crime
+##    &lt;chr&gt;                         &lt;dbl&gt;
+##  1 ALABAMA                        472.
+##  2 ALASKA                         730.
+##  3 ARIZONA                        410.
+##  4 ARKANSAS                       521.
+##  5 CALIFORNIA                     426.
+##  6 COLORADO                       321 
+##  7 CONNECTICUT                    218.
+##  8 DELAWARE                       499 
+##  9 DISTRICT OF COLUMBIA4         1269.
+## 10 FLORIDA                        462.
+## # … with 42 more rows
+</pre>
 <p>If we look closely at our data, we'll notice that some of our state names have 6s at the end of them. This will cause problems later on.</p>
 <program language="r"><input><![CDATA[
 violentcrime$State[20]
 ]]></input></program>
+<pre>
+## [1] "MAINE6"
+</pre>
 <p>So, let's clean that up now be removing those trailing numeric values <em>and</em> converting the names to lower case:</p>
 <program language="r"><input><![CDATA[
 # lower case and remove numbers from State column
@@ -2247,6 +3712,22 @@ violentcrime <- violentcrime %>%
 
 violentcrime
 ]]></input></program>
+<pre>
+## # A tibble: 52 × 2
+##    State                violent_crime
+##    &lt;chr&gt;                        &lt;dbl&gt;
+##  1 alabama                       472.
+##  2 alaska                        730.
+##  3 arizona                       410.
+##  4 arkansas                      521.
+##  5 california                    426.
+##  6 colorado                      321 
+##  7 connecticut                   218.
+##  8 delaware                      499 
+##  9 district of columbia         1269.
+## 10 florida                       462.
+## # … with 42 more rows
+</pre>
 <p>We've now got ourselves a tidy dataset with violent crime information that's ready to be joined with our census_stats data!</p>
 <program language="r"><input><![CDATA[
 # join with census data
@@ -2255,6 +3736,22 @@ firearms <- left_join(census_stats, violentcrime,
 
 firearms
 ]]></input></program>
+<pre>
+## # A tibble: 51 × 7
+##    NAME                 white black hispanic  male total_pop violent_crime
+##    &lt;chr&gt;                &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+##  1 alabama               69.5 26.7      4.13  48.5   4850858          472.
+##  2 alaska                66.5  3.67     6.82  52.4    737979          730.
+##  3 arizona               83.5  4.80    30.9   49.7   6802262          410.
+##  4 arkansas              79.6 15.7      7.18  49.1   2975626          521.
+##  5 california            73.0  6.49    38.7   49.7  39032444          426.
+##  6 colorado              87.6  4.47    21.3   50.3   5440445          321 
+##  7 connecticut           80.9 11.6     15.3   48.8   3593862          218.
+##  8 delaware              70.3 22.5      8.96  48.4    944107          499 
+##  9 district of columbia  44.1 48.5     10.7   47.4    672736         1269.
+## 10 florida               77.7 16.9     24.7   48.9  20268567          462.
+## # … with 41 more rows
+</pre>
 </subsubsection>
 <subsubsection xml:id="brady-scores">
 <title>Brady Scores</title>
@@ -2263,6 +3760,28 @@ firearms
 <program language="r"><input><![CDATA[
 brady
 ]]></input></program>
+<pre>
+## # A tibble: 116 × 54
+##    `States can recei… `Category Point… `Sub Category P… Points AL    AK    AR   
+##    &lt;chr&gt;                         &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 TOTAL STATE POINTS               NA               NA     NA -18   -30   -24  
+##  2 CATEGORY 1:  KEEP…               50               NA     NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+##  3 BACKGROUND CHECKS…               NA               25     NA AL    AK    AR   
+##  4 Background Checks…               NA               NA     25 &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+##  5 Background Checks…               NA               NA     20 &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+##  6 Background Checks…               NA               NA      5 &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+##  7 Verifiy Legal Pur…               NA               NA     20 &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+##  8 TOTAL                            NA               NA     NA 0     0     0    
+##  9 &lt;NA&gt;                             NA               NA     NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+## 10 OTHER LAWS TO STO…               NA               12     NA AL    AK    AR   
+## # … with 106 more rows, and 47 more variables: AZ &lt;chr&gt;, CA &lt;chr&gt;, CO &lt;chr&gt;,
+## #   CT &lt;chr&gt;, DE &lt;chr&gt;, FL &lt;chr&gt;, GA &lt;chr&gt;, HI &lt;chr&gt;, ID &lt;chr&gt;, IL &lt;chr&gt;,
+## #   IN &lt;chr&gt;, IA &lt;chr&gt;, KS &lt;chr&gt;, KY &lt;chr&gt;, LA &lt;chr&gt;, MA &lt;chr&gt;, MD &lt;chr&gt;,
+## #   ME &lt;chr&gt;, MI &lt;chr&gt;, MN &lt;chr&gt;, MO &lt;chr&gt;, MT &lt;chr&gt;, MS &lt;chr&gt;, NC &lt;chr&gt;,
+## #   ND &lt;chr&gt;, NE &lt;chr&gt;, NH &lt;chr&gt;, NJ &lt;chr&gt;, NM &lt;chr&gt;, NV &lt;chr&gt;, NY &lt;chr&gt;,
+## #   OK &lt;chr&gt;, OH &lt;chr&gt;, OR &lt;chr&gt;, PA &lt;chr&gt;, RI &lt;chr&gt;, SC &lt;chr&gt;, SD &lt;chr&gt;,
+## #   TN &lt;chr&gt;, TX &lt;chr&gt;, UT &lt;chr&gt;, VA &lt;chr&gt;, VT &lt;chr&gt;, WA &lt;chr&gt;, WI &lt;chr&gt;, …
+</pre>
 <p>This dataset includes a lot of information, but we're interested in the brady scores for each state. These are stored in the row where the first column is equal to "TOTAL STATE POINTS," so we <c>filter()</c> to only include that row. We then want to only receive the scores for each state, and not the information in the first few columns, so we specify that using <c>select()</c>. With the information we're interested in, we then take the data from wide to long using <c>pivot_longer()</c>, renaming the columns as we go. Finally, we specify that the information in the <c>brady_scores</c> column is numeric, not a character.</p>
 <program language="r"><input><![CDATA[
 brady <- brady %>%
@@ -2276,6 +3795,22 @@ brady <- brady %>%
 
 brady
 ]]></input></program>
+<pre>
+## # A tibble: 50 × 2
+##    state brady_scores
+##    &lt;chr&gt;        &lt;dbl&gt;
+##  1 AL           -18  
+##  2 AK           -30  
+##  3 AR           -24  
+##  4 AZ           -39  
+##  5 CA            76  
+##  6 CO            22  
+##  7 CT            73  
+##  8 DE            41  
+##  9 FL           -20.5
+## 10 GA           -18  
+## # … with 40 more rows
+</pre>
 <p>Only problem now is that we have the two letter state code, rather than the full state name we've been joining on so far here. We can, however, use the <c>state</c> datasets we used in the first case study here!</p>
 <program language="r"><input><![CDATA[
 brady <- brady %>% 
@@ -2287,12 +3822,44 @@ brady <- brady %>%
 
 brady
 ]]></input></program>
+<pre>
+## # A tibble: 50 × 2
+##    state       brady_scores
+##    &lt;chr&gt;              &lt;dbl&gt;
+##  1 alabama            -18  
+##  2 alaska             -30  
+##  3 arkansas           -24  
+##  4 arizona            -39  
+##  5 california          76  
+##  6 colorado            22  
+##  7 connecticut         73  
+##  8 delaware            41  
+##  9 florida            -20.5
+## 10 georgia            -18  
+## # … with 40 more rows
+</pre>
 <p>Now, it's time to join this information into our growing dataframe <c>firearms</c>:</p>
 <program language="r"><input><![CDATA[
 firearms <- left_join(firearms, brady, by = c("NAME" = "state"))
 
 firearms
 ]]></input></program>
+<pre>
+## # A tibble: 51 × 8
+##    NAME                 white black hispanic  male total_pop violent_crime brady_scores
+##    &lt;chr&gt;                &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
+##  1 alabama               69.5 26.7      4.13  48.5   4850858          472.        -18  
+##  2 alaska                66.5  3.67     6.82  52.4    737979          730.        -30  
+##  3 arizona               83.5  4.80    30.9   49.7   6802262          410.        -39  
+##  4 arkansas              79.6 15.7      7.18  49.1   2975626          521.        -24  
+##  5 california            73.0  6.49    38.7   49.7  39032444          426.         76  
+##  6 colorado              87.6  4.47    21.3   50.3   5440445          321          22  
+##  7 connecticut           80.9 11.6     15.3   48.8   3593862          218.         73  
+##  8 delaware              70.3 22.5      8.96  48.4    944107          499          41  
+##  9 district of columbia  44.1 48.5     10.7   47.4    672736         1269.         NA  
+## 10 florida               77.7 16.9     24.7   48.9  20268567          462.        -20.5
+## # … with 41 more rows
+</pre>
 </subsubsection>
 <subsubsection xml:id="the-counted-fatal-shootings">
 <title>The Counted Fatal Shootings</title>
@@ -2301,6 +3868,22 @@ firearms
 <program language="r"><input><![CDATA[
 counted15
 ]]></input></program>
+<pre>
+## # A tibble: 1,146 × 6
+##    gender raceethnicity          state classification  lawenforcementage… armed 
+##    &lt;chr&gt;  &lt;chr&gt;                  &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;              &lt;chr&gt; 
+##  1 Male   Black                  GA    Death in custo… Chatham County Sh… No    
+##  2 Male   White                  OR    Gunshot         Washington County… Firea…
+##  3 Male   White                  HI    Struck by vehi… Kauai Police Depa… No    
+##  4 Male   Hispanic/Latino        KS    Gunshot         Wichita Police De… No    
+##  5 Male   Asian/Pacific Islander WA    Gunshot         Mason County Sher… Firea…
+##  6 Male   White                  CA    Gunshot         San Francisco Pol… Non-l…
+##  7 Male   Hispanic/Latino        AZ    Gunshot         Chandler Police D… Firea…
+##  8 Male   Hispanic/Latino        CO    Gunshot         Evans Police Depa… Other 
+##  9 Male   White                  CA    Gunshot         Stockton Police D… Knife 
+## 10 Male   Black                  CA    Taser           Los Angeles Count… No    
+## # … with 1,136 more rows
+</pre>
 <p>The data from each year are in a similar format with each row representing a different individual and the columns being consistent between the two datasets.</p>
 <p>Because of this consistent format, we can combine these two datasets using <c>bind_rows()</c>. By specifying <c>id = "dataset"</c>, a column called <c>dataset</c> will store which dataset each row came from originally. We can then use <c>mutate()</c> and <c>ifelse()</c> to conditionally specify the year -- 2015 or 2016 -- from which the data originated. We'll also be sure to change the two letter state abbreviation to the lower case state name, to allow for each merging.</p>
 <program language="r"><input><![CDATA[
@@ -2331,6 +3914,22 @@ counted_stats <- left_join(counted_stats, gunshot_filtered, by = "state") %>%
 
 counted_stats
 ]]></input></program>
+<pre>
+## # A tibble: 50 × 4
+##    state                gunshot_tally gunshot_filtered gunshot_rate
+##    &lt;chr&gt;                        &lt;int&gt;            &lt;int&gt;        &lt;dbl&gt;
+##  1 alabama                         18               15        1.86 
+##  2 alaska                           4                4        2.71 
+##  3 arizona                         43               37        3.16 
+##  4 arkansas                         5                4        0.840
+##  5 california                     196              150        2.51 
+##  6 colorado                        29               27        2.67 
+##  7 connecticut                      2                2        0.278
+##  8 delaware                         3                2        1.59 
+##  9 district of columbia             5                4        3.72 
+## 10 florida                         64               54        1.58 
+## # … with 40 more rows
+</pre>
 <p>Time to merge this into the data frame we've been compiling:</p>
 <program language="r"><input><![CDATA[
 firearms <- left_join(firearms, counted_stats, by = c("NAME" = "state"))
@@ -2342,6 +3941,22 @@ firearms <- left_join(firearms, counted_stats, by = c("NAME" = "state"))
 <program language="r"><input><![CDATA[
 unemployment
 ]]></input></program>
+<pre>
+## # A tibble: 54 × 3
+##    State           `2015rate` Rank 
+##    &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt;
+##  1 "United States" "5.3"      ""   
+##  2 ""              ""         ""   
+##  3 "North Dakota"  "2.8"      "1"  
+##  4 "Nebraska"      "3.0"      "2"  
+##  5 "South Dakota"  "3.1"      "3"  
+##  6 "New Hampshire" "3.4"      "4"  
+##  7 "Hawaii"        "3.6"      "5"  
+##  8 "Utah"          "3.6"      "5"  
+##  9 "Vermont"       "3.6"      "5"  
+## 10 "Minnesota"     "3.7"      "8"  
+## # … with 44 more rows
+</pre>
 <p>Let's first rename the columns to clean things up. You'll note that there are more rows in this data frame (due to an empty row, the United States, and a note being in this dataset); however, when we <c>left_merge()</c> in just a second these will disappear, so we can ignore them for now.</p>
 <program language="r"><input><![CDATA[
 unemployment <- unemployment %>% 
@@ -2353,6 +3968,22 @@ unemployment <- unemployment %>%
 
 unemployment
 ]]></input></program>
+<pre>
+## # A tibble: 54 × 3
+##    state                  unemployment_rate unemployment_rank
+##    &lt;chr&gt;                  &lt;chr&gt;             &lt;chr&gt;            
+##  1 ""                     ""                ""               
+##  2 "alabama"              "6.1"             "42"             
+##  3 "alaska"               "6.5"             "47"             
+##  4 "arizona"              "6.1"             "42"             
+##  5 "arkansas"             "5.0"             "24"             
+##  6 "california"           "6.2"             "44"             
+##  7 "colorado"             "3.9"             "10"             
+##  8 "connecticut"          "5.7"             "35"             
+##  9 "delaware"             "4.9"             "22"             
+## 10 "district of columbia" "6.9"             "51"             
+## # … with 44 more rows
+</pre>
 <p>Let's do that join now. Let's add unemployment information to our growing data frame!</p>
 <program language="r"><input><![CDATA[
 firearms <- left_join(firearms, unemployment, by = c("NAME" = "state"))
@@ -2361,6 +3992,23 @@ firearms <- left_join(firearms, unemployment, by = c("NAME" = "state"))
 <program language="r"><input><![CDATA[
 glimpse(firearms)
 ]]></input></program>
+<pre>
+## Rows: 51
+## Columns: 13
+## $ NAME              &lt;chr&gt; "alabama", "alaska", "arizona", "arkansas", "califor…
+## $ white             &lt;dbl&gt; 69.50197, 66.51368, 83.52295, 79.57623, 72.97555, 87…
+## $ black             &lt;dbl&gt; 26.7459489, 3.6679906, 4.7978011, 15.6634268, 6.4910…
+## $ hispanic          &lt;dbl&gt; 4.129434, 6.821197, 30.873010, 7.180439, 38.727129, …
+## $ male              &lt;dbl&gt; 48.46650, 52.36978, 49.71595, 49.12855, 49.67815, 50…
+## $ total_pop         &lt;dbl&gt; 4850858, 737979, 6802262, 2975626, 39032444, 5440445…
+## $ violent_crime     &lt;dbl&gt; 472.4, 730.2, 410.2, 521.3, 426.3, 321.0, 218.5, 499…
+## $ brady_scores      &lt;dbl&gt; -18.0, -30.0, -39.0, -24.0, 76.0, 22.0, 73.0, 41.0, …
+## $ gunshot_tally     &lt;int&gt; 18, 4, 43, 5, 196, 29, 2, 3, 5, 64, 29, 2, 7, 22, 19…
+## $ gunshot_filtered  &lt;int&gt; 15, 4, 37, 4, 150, 27, 2, 2, 4, 54, 25, 2, 7, 21, 15…
+## $ gunshot_rate      &lt;dbl&gt; 1.8553419, 2.7101042, 3.1607133, 0.8401593, 2.510731…
+## $ unemployment_rate &lt;chr&gt; "6.1", "6.5", "6.1", "5.0", "6.2", "3.9", "5.7", "4.…
+## $ unemployment_rank &lt;chr&gt; "42", "47", "42", "24", "44", "10", "35", "22", "51"…
+</pre>
 <program language="r"><input><![CDATA[
 # convert type for unemployment columns
 firearms <- firearms %>%
@@ -2381,6 +4029,22 @@ totalPop <- census %>%
 
 totalPop
 ]]></input></program>
+<pre>
+## # A tibble: 51 × 2
+##    NAME                    total
+##    &lt;chr&gt;                   &lt;dbl&gt;
+##  1 alabama               4850858
+##  2 alaska                 737979
+##  3 arizona               6802262
+##  4 arkansas              2975626
+##  5 california           39032444
+##  6 colorado              5440445
+##  7 connecticut           3593862
+##  8 delaware               944107
+##  9 district of columbia   672736
+## 10 florida              20268567
+## # … with 41 more rows
+</pre>
 <p>Then, we select <c>LND110210D</c> by looking at the <c>land</c> table and comparing values on other sites (such as the census or Wikipedia) to find the correct column. This column corresponds to land area in square miles. We'll convert all state names to lower case for easy merging with our growing data frame in a few steps.</p>
 <program language="r"><input><![CDATA[
 landSqMi <- land %>%
@@ -2389,6 +4053,22 @@ landSqMi <- land %>%
 
 landSqMi
 ]]></input></program>
+<pre>
+## # A tibble: 3,198 × 2
+##    Areaname      land_area
+##    &lt;chr&gt;             &lt;dbl&gt;
+##  1 united states  3531905.
+##  2 alabama          50645.
+##  3 autauga, al        594.
+##  4 baldwin, al       1590.
+##  5 barbour, al        885.
+##  6 bibb, al           623.
+##  7 blount, al         645.
+##  8 bullock, al        623.
+##  9 butler, al         777.
+## 10 calhoun, al        606.
+## # … with 3,188 more rows
+</pre>
 <p>Since <c>landSqMi</c> gives us area for each town in addition to the states, we will want merge on the state names to obtain only the area for each state, removing the city- and nation-level data. Also, because "district of columbia" appears twice, we'll use the <c>distinct()</c> function to only include on entry for "district of columbia"</p>
 <p>We can then calculate density and remove the <c>total</c> and <c>land_area</c> columns to only keep state name and density for each state:</p>
 <program language="r"><input><![CDATA[
@@ -2399,6 +4079,22 @@ popdensity <- left_join(totalPop, landSqMi, by=c("NAME" = "Areaname")) %>%
 
 popdensity
 ]]></input></program>
+<pre>
+## # A tibble: 51 × 2
+##    NAME                  density
+##    &lt;chr&gt;                   &lt;dbl&gt;
+##  1 alabama                 95.8 
+##  2 alaska                   1.29
+##  3 arizona                 59.9 
+##  4 arkansas                57.2 
+##  5 california             251.  
+##  6 colorado                52.5 
+##  7 connecticut            742.  
+##  8 delaware               485.  
+##  9 district of columbia 11019.  
+## 10 florida                378.  
+## # … with 41 more rows
+</pre>
 <p>This can now be joined with our growing data frame:</p>
 <program language="r"><input><![CDATA[
 firearms <- left_join(firearms, popdensity, by="NAME")
@@ -2412,6 +4108,22 @@ ownership_df <- as_tibble(list("NAME" = tolower(suicide_all$State),
                           "ownership" = suicide_firearm$Deaths/suicide_all$Deaths*100))
 ownership_df
 ]]></input></program>
+<pre>
+## # A tibble: 51 × 2
+##    NAME        ownership
+##    &lt;chr&gt;           &lt;dbl&gt;
+##  1 alabama          70.1
+##  2 alaska           59.9
+##  3 arizona          57.4
+##  4 arkansas         59.5
+##  5 california       37.3
+##  6 colorado         51.0
+##  7 connecticut      27.4
+##  8 delaware         49.8
+##  9 florida          52.0
+## 10 georgia          62.1
+## # … with 41 more rows
+</pre>
 <p>This can now be joined onto our tidy data frame:</p>
 <program language="r"><input><![CDATA[
 firearms <- left_join(firearms, ownership_df, by="NAME")
