@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <chapter xml:id="ch-tidying" xmlns:xi="http://www.w3.org/2001/XInclude">
 <title>Wrangling Data in the Tidyverse</title>
-
+<introduction>
 <p>In the last course we spent a ton of time talking about all the most common ways data are stored and reviewed how to get them into a tibble (or data.frame) in R.</p>
 <p>So far we've discussed what tidy and untidy data are. We've (hopefully) convinced you that tidy data are the right type of data to work with. What we may not have made perfectly clear yet is that data are <em>not</em> always the tidiest when they come to you at the start of a project. An incredibly important skill of a data scientist is to be able to take data from an untidy format and get it into a tidy format. This process is often referred to as <term>data wrangling</term>. Generally, data wranglings skills are those that allow you to wrangle data from the format they're currently in into the tidy format you actually want them in.</p>
 <p>Beyond data wrangling, it's also important to make sure the data you have are accurate and what you need to answer your question of interest. After wrangling the data into a tidy format, there is often further work that has to be done to <term>clean</term> the data.</p>
+</introduction>
 <section xml:id="about-this-course">
 <title>About This Course</title>
 <p>Data never arrive in the condition that you need them in order to do effective data analysis. Data need to be re-shaped, re-arranged, and re-formatted, so that they can be visualized or be inputted into a machine learning algorithm. This course addresses the problem of wrangling your data so that you can bring them under control and analyze them effectively. The key goal in data wrangling is transforming non-tidy data into tidy data.</p>
