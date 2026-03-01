@@ -2019,7 +2019,7 @@
 ##   Status: 200
 ##   Content-Type: application/octet-stream
 ##   Size: 66.2 kB
-## <ON DISK>  /var/folders/6h/jgypt4153dq7_4nl6g04qtqh0000gn/T//RtmpgTqYzy/file34ed59c09d07.xlsx
+## &lt;ON DISK&gt;  /var/folders/6h/jgypt4153dq7_4nl6g04qtqh0000gn/T//RtmpgTqYzy/file34ed59c09d07.xlsx
 </pre>
 <pre>
 ## # A tibble: 116 × 54
@@ -2069,7 +2069,7 @@
 ##   Status: 200
 ##   Content-Type: application/octet-stream
 ##   Size: 98.3 kB
-## <ON DISK>  /var/folders/6h/jgypt4153dq7_4nl6g04qtqh0000gn/T//RtmpgTqYzy/file34ed618fb492.xls
+## &lt;ON DISK&gt;  /var/folders/6h/jgypt4153dq7_4nl6g04qtqh0000gn/T//RtmpgTqYzy/file34ed618fb492.xls
 </pre>
 <pre>
 ## # A tibble: 510 × 14
@@ -2127,7 +2127,7 @@
 ##   Status: 200
 ##   Content-Type: application/octet-stream
 ##   Size: 1.57 MB
-## <ON DISK>  /var/folders/6h/jgypt4153dq7_4nl6g04qtqh0000gn/T//RtmpgTqYzy/file34ed6135133.xls
+## &lt;ON DISK&gt;  /var/folders/6h/jgypt4153dq7_4nl6g04qtqh0000gn/T//RtmpgTqYzy/file34ed6135133.xls
 </pre>
 <pre>
 ## # A tibble: 3,198 × 34
