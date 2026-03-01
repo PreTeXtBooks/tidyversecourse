@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<preface xml:id="preface">
+  <title>Preface</title>
+
+  <p>
+    This book demonstrates how to use the Tidyverse collection of packages for
+    doing data science in R. The <url href="https://www.tidyverse.org/">Tidyverse</url>
+    is an opinionated collection of R packages designed for data science. All
+    packages share an underlying design philosophy, grammar, and data structures.
+  </p>
+
+  <p>
+    In this book we cover the simple idea of <q>tidy data</q> and how this idea
+    serves to organize data for analysis and modeling. We cover the data science
+    project life cycle and the ecosystem of Tidyverse R packages that can be
+    used at each step: importing data, tidying data, exploring and visualizing
+    data, and building prediction models. We assume familiarity with the R
+    programming language. If you are not yet familiar with R, we suggest you
+    first complete <url href="https://www.coursera.org/learn/r-programming">R
+    Programming</url> before returning to complete this book.
+  </p>
+
+  <p>
+    This book was originally written using R Markdown and
+    <url href="https://bookdown.org/">bookdown</url>. This version has been
+    converted to <url href="https://pretextbook.org/">PreTeXt</url>, a
+    markup language for authoring books and articles with a focus on
+    accessibility and multiple output formats. If you encounter any issues
+    with this PreTeXt version, please open an issue on the
+    <url href="https://github.com/PreTeXtBooks/tidyversecourse">GitHub
+    repository</url>.
+  </p>
+
+  <attribution>
+    <line>Carrie Wright, Shannon E. Ellis, Stephanie C. Hicks, and Roger D. Peng</line>
+  </attribution>
+
+</preface>
