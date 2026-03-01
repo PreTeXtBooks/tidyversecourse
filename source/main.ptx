@@ -32,6 +32,7 @@
     <xi:include href="chapters/ch05-prediction.ptx" />
 
     <backmatter xml:id="backmatter">
+      <xi:include href="chapters/about-authors.ptx" />
       <index>
         <index-list />
       </index>
