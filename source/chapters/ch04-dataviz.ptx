@@ -1837,6 +1837,12 @@ ggplot(mtcars, aes(wt, hp, label = model)) +
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-56-1.png">
+    <description>Scatterplot of car weight vs horsepower with overlapping text labels</description>
+  </image>
+  <caption>Scatterplot of car weight vs horsepower with overlapping text labels</caption>
+</figure>
 <p>
 The overall trend is clear here - the more a car weights, the more horsepower it tends to have. However, many of the labels are overlapping and impossible to read - this is where <c>ggrepel</c> plays a role:
 </p>
@@ -1853,6 +1859,12 @@ ggplot(mtcars, aes(wt, hp, label = model)) +
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-57-1.png">
+    <description>Scatterplot of car weight vs horsepower with non-overlapping labels using ggrepel</description>
+  </image>
+  <caption>Scatterplot of car weight vs horsepower with non-overlapping labels using ggrepel</caption>
+</figure>
 <p>
 The only bit of code here that changed was that we changed <c>geom_text()</c> to <c>geom_text_repel()</c>. This, like <c>geom_text()</c> adds text directly to the plot. However, it also helpfully repels overlapping labels away from one another and away from the data points on the plot.
 </p>
@@ -1887,6 +1899,12 @@ ggplot(mtcars, aes(wt, hp, label = model)) +
 
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-58-1.png">
+    <description>Scatterplot highlighting Mercedes cars with labeled points using ggrepel</description>
+  </image>
+  <caption>Scatterplot highlighting Mercedes cars with labeled points using ggrepel</caption>
+</figure>
 <p>
 Here, notice that we first create a new column in our dataframe called <c>merc</c>. Here, we include the model of the car, only if "Merc" is in the model of the car's name.
 </p>
@@ -1945,6 +1963,12 @@ mtcars %>%
       scale_y_continuous(limits = c(9, 38))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-59-1.png">
+    <description>Scatterplot labeling high-mpg cars using ggrepel text alignment options</description>
+  </image>
+  <caption>Scatterplot labeling high-mpg cars using ggrepel text alignment options</caption>
+</figure>
 <p>
 Notice that we've also had to provide the plot with more room by customizing the x- and y- axes, using the final two lines of code you see above.
 </p>
@@ -1977,7 +2001,16 @@ mtcars %>%
                         cex = 1)) +
   theme_minimal() +
   theme(legend.position = "none")
-
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-60-1.png">
+    <description>Scatterplot with first.points direct labels for high-mpg cars</description>
+  </image>
+  <caption>Scatterplot with first.points direct labels for high-mpg cars</caption>
+</figure>
+<program language="r">
+<input>
 mtcars %>%
   mutate(mpg_highlight = case_when(mpg > 30 ~ "high", mpg &lt; 30 ~ "low")) %>%
   ggplot(aes(qsec, mpg, label = model)) +
@@ -1992,6 +2025,12 @@ mtcars %>%
   theme(legend.position = "none")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-60-2.png">
+    <description>Scatterplot with last.points direct labels for high-mpg cars</description>
+  </image>
+  <caption>Scatterplot with last.points direct labels for high-mpg cars</caption>
+</figure>
 <p>
 This package is especially useful for labeling lines in a lineplot. There are several methods, one of which is the <c>angled.boxes</c> method. This often negates the need for a legend.
 </p>
@@ -2007,6 +2046,12 @@ ggplot(mtcars, aes(qsec, mpg, color = cyl, group = cyl)) +
   labs(title = "Differences in cars with 4, 6, or 8 cylinders")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-61-1.png">
+    <description>Line plot with angled.boxes direct labels showing differences in cars by cylinder count</description>
+  </image>
+  <caption>Line plot with angled.boxes direct labels showing differences in cars by cylinder count</caption>
+</figure>
 <p>
 See <url href="https://cran.r-project.org/web/packages/directlabels/directlabels.pdf">here</url> for more information about this package.
 </p>
@@ -2050,6 +2095,12 @@ p1 &lt;- ggplot(mtcars, aes(qsec, mpg, color = transmission)) +
 p1
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-64-1.png">
+    <description>Scatterplot of qsec vs mpg colored by transmission type using theme_cowplot</description>
+  </image>
+  <caption>Scatterplot of qsec vs mpg colored by transmission type using theme_cowplot</caption>
+</figure>
 <p>
 Let's make a similar plot, but color by engine type. We'll want to manually change the colors here so that we aren't using the same colors for transmission and engine. We'll store this in <c>p2</c>.
 </p>
@@ -2063,6 +2114,12 @@ p2 &lt;- ggplot(mtcars, aes(qsec, mpg, color = engine)) +
 p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-65-1.png">
+    <description>Scatterplot of qsec vs mpg colored by engine type using theme_cowplot</description>
+  </image>
+  <caption>Scatterplot of qsec vs mpg colored by engine type using theme_cowplot</caption>
+</figure>
 <p>
 Great - we've now got two plots with the same theme and similar appearance. What if we wanted to combine these into a single grid for presentation purposes?
 </p>
@@ -2078,6 +2135,12 @@ Combining plots is made simple within the <c>cowplot</c> package using the <c>pl
 plot_grid(p1, p2, ncol = 2)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-66-1.png">
+    <description>Two plots displayed side by side using plot_grid</description>
+  </image>
+  <caption>Two plots displayed side by side using plot_grid</caption>
+</figure>
 <p>
 Here, we specify the two plots we'd like to plot on a single grid and we also optionally include how many columns we'd like using the <c>ncol</c> parameter.
 </p>
@@ -2090,6 +2153,12 @@ To plot these one on top of the other, you could specify for <c>plot_grid()</c> 
 plot_grid(p1, p2, ncol = 1)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-67-1.png">
+    <description>Two plots stacked on top of one another using plot_grid</description>
+  </image>
+  <caption>Two plots stacked on top of one another using plot_grid</caption>
+</figure>
 <p>
 Note that by default, the plots will share the space equally, but it's also possible to make one larger than the other within the grid using <c>rel_widths</c> and <c>rel_heights</c>.
 </p>
@@ -2109,6 +2178,12 @@ p3 &lt;- ggplot(mtcars, aes(engine)) +
 p3
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-68-1.png">
+    <description>Faceted bar chart of engine type by transmission using theme_minimal_hgrid</description>
+  </image>
+  <caption>Faceted bar chart of engine type by transmission using theme_minimal_hgrid</caption>
+</figure>
 <p>
 Note that for this plot we've chosen a different theme, allowing for horizontal grid lines. This can be helpful when visualizing bar plots.
 </p>
@@ -2121,6 +2196,12 @@ If we were to plot these next to one another using the defaults, the faceted plo
 plot_grid(p1, p3)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-69-1.png">
+    <description>p1 and faceted p3 plotted next to one another with default spacing</description>
+  </image>
+  <caption>p1 and faceted p3 plotted next to one another with default spacing</caption>
+</figure>
 <p>
 We can use <c>rel_widths</c> to specify the relative width for the plot on the left relative to the plot on the right:
 </p>
@@ -2130,6 +2211,12 @@ We can use <c>rel_widths</c> to specify the relative width for the plot on the l
 plot_grid(p1, p3, rel_widths = c(1, 1.3))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-70-1.png">
+    <description>p1 and p3 in a grid with adjusted relative widths</description>
+  </image>
+  <caption>p1 and p3 in a grid with adjusted relative widths</caption>
+</figure>
 <p>
 Notice how the plot on the left is now a bit more narrow and the plot on the right is a bit wider.
 </p>
@@ -2145,6 +2232,12 @@ Within these grids, you'll often want to label these plots so that you can refer
 plot_grid(p1, p3, labels = "AUTO", rel_widths = c(1, 1.3))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-71-1.png">
+    <description>p1 and p3 in a labeled grid with AUTO labels A and B</description>
+  </image>
+  <caption>p1 and p3 in a labeled grid with AUTO labels A and B</caption>
+</figure>
 <p>
 <alert>Adding Joint Titles</alert>
 </p>
@@ -2178,6 +2271,12 @@ title &lt;- ggdraw() +
 plot_grid(title, three_plots, ncol = 1, rel_heights = c(0.1, 1))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-72-1.png">
+    <description>Three plots combined in a labeled grid with a shared title using plot_grid</description>
+  </image>
+  <caption>Three plots combined in a labeled grid with a shared title using plot_grid</caption>
+</figure>
 <p>
 And, just like that we've got three plots, labeled, spaced out nicely in a grid, with a shared title, all thanks to the functionality within the <c>cowplot</c> package.
 </p>
@@ -2199,9 +2298,25 @@ To combine two plots together we can simply add them together with the <c>+</c> 
 #install.packages(patchwork)
 library(patchwork)
 p1 + p2
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-73-1.png">
+    <description>Two plots combined side by side using the patchwork + operator</description>
+  </image>
+  <caption>Two plots combined side by side using the patchwork + operator</caption>
+</figure>
+<program language="r">
+<input>
 p1 | p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-73-2.png">
+    <description>Two plots combined side by side using the patchwork | operator</description>
+  </image>
+  <caption>Two plots combined side by side using the patchwork | operator</caption>
+</figure>
 <p>
 If we want a plot above another plot we can use the "/" symbol:
 </p>
@@ -2210,6 +2325,12 @@ If we want a plot above another plot we can use the "/" symbol:
 p1 / p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-74-1.png">
+    <description>Two plots stacked vertically using the patchwork / operator</description>
+  </image>
+  <caption>Two plots stacked vertically using the patchwork / operator</caption>
+</figure>
 <p>
 Grouping or nesting plots together using parenthesis can result in two or more plots taking up a single grid space.
 </p>
@@ -2221,6 +2342,12 @@ Thus, to combine multiple plots in a more complicated layout, one can combine tw
 (p3 + p2) / p1
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-75-1.png">
+    <description>p3 and p2 on one row with p1 below using patchwork grouping</description>
+  </image>
+  <caption>p3 and p2 on one row with p1 below using patchwork grouping</caption>
+</figure>
 <p>
 Without the parentheses we would have the following:
 </p>
@@ -2229,6 +2356,12 @@ Without the parentheses we would have the following:
 p3 + p2 / p1
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-76-1.png">
+    <description>p3, p2, and p1 combined without parentheses grouping in patchwork</description>
+  </image>
+  <caption>p3, p2, and p1 combined without parentheses grouping in patchwork</caption>
+</figure>
 <p>
 You can also empty plot spacers using the <c>plotspacer()</c> function like so:
 </p>
@@ -2237,6 +2370,12 @@ You can also empty plot spacers using the <c>plotspacer()</c> function like so:
 (plot_spacer() + p2 + plot_spacer()) / p1
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-77-1.png">
+    <description>Plot layout using plot_spacer() to add empty space around p2 above p1</description>
+  </image>
+  <caption>Plot layout using plot_spacer() to add empty space around p2 above p1</caption>
+</figure>
 <p>
 You can modify the widths of the plots using the <c>widths</c> argument of the <c>plot_layout()</c> function. In the following example we will make the width of the plot on the left 2 times that of the plot on the right. Any numeric values will do, it is the ratio of the numbers that make the difference.
 </p>
@@ -2246,18 +2385,50 @@ Thus, both <c>p1 + p2 + plot_layout(widths = c(2, 1))</c> and <c>p1 + p2 + plot_
 <program language="r">
 <input>
 p1 + p2 + plot_layout(widths = c(2, 1))
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-78-1.png">
+    <description>Two plots with relative widths c(2,1) using plot_layout</description>
+  </image>
+  <caption>Two plots with relative widths c(2,1) using plot_layout</caption>
+</figure>
+<program language="r">
+<input>
 p1 + p2 + plot_layout(widths = c(60, 30))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-78-2.png">
+    <description>Two plots with relative widths c(60,30) using plot_layout</description>
+  </image>
+  <caption>Two plots with relative widths c(60,30) using plot_layout</caption>
+</figure>
 <p>
 The relative heights of the plots can also be modified using a <c>heights</c> argument with the same function.
 </p>
 <program language="r">
 <input>
 p1 + p2 + plot_layout(heights = c(2, 1))
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-79-1.png">
+    <description>Two plots with relative heights c(2,1) using plot_layout</description>
+  </image>
+  <caption>Two plots with relative heights c(2,1) using plot_layout</caption>
+</figure>
+<program language="r">
+<input>
 p1 + p2 + plot_layout(heights = c(60, 30))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-79-2.png">
+    <description>Two plots with relative heights c(60,30) using plot_layout</description>
+  </image>
+  <caption>Two plots with relative heights c(60,30) using plot_layout</caption>
+</figure>
 <p>
 This package also allows for modification of legends. For example, legends can be gathered together to one side of the combined plots using the <c>guides = 'collect'</c> argument of the <c>plot_layout()</c> function.
 </p>
@@ -2266,6 +2437,12 @@ This package also allows for modification of legends. For example, legends can b
 p1 + p2 + plot_layout(guides = "collect")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-80-1.png">
+    <description>Two plots with collected legends using plot_layout guides argument</description>
+  </image>
+  <caption>Two plots with collected legends using plot_layout guides argument</caption>
+</figure>
 <p>
 You can also specify the number of columns or rows using this same function with the <c>ncol</c> or <c>nrow</c> as you would with <c>facet_wrap()</c> of the <c>ggplot2</c> package, where plots are added to <alert>complete a row</alert> before they will be added to a new row. For example, the following will result in an empty 2nd row below the plots.
 </p>
@@ -2274,6 +2451,12 @@ You can also specify the number of columns or rows using this same function with
 p1 + p2 + plot_layout(nrow = 2, ncol = 2, guides = "collect")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-81-1.png">
+    <description>Two plots arranged in a 2x2 grid with collected legends</description>
+  </image>
+  <caption>Two plots arranged in a 2x2 grid with collected legends</caption>
+</figure>
 <p>
 However, the <c>byrow = FALSE</c> argument can disrupt this behavior and result in an empty 2nd column:
 </p>
@@ -2282,6 +2465,12 @@ However, the <c>byrow = FALSE</c> argument can disrupt this behavior and result 
 p1 +p2 + plot_layout(nrow = 2, ncol = 2, byrow = FALSE, guides = "collect")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-82-1.png">
+    <description>Two plots in a 2x2 grid filled by column using byrow = FALSE</description>
+  </image>
+  <caption>Two plots in a 2x2 grid filled by column using byrow = FALSE</caption>
+</figure>
 <p>
 In this case the <alert>columns will be preferentially completed</alert> before placing a plot in a new column.
 </p>
@@ -2293,6 +2482,12 @@ We can also use the package to change the theme specifications of specific plots
 p1 + p2 + theme(legend.position = "bottom") + p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-83-1.png">
+    <description>Three-plot patchwork with legend moved to bottom on only p2</description>
+  </image>
+  <caption>Three-plot patchwork with legend moved to bottom on only p2</caption>
+</figure>
 <p>
 Using the <c>*</c>, themes can be added to all plots that are nested together.
 </p>
@@ -2301,6 +2496,12 @@ Using the <c>*</c>, themes can be added to all plots that are nested together.
 (p1 + p2) *theme_bw() + p2
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-84-1.png">
+    <description>Patchwork plots with theme_bw applied to nested plots using the * operator</description>
+  </image>
+  <caption>Patchwork plots with theme_bw applied to nested plots using the * operator</caption>
+</figure>
 <p>
 The <c>&amp;</c> adds themes to all plots.
 </p>
@@ -2309,6 +2510,12 @@ The <c>&amp;</c> adds themes to all plots.
 (p1 + p2) + p2 &amp; theme(axis.title.x = element_text(face = "bold"))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-85-1.png">
+    <description>Patchwork plots with bold x-axis title applied to all plots using the &amp; operator</description>
+  </image>
+  <caption>Patchwork plots with bold x-axis title applied to all plots using the &amp; operator</caption>
+</figure>
 <p>
 Annotations for all the plots combined can also be added using the <c>plot_annotation()</c> function, which can also take <c>theme()</c> function specifications with the <c>theme</c> argument.
 </p>
@@ -2321,6 +2528,12 @@ Annotations for all the plots combined can also be added using the <c>plot_annot
 
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-86-1.png">
+    <description>Three patchwork plots with a shared title added via plot_annotation</description>
+  </image>
+  <caption>Three patchwork plots with a shared title added via plot_annotation</caption>
+</figure>
 <p>
 See <url href="https://patchwork.data-imaginist.com/">here</url> for more information about the <c>patchwork</c> package.
 </p>
