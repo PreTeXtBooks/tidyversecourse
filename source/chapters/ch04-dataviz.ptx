@@ -2840,6 +2840,12 @@ library(visdat)
 vis_dat(hc)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-102-1.png">
+    <description>Visualization of variable types and missingness in the hc dataset using vis_dat</description>
+  </image>
+  <caption>Visualization of variable types and missingness in the hc dataset using vis_dat</caption>
+</figure>
 <p>
 We now have a sense that a few states, for some years are missing coverage data, which also affects the ability to calculate proportion covered.
 </p>
@@ -2851,6 +2857,12 @@ To see these values highlighted more specifically, we can use the related <c>vis
 vis_miss(hc)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-103-1.png">
+    <description>Visualization of missingness in the hc dataset using vis_miss</description>
+  </image>
+  <caption>Visualization of missingness in the hc dataset using vis_miss</caption>
+</figure>
 <p>
 Here we see that missing values only occur 0.6% of the time, with 3.1% of the observations missing entries for <c>tot_coverage</c> and <c>prop_coverage</c>. So, all in all, there is not a lot of missing data, but we still want to be sure we understand where missingness occurs before answering our questions.
 </p>
@@ -2960,6 +2972,12 @@ hc %>%
        y = "coverage proportion")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-107-1.png">
+    <description>Scatterplot of health care spending per capita vs coverage proportion for 2013 Employer data</description>
+  </image>
+  <caption>Scatterplot of health care spending per capita vs coverage proportion for 2013 Employer data</caption>
+</figure>
 <p>
 We see that there appears to be some relationship, with those states that spend more per capita also having higher proportions of their population having health care coverage.
 </p>
@@ -2980,6 +2998,12 @@ hc %>%
   geom_smooth(method = "lm", col = "red")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-108-1.png">
+    <description>Scatterplot with linear fit line of health care spending per capita vs coverage proportion for 2013</description>
+  </image>
+  <caption>Scatterplot with linear fit line of health care spending per capita vs coverage proportion for 2013</caption>
+</figure>
 <p>
 Beyond that, we likely want to know which point represents which state, so we can add state labels:
 </p>
@@ -2999,6 +3023,12 @@ hc %>%
             nudge_x = 150)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-109-1.png">
+    <description>Scatterplot with state abbreviation labels and fit line for 2013 Employer health care data</description>
+  </image>
+  <caption>Scatterplot with state abbreviation labels and fit line for 2013 Employer health care data</caption>
+</figure>
 <p>
 From there, it'd likely be helpful to have information from each region:
 </p>
@@ -3020,6 +3050,12 @@ hc %>%
             show.legend = FALSE)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-110-1.png">
+    <description>Scatterplot colored by US region with state labels and fit line for 2013 Employer data</description>
+  </image>
+  <caption>Scatterplot colored by US region with state labels and fit line for 2013 Employer data</caption>
+</figure>
 <p>
 So far, we've only been focusing on data from 2013. What about looking at data from both 2013 and 2014? We can do that using <c>facet_wrap()</c>:
 </p>
@@ -3041,6 +3077,12 @@ hc %>%
             show.legend = FALSE)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-111-1.png">
+    <description>Faceted scatterplot by year (2013 and 2014) colored by region for Employer health care data</description>
+  </image>
+  <caption>Faceted scatterplot by year (2013 and 2014) colored by region for Employer health care data</caption>
+</figure>
 <p>
 We see that the overall trend holds, but there has been some movement. For example, we see at a glance that DC has a higher proportion of its population covered in 2014 relative to 2013, while MA saw a drop in coverage. UT appears to be an outlier in both years having low spending but a high proportion of individuals covered.
 </p>
@@ -3065,6 +3107,12 @@ hc %>%
             show.legend = FALSE)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-112-1.png">
+    <description>Faceted scatterplot by insurance type colored by region for 2013 health care data</description>
+  </image>
+  <caption>Faceted scatterplot by insurance type colored by region for 2013 health care data</caption>
+</figure>
 <p>
 From these data, we see that Employer health care coverage is the most popular way in which individuals receive their health insurance across all states. We also see a flat or positive relationship for all other types of insurance, except for "Uninsured". We see that the more money spent per capita the fewer individuals the state has without insurance, as one might expect.
 </p>
@@ -3089,6 +3137,12 @@ hc %>%
             show.legend = FALSE)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-113-1.png">
+    <description>Faceted scatterplot by insurance type colored by region for 2014 health care data</description>
+  </image>
+  <caption>Faceted scatterplot by insurance type colored by region for 2014 health care data</caption>
+</figure>
 <p>
 The same general patterns hold in 2014 as we saw in 2013; however, the patterns are not exactly the same.
 </p>
@@ -3180,6 +3234,12 @@ hc %>%
   labs(y = "spending per capita")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-115-1.png">
+    <description>Boxplot of health care spending per capita by US region</description>
+  </image>
+  <caption>Boxplot of health care spending per capita by US region</caption>
+</figure>
 <p>
 Here, we get a sense of the overall trend, seeing that states in the Northeast tend to spend the most on health care, while states in the West spend the least.
 </p>
@@ -3198,6 +3258,12 @@ hc %>%
   labs(y = "spending per capita")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-116-1.png">
+    <description>Boxplot with jittered data points of health care spending per capita by region (Employer type)</description>
+  </image>
+  <caption>Boxplot with jittered data points of health care spending per capita by region (Employer type)</caption>
+</figure>
 <p>
 This gives us a sense of the variation in spending for states in each region. Of note, there are more outliers in the South and West, with a few states spending more on health care than even states in the Northeast, where spending tends to be higher.
 </p>
@@ -3238,6 +3304,12 @@ hc %>%
   facet_grid(year~type)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-117-1.png">
+    <description>Grid of scatterplots faceted by year and insurance type showing spending vs coverage colored by region</description>
+  </image>
+  <caption>Grid of scatterplots faceted by year and insurance type showing spending vs coverage colored by region</caption>
+</figure>
 <p>
 With this output, the top row shows the data from 2013 and the bottom shows the data from 2014. We can then visually compare the top plot to the bottom plot for each time of insurance.
 </p>
@@ -3303,6 +3375,12 @@ Similar to how we approached the health care case study, let's get an overall un
 vis_dat(firearms)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-119-1.png">
+    <description>Visualization of variable types and missingness in the firearms dataset using vis_dat</description>
+  </image>
+  <caption>Visualization of variable types and missingness in the firearms dataset using vis_dat</caption>
+</figure>
 <p>
 We see that we have data for all 50 states (and Washington, D.C.) for most variables in our dataset; however, we're missing information for one state when it comes to gunshot information and another state when it comes to Brady scores and ownership by suicide rates.
 </p>
@@ -3337,6 +3415,12 @@ ggplot(firearms,
   geom_text_repel(aes(label = NAME))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-121-1.png">
+    <description>Scatterplot of total population vs violent crime with state labels using ggrepel</description>
+  </image>
+  <caption>Scatterplot of total population vs violent crime with state labels using ggrepel</caption>
+</figure>
 <p>
 Here we see that the visualization of this relationship is largely dependent upon the state's population, with large states like Texas and California sticking out. However, we do see that, for its size, Washington D.C had many more violent cries than other states, despite its small population.
 </p>
@@ -3355,6 +3439,12 @@ ggplot(firearms,
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-122-1.png">
+    <description>Scatterplot of unemployment rate vs violent crime across US states</description>
+  </image>
+  <caption>Scatterplot of unemployment rate vs violent crime across US states</caption>
+</figure>
 <p>
 Here, there appears to be some relationship with states that have higher rates of unemployment having slightly more violent crimes, but violent crimes is not adjusted by population, so this is likely not <em>that</em> helpful.
 </p>
@@ -3373,6 +3463,12 @@ ggplot(firearms,
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-123-1.png">
+    <description>Scatterplot of annualized rate of fatal police shootings vs gun ownership by suicide rate</description>
+  </image>
+  <caption>Scatterplot of annualized rate of fatal police shootings vs gun ownership by suicide rate</caption>
+</figure>
 <p>
 This suggests that states with more fatal police shootings <em>tend</em> to have more firearm suicides relative to non-firearm suicides; however, this relationship is non linear.
 </p>
@@ -3405,6 +3501,12 @@ ggplot(firearms, aes(x = brady_scores,
   theme_classic()
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-124-1.png">
+    <description>Scatterplot of Brady firearm legislative strength score vs annualized rate of fatal police shootings</description>
+  </image>
+  <caption>Scatterplot of Brady firearm legislative strength score vs annualized rate of fatal police shootings</caption>
+</figure>
 <p>
 In this plot, we see that there is a relationship, but it is non-linear. Overall, the higher the legislative strength score (<c>brady_scores</c>), the lower the rate of police shootings; however, this decrease is nonlinear, as all states with a positive Brady Score have a similar police shooting rate.
 </p>
@@ -3424,6 +3526,12 @@ ggplot(firearms, aes(x = brady_scores,
             nudge_x = 7)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-125-1.png">
+    <description>Scatterplot of firearm legislation score vs fatal police shootings with state name labels</description>
+  </image>
+  <caption>Scatterplot of firearm legislation score vs fatal police shootings with state name labels</caption>
+</figure>
 <p>
 This makes it clear that Wyoming, New Mexico, Oklahoma, Arizona, and Nevada have some of the highest rates of fatal police shootings, while  Connecticut, New York, Pennsylvania, and North Dakota are among the lowest.
 </p>
@@ -3444,6 +3552,12 @@ ggplot(firearms, aes(x = brady_scores,
   geom_text_repel(aes(label = NAME))
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-126-1.png">
+    <description>Scatterplot of firearm legislation score vs fatal police shootings with repelled state name labels</description>
+  </image>
+  <caption>Scatterplot of firearm legislation score vs fatal police shootings with repelled state name labels</caption>
+</figure>
 <p>
 If we wanted to save this particular plot as a pdf, we could do so like this to save the plot in a directory called exploratory within a directory called figures:
 </p>
