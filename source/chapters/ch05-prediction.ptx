@@ -2089,7 +2089,7 @@ To illustrate how to use each of these packages, we will work through some examp
 These are the major steps that we will cover in addition to some more advanced methods:
 </p>
 <figure>
-  <image source="images/book_figures/Updated_tidymodels_Basics.png">
+  <image source="images/book_figures/Updated_tidymodels_basics.png">
     <description>Updated tidymodels Basics</description>
   </image>
   <caption>Updated tidymodels Basics</caption>
@@ -4276,7 +4276,7 @@ Great!
 In summary, these are the minimal steps to perform a prediction analysis using <c>tidymodels</c>:
 </p>
 <figure>
-  <image source="images/book_figures/Updated_tidymodels_Basics.png">
+  <image source="images/book_figures/Updated_tidymodels_basics.png">
     <description>Updated tidymodels Basics</description>
   </image>
   <caption>Updated tidymodels Basics</caption>

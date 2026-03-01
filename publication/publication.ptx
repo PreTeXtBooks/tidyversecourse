@@ -6,7 +6,7 @@
   </common>
 
   <source>
-    <directories external="../assets" generated="../generated-assets" />
+    <directories external=".." generated="../generated-assets" />
   </source>
 
   <html>
