@@ -466,6 +466,22 @@ diamonds &lt;- as_tibble(diamonds)
 diamonds
 </input>
 </program>
+<pre>
+## # A tibble: 53,940 × 10
+##    carat cut       color clarity depth table price     x     y     z
+##    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+##  2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+##  3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+##  4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+##  5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+##  6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+##  7  0.24 Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+##  8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+##  9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+## 10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39
+## # … with 53,930 more rows
+</pre>
 <figure>
   <image source="images/gslides/193.png">
     <description>First 12 rows of diamonds dataset</description>
@@ -612,6 +628,13 @@ ggplot(data = diamonds) +
   geom_point(mapping = aes(x = carat, y = price, shape = clarity))
 </input>
 </program>
+<pre>
+## Warning: Using shapes for an ordinal variable is not advised
+## Warning: The shape palette can deal with a maximum of 6 discrete values because
+## more than 6 becomes difficult to discriminate; you have 8. Consider
+## specifying shapes manually if you must have them.
+## Warning: Removed 5445 rows containing missing values (geom_point).
+</pre>
 <figure>
   <image source="images/gslides/199.png">
     <description>mapping clarity to shape</description>
@@ -703,6 +726,9 @@ ggplot(data = diamonds) +
   geom_histogram(mapping =  aes(carat))
 </input>
 </program>
+<pre>
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+</pre>
 <figure>
   <image source="images/gslides/203.png">
     <description>histogram of carat shows range and shape</description>
@@ -1572,6 +1598,16 @@ df &lt;- diamonds %>%
 df
 </input>
 </program>
+<pre>
+## # A tibble: 5 × 5
+##   cut           N   min   avg   max
+##   &lt;ord&gt;     &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+## 1 Fair       1610   337 4359. 18574
+## 2 Good       4906   327 3929. 18788
+## 3 Very Good 12082   336 3982. 18818
+## 4 Premium   13791   326 4584. 18823
+## 5 Ideal     21551   326 3458. 18806
+</pre>
 <p>
 By getting the data summarized into a single object in R (<c>df</c>), we're on our way to making an informative table. However, this is clearly just an exploratory table. The output in R from this code follows some of the good table rules above, but not all of them. At a glance, it will help you to understand the data, but it's not the finished table you would want to send to your boss.
 </p>
@@ -1712,6 +1748,17 @@ as_tibble(rownames = "model")
 head(mtcars)
 </input>
 </program>
+<pre>
+## # A tibble: 6 × 12
+##   model          mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Mazda RX4     21       6   160   110  3.9   2.62  16.5     0     1     4     4
+## 2 Mazda RX4 W…  21       6   160   110  3.9   2.88  17.0     0     1     4     4
+## 3 Datsun 710    22.8     4   108    93  3.85  2.32  18.6     1     1     4     1
+## 4 Hornet 4 Dr…  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
+## 5 Hornet Spor…  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
+## 6 Valiant       18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
+</pre>
 <p>
 What if we were to plot a scatterplot between horsepower (<c>hp</c>) and weight (<c>wt</c>) of each car and wanted to label each point in that plot with the care model.
 </p>
@@ -2484,6 +2531,23 @@ We've now got the data in order so that we can start to explore the relationship
 hc
 </input>
 </program>
+<pre>
+## # A tibble: 612 × 10
+##    Location  year type         tot_coverage abb   region tot_spending tot_pop
+##    &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;               &lt;int&gt; &lt;chr&gt; &lt;fct&gt;         &lt;dbl&gt;   &lt;int&gt;
+##  1 Alabama   2013 Employer          2126500 AL    South         33788 4763900
+##  2 Alabama   2013 Non-Group          174200 AL    South         33788 4763900
+##  3 Alabama   2013 Medicaid           869700 AL    South         33788 4763900
+##  4 Alabama   2013 Medicare           783000 AL    South         33788 4763900
+##  5 Alabama   2013 Other Public        85600 AL    South         33788 4763900
+##  6 Alabama   2013 Uninsured          724800 AL    South         33788 4763900
+##  7 Alabama   2014 Employer          2202800 AL    South         35263 4768000
+##  8 Alabama   2014 Non-Group          288900 AL    South         35263 4768000
+##  9 Alabama   2014 Medicaid           891900 AL    South         35263 4768000
+## 10 Alabama   2014 Medicare           718400 AL    South         35263 4768000
+## # … with 602 more rows, and 2 more variables: prop_coverage &lt;dbl&gt;,
+## #   spending_capita &lt;dbl&gt;
+</pre>
 <p>
 As a reminder, we have state level data, broken down by year and type of insurance. For each, we have the total number of individuals who have health care coverage (<c>tot_coverage</c>), the amount spent on coverage (<c>tot_spending</c>), the proportion of individuals covered (<c>prop_coverage</c>), and the amount spent per capita (<c>spending_capita</c>). Additionally, we have the state name (<c>Location</c>), the two letter state abbreviation  (<c>abb</c>), and the region of the United States where the state is located (<c>region</c>). Let's get visualizing!
 </p>
@@ -2523,6 +2587,31 @@ hc %>%
   filter(is.na(tot_coverage))
 </input>
 </program>
+<pre>
+## # A tibble: 19 × 10
+##    Location              year type  tot_coverage abb   region tot_spending tot_pop
+##    &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;        &lt;int&gt; &lt;chr&gt; &lt;fct&gt;         &lt;dbl&gt;   &lt;int&gt;
+##  1 Arizona               2013 Othe…           NA AZ    West          41481 6603100
+##  2 Arizona               2014 Othe…           NA AZ    West          43356 6657200
+##  3 District of Columbia  2013 Othe…           NA DC    South          7443  652100
+##  4 District of Columbia  2014 Othe…           NA DC    South          7871  656900
+##  5 Indiana               2014 Othe…           NA IN    North…        54741 6477500
+##  6 Kansas                2013 Othe…           NA KS    North…        21490 2817600
+##  7 Kansas                2014 Othe…           NA KS    North…        22183 2853000
+##  8 Kentucky              2014 Othe…           NA KY    South         35323 4315700
+##  9 Massachusetts         2013 Othe…           NA MA    North…        68899 6647700
+## 10 Massachusetts         2014 Othe…           NA MA    North…        71274 6658100
+## 11 New Hampshire         2014 Othe…           NA NH    North…        12742 1319700
+## 12 New Jersey            2013 Othe…           NA NJ    North…        75148 8807400
+## 13 North Dakota          2013 Othe…           NA ND    North…         6795  714500
+## 14 Oklahoma              2013 Othe…           NA OK    South         28097 3709400
+## 15 Rhode Island          2014 Othe…           NA RI    North…        10071 1048200
+## 16 Tennessee             2013 Othe…           NA TN    South         46149 6400200
+## 17 Tennessee             2014 Othe…           NA TN    South         48249 6502000
+## 18 West Virginia         2013 Othe…           NA WV    South         16622 1822000
+## 19 Wisconsin             2014 Othe…           NA WI    North…        50109 5747200
+## # … with 2 more variables: prop_coverage &lt;dbl&gt;, spending_capita &lt;dbl&gt;
+</pre>
 <p>
 Ah, so we see that the "Other" type of coverage is missing in both 2013 and 2014 for a subset of states. We'll be focusing on the non-"Other" types of health care coverage, so this shouldn't pose a problem, but it is good to know!
 </p>
@@ -2906,6 +2995,24 @@ In the previous course, we wrangled the data into a single, helpful dataframe: <
 firearms
 </input>
 </program>
+<pre>
+## # A tibble: 51 × 15
+##    NAME                 white black hispanic  male total_pop violent_crime brady_scores
+##    &lt;chr&gt;                &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
+##  1 alabama               69.5 26.7      4.13  48.5   4850858          472.        -18  
+##  2 alaska                66.5  3.67     6.82  52.4    737979          730.        -30  
+##  3 arizona               83.5  4.80    30.9   49.7   6802262          410.        -39  
+##  4 arkansas              79.6 15.7      7.18  49.1   2975626          521.        -24  
+##  5 california            73.0  6.49    38.7   49.7  39032444          426.         76  
+##  6 colorado              87.6  4.47    21.3   50.3   5440445          321          22  
+##  7 connecticut           80.9 11.6     15.3   48.8   3593862          218.         73  
+##  8 delaware              70.3 22.5      8.96  48.4    944107          499          41  
+##  9 district of columbia  44.1 48.5     10.7   47.4    672736         1269.         NA  
+## 10 florida               77.7 16.9     24.7   48.9  20268567          462.        -20.5
+## # … with 41 more rows, and 7 more variables: gunshot_tally &lt;int&gt;,
+## #   gunshot_filtered &lt;int&gt;, gunshot_rate &lt;dbl&gt;, unemployment_rate &lt;dbl&gt;,
+## #   unemployment_rank &lt;int&gt;, density &lt;dbl&gt;, ownership &lt;dbl&gt;
+</pre>
 <p>
 This dataset contains state level information about firearm ownership (broken down by ethnicity and gender), the population of each state (<c>total_pop</c>), the number of violent crimes (<c>violent_crime</c>), the “total state points” from the Brady Scorecard (<c>brady_scores</c>), the number of gunshots (<c>gunshot_tally</c>), the number of gunshots from armed, non-white, male individuals (<c>gunshot_filtered</c>), the annualized rate per 1,000,000 residents (<c>gunshot_rate</c>), the <c>unemployment rate</c> and <c>unemployment_rank</c>, population density (<c>density</c>), and firearm ownership as a percent of firearm suicides to all suicides (<c>ownership</c>).
 </p>
