@@ -1343,6 +1343,12 @@ ggplot(diamonds) +
          x = "Clarity")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-40-1.png">
+    <description>Bar chart of diamond clarity with y-axis on log10 scale</description>
+  </image>
+  <caption>Bar chart of diamond clarity with y-axis on log10 scale</caption>
+</figure>
 <p>
 Notice that the values are not changed, just the way they are plotted. Now the y-axis increases by a factor of 10 for each break.
 </p>
@@ -1353,7 +1359,16 @@ We will create a plot of the price of the diamonds to demonstrate the utility of
 <input>
 ggplot(diamonds) + 
   geom_boxplot(aes(y = price, x = clarity))
-
+</input>
+</program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-41-1.png">
+    <description>Boxplot of diamond price by clarity</description>
+  </image>
+  <caption>Boxplot of diamond price by clarity</caption>
+</figure>
+<program language="r">
+<input>
 ggplot(diamonds) + 
   geom_boxplot(aes(y = price, x = clarity)) + 
   scale_y_continuous(trans = "log10") + 
@@ -1361,6 +1376,12 @@ ggplot(diamonds) +
        x = "Diamond Clarity")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-41-2.png">
+    <description>Boxplot of diamond price by clarity with log10 y-axis scale</description>
+  </image>
+  <caption>Boxplot of diamond price by clarity with log10 y-axis scale</caption>
+</figure>
 <p>
 In the first plot, it is difficult to tell what values the boxplots correspond to and it is difficult to compare the boxplots (particularly for the last three clarity categories), however this is greatly improved in the second plot.
 </p>
@@ -1377,6 +1398,12 @@ ggplot(diamonds) +
        x = "Diamond Clarity")
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-42-1.png">
+    <description>Boxplot of diamond price by clarity with log10 scale and dollar labels</description>
+  </image>
+  <caption>Boxplot of diamond price by clarity with log10 scale and dollar labels</caption>
+</figure>
 <p>
 In the above plot, we might also want to order the boxplots by the median price, we can do so using the <c>fct_reorder</c> function of <c>forcats</c> package to change the order for the <c>clarity</c> levels to be based on the median of the <c>price</c> values.
 </p>
@@ -1392,6 +1419,12 @@ ggplot(diamonds) +
 
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-43-1.png">
+    <description>Boxplot of diamond price by clarity ordered by median price</description>
+  </image>
+  <caption>Boxplot of diamond price by clarity ordered by median price</caption>
+</figure>
 <p>
 Now we can more easily determine that the <c>SI2</c> diamonds are the most expensive.
 </p>
@@ -1534,6 +1567,12 @@ ggplot(diamonds) +
   geom_hline(yintercept = 0.5, color = "red", size = 1)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-48-1.png">
+    <description>Stacked bar chart with horizontal line at 50% using geom_hline</description>
+  </image>
+  <caption>Stacked bar chart with horizontal line at 50% using geom_hline</caption>
+</figure>
 <p>
 Now, it is easier to tell that slightly over half of the <c>VVS2</c> diamonds have an <c>Ideal</c> cut. This would be much more difficult to see without the horizontal line.
 </p>
@@ -1552,6 +1591,12 @@ ggplot(diamonds) +
   geom_vline(xintercept = 5.5, color = "black", size = .5)
 </input>
 </program>
+<figure>
+  <image source="images/dataviz-unnamed-chunk-49-1.png">
+    <description>Stacked bar chart with horizontal and vertical lines using geom_hline and geom_vline</description>
+  </image>
+  <caption>Stacked bar chart with horizontal and vertical lines using geom_hline and geom_vline</caption>
+</figure>
 <p>
 This would be helpful if we wanted to especially point out differences between the last three clarity categories of diamonds compared to the other categories.
 </p>
