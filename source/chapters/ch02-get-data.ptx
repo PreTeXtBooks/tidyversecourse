@@ -51,6 +51,22 @@
       as_tibble(trees)
     </input>
   </program>
+  <pre>
+## # A tibble: 31 × 3
+##    Girth Height Volume
+##    <dbl>  <dbl>  <dbl>
+##  1   8.3     70   10.3
+##  2   8.6     65   10.3
+##  3   8.8     63   10.2
+##  4  10.5     72   16.4
+##  5  10.7     81   18.8
+##  6  10.8     83   19.7
+##  7  11       66   15.6
+##  8  11       75   18.2
+##  9  11.1     80   22.6
+## 10  11.2     75   19.9
+## # … with 21 more rows
+</pre>
 
   <p>Note in the above example and as mentioned earlier, that tibbles, by default, only print the first ten rows to screen. If you were to print <c>trees</c> to screen, all 31 rows would be displayed. When working with large data.frames, this default behavior can be incredibly frustrating. Using tibbles removes this frustration because of the default settings for tibble printing.</p>
   <p>Additionally, you'll note that the type of the variable is printed for each variable in the tibble. This helpful feature is another added bonus of tibbles relative to data.frame.</p>
@@ -62,6 +78,17 @@
         print(n = 5, width = Inf)
     </input>
   </program>
+<pre>
+## # A tibble: 31 × 3
+##   Girth Height Volume
+##   <dbl>  <dbl>  <dbl>
+## 1   8.3     70   10.3
+## 2   8.6     65   10.3
+## 3   8.8     63   10.2
+## 4  10.5     72   16.4
+## 5  10.7     81   18.8
+## # … with 26 more rows
+</pre>
 
   <p>Other options for viewing your tibbles are the <c>slice_*</c> functions of the <c>dplyr</c> package.</p>
   <p>The <c>slice_sample()</c> function of the <c>dplyr</c> package will allow you to see a sample of random rows in random order. The number of rows to show is specified by the <c>n</c> argument. This can be useful if you don't want to print the entire tibble, but you want to get a greater sense of the values. This is a good option for data analysis reports, where printing the entire tibble would not be appropriate if the tibble is quite large.</p>
@@ -70,6 +97,19 @@
       slice_sample(trees, n = 10)
     </input>
   </program>
+<pre>
+##    Girth Height Volume
+## 1   16.3     77   42.6
+## 2   14.0     78   34.5
+## 3   13.8     64   24.9
+## 4   10.8     83   19.7
+## 5    8.8     63   10.2
+## 6   17.5     82   55.7
+## 7    8.3     70   10.3
+## 8   11.4     76   21.4
+## 9   10.7     81   18.8
+## 10  10.5     72   16.4
+</pre>
 
   <p>You can also use <c>slice_head()</c> or <c>slice_tail()</c> to take a look at the top rows or bottom rows of your tibble. Again the number of rows can be specified with the n argument.</p>
   <p>This will show the first 5 rows.</p>
@@ -78,13 +118,28 @@
       slice_head(trees, n = 5)
     </input>
   </program>
-
+<pre>
+##   Girth Height Volume
+## 1   8.3     70   10.3
+## 2   8.6     65   10.3
+## 3   8.8     63   10.2
+## 4  10.5     72   16.4
+## 5  10.7     81   18.8
+</pre>
   <p>This will show the last 5 rows.</p>
   <program language="r">
     <input>
       slice_tail(trees, n = 5)
     </input>
   </program>
+<pre>
+##   Girth Height Volume
+## 1  17.5     82   55.7
+## 2  17.9     80   58.3
+## 3  18.0     80   51.5
+## 4  18.0     80   51.0
+## 5  20.6     87   77.0
+</pre>
 
 </subsubsection>
 
@@ -103,6 +158,16 @@
       )
     </input>
   </program>
+<pre>
+## # A tibble: 5 × 4
+##       a     b     c     z
+##   <int> <int> <dbl> <dbl>
+## 1     1     6     1    50
+## 2     2     7     1    82
+## 3     3     8     1   122
+## 4     4     9     1   170
+## 5     5    10     1   226
+</pre>
 
   <p>The <c>tibble()</c> function allows you to quickly generate tibbles and even allows you to reference columns within the tibble you're creating, as seen in column z of the example above.</p>
   <p>We also noted previously that tibbles can have column names that are not allowed in data.frame. In this example, we see that to utilize a nontraditional variable name, you surround the column name with backticks. Note that to refer to such columns in other tidyverse packages, you'll continue to use backticks surrounding the variable name.</p>
@@ -115,6 +180,16 @@
       )
     </input>
   </program>
+<pre>
+## # A tibble: 5 × 3
+##   `two words` `12`    `:)` 
+##         <int> <chr>   <chr>
+## 1           1 numeric smile
+## 2           2 numeric smile
+## 3           3 numeric smile
+## 4           4 numeric smile
+## 5           5 numeric smile
+</pre>
 
 </subsubsection>
 
@@ -141,6 +216,11 @@
       df[[4]]
     </input>
   </program>
+<pre>
+## [1]  50  82 122 170 226
+## [1]  50  82 122 170 226
+## [1]  50  82 122 170 226
+</pre>
 
   <p>Having now discussed tibbles, which are the type of object most tidyverse and tidyverse-adjacent packages work best with, we now know the goal. In many cases, tibbles are ultimately what we want to work with in R. However, data are stored in many different formats outside of R. We'll spend the rest of this course discussing those formats and talking about how to get those data into R so that you can start the process of working with and analyzing these data in R.</p>
 </subsection>
@@ -183,6 +263,22 @@
       df
     </input>
   </program>
+<pre>
+## # A tibble: 150 × 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           <dbl>       <dbl>        <dbl>       <dbl> <chr>  
+##  1          5.1         3.5          1.4         0.2 setosa 
+##  2          4.9         3            1.4         0.2 setosa 
+##  3          4.7         3.2          1.3         0.2 setosa 
+##  4          4.6         3.1          1.5         0.2 setosa 
+##  5          5           3.6          1.4         0.2 setosa 
+##  6          5.4         3.9          1.7         0.4 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          5           3.4          1.5         0.2 setosa 
+##  9          4.4         2.9          1.4         0.2 setosa 
+## 10          4.9         3.1          1.5         0.1 setosa 
+## # … with 140 more rows
+</pre>
 
   <p>Note that the information stored in <c>df</c> is a tibble. This will be a common theme throughout the packages used in these courses.</p>
   <p>Further, by default, <c>read_excel()</c> converts blank cells to missing data (NA). This behavior can be changed by specifying the <c>na</c> argument within this function. There are a number of additional helpful arguments within this function. They can all be seen using <c>?read_excel</c>, but we'll highlight a few here:</p>
@@ -198,6 +294,22 @@
       read_excel(example, col_names = LETTERS[1:5])
     </input>
   </program>
+<pre>
+## # A tibble: 151 × 5
+##    A            B           C            D           E      
+##    <chr>        <chr>       <chr>        <chr>       <chr>  
+##  1 Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##  2 5.1          3.5         1.4          0.2         setosa 
+##  3 4.9          3           1.4          0.2         setosa 
+##  4 4.7          3.2         1.3          0.2         setosa 
+##  5 4.6          3.1         1.5          0.2         setosa 
+##  6 5            3.6         1.4          0.2         setosa 
+##  7 5.4          3.9         1.7          0.4         setosa 
+##  8 4.6          3.4         1.4          0.3         setosa 
+##  9 5            3.4         1.5          0.2         setosa 
+## 10 4.4          2.9         1.4          0.2         setosa 
+## # … with 141 more rows
+</pre>
 
   <p>To take this a step further let's discuss one of the lesser-known arguments of the <c>read_excel()</c> function: <c>.name_repair</c>. This argument allows for further fine-tuning and handling of column names.</p>
   <p>The default for this argument is <c>.name_repair = "unique"</c>. This checks to make sure that each column of the imported file has a unique name. If TRUE, <c>readxl</c> leaves them as is, as you see in the example here:</p>
@@ -211,6 +323,14 @@
       )
     </input>
   </program>
+<pre>
+## # A tibble: 3 × 6
+##   Name          Profession   Age `Has kids` `Date of birth`     `Date of death`    
+##   <chr>         <chr>      <dbl> <lgl>      <dttm>              <dttm>             
+## 1 David Bowie   musician      69 TRUE       1947-01-08 00:00:00 2016-01-10 00:00:00
+## 2 Carrie Fisher actor         60 TRUE       1956-10-21 00:00:00 2016-12-27 00:00:00
+## 3 Chuck Berry   musician      90 TRUE       1926-10-18 00:00:00 2017-03-18 00:00:00
+</pre>
 
   <p>Another option for this argument is <c>.name_repair = "universal"</c>. This ensures that column names don’t contain any forbidden characters or reserved words. It's often a good idea to use this option if you plan to use these data with other packages downstream. This ensures that all the column names will work, regardless of the R package being used.</p>
   <program language="r">
@@ -223,6 +343,20 @@
       )
     </input>
   </program>
+<pre>
+## New names:
+## * `Has kids` -> Has.kids
+## * `Date of birth` -> Date.of.birth
+## * `Date of death` -> Date.of.death
+</pre>
+<pre>
+## # A tibble: 3 × 6
+##   Name          Profession   Age Has.kids Date.of.birth       Date.of.death      
+##   <chr>         <chr>      <dbl> <lgl>    <dttm>              <dttm>             
+## 1 David Bowie   musician      69 TRUE     1947-01-08 00:00:00 2016-01-10 00:00:00
+## 2 Carrie Fisher actor         60 TRUE     1956-10-21 00:00:00 2016-12-27 00:00:00
+## 3 Chuck Berry   musician      90 TRUE     1926-10-18 00:00:00 2017-03-18 00:00:00
+</pre>
 
   <p>Note that when using <c>.name_repair = "universal"</c>, you'll get a readout about which column names have been changed. Here you see that column names with a space in them have been changed to periods for word separation.</p>
   <p>Aside from these options, functions can be passed to <c>.name_repair</c>. For example, if you want all of your column names to be uppercase, you would use the following:</p>
@@ -236,7 +370,14 @@
       )
     </input>
   </program>
-
+<pre>
+## # A tibble: 3 × 6
+##   NAME          PROFESSION   AGE `HAS KIDS` `DATE OF BIRTH`     `DATE OF DEATH`    
+##   <chr>         <chr>      <dbl> <lgl>      <dttm>              <dttm>             
+## 1 David Bowie   musician      69 TRUE       1947-01-08 00:00:00 2016-01-10 00:00:00
+## 2 Carrie Fisher actor         60 TRUE       1956-10-21 00:00:00 2016-12-27 00:00:00
+## 3 Chuck Berry   musician      90 TRUE       1926-10-18 00:00:00 2017-03-18 00:00:00
+</pre>
   <p>Notice that the function is passed directly to the argument. It does not have quotes around it, as we want this to be interpreted as the <c>toupper()</c> function.</p>
   <p>Here we've really only focused on a single function (<c>read_excel()</c>) from the <c>readxl</c> package. This is because some of the best packages do a single thing and do that single thing well. The <c>readxl</c> package has a single, slick function that covers most of what you'll need when reading in files from Excel. That is not to say that the package doesn't have other useful functions (it does!), but this function will cover your needs most of the time.</p>
 </subsubsection>
@@ -515,6 +656,9 @@
       json
     </input>
   </program>
+<pre>
+## [1] "[\n  {\"Name\" : \"Woody\", \"Age\" : 40, \"Occupation\" : \"Sherriff\"}, \n  {\"Name\" : \"Buzz Lightyear\", \"Age\" : 34, \"Occupation\" : \"Space Ranger\"},\n  {\"Name\" : \"Andy\", \"Occupation\" : \"Toy Owner\"}\n]"
+</pre>
 
   <p>Here, we've stored information about Toy Story characters, their age, and their occupation in an object called <c>json</c>.</p>
   <p>In this format, we cannot easily work with the data within R; however, the <c>jsonlite</c> package can help us. Using the defaults of the function <c>fromJSON()</c>, <c>jsonlite</c> will take the data from JSON array format and helpfully return a data frame.</p>
@@ -530,6 +674,12 @@
       mydf
     </input>
   </program>
+<pre>
+##             Name Age   Occupation
+## 1          Woody  40     Sherriff
+## 2 Buzz Lightyear  34 Space Ranger
+## 3           Andy  NA    Toy Owner
+</pre>
 
   <figure xml:id="fig-fromjson">
     <image source="images/gslides/050.png"/>
@@ -544,6 +694,9 @@
       json
     </input>
   </program>
+<pre>
+## [{"Name":"Woody","Age":40,"Occupation":"Sherriff"},{"Name":"Buzz Lightyear","Age":34,"Occupation":"Space Ranger"},{"Name":"Andy","Occupation":"Toy Owner"}]
+</pre>
 
   <figure xml:id="fig-tojson">
     <image source="images/gslides/051.png"/>
@@ -667,6 +820,12 @@
       dbListTables(db)
     </input>
   </program>
+<pre>
+##  [1] "albums"          "artists"         "customers"       "employees"      
+##  [5] "genres"          "invoice_items"   "invoices"        "media_types"    
+##  [9] "playlist_track"  "playlists"       "sqlite_sequence" "sqlite_stat1"   
+## [13] "tracks"
+</pre>
 
   <p>The output from <c>dbListTables()</c> will include 13 tables. Among them will be the two tables we're going to work through in our example: <c>artists</c>, and <c>albums</c>.</p>
   <figure xml:id="fig-output-from-dblisttablesdb">
@@ -741,7 +900,22 @@
       as_tibble(inner)
     </input>
   </program>
-
+<pre>
+## # A tibble: 347 × 4
+##    ArtistId Name                 AlbumId Title                                
+##       <int> <chr>                  <int> <chr>                                
+##  1        1 AC/DC                      1 For Those About To Rock We Salute You
+##  2        2 Accept                     2 Balls to the Wall                    
+##  3        2 Accept                     3 Restless and Wild                    
+##  4        1 AC/DC                      4 Let There Be Rock                    
+##  5        3 Aerosmith                  5 Big Ones                             
+##  6        4 Alanis Morissette          6 Jagged Little Pill                   
+##  7        5 Alice In Chains            7 Facelift                             
+##  8        6 Antônio Carlos Jobim       8 Warner 25 Anos                       
+##  9        7 Apocalyptica               9 Plays Metallica By Four Cellos       
+## 10        8 Audioslave                10 Audioslave                           
+## # … with 337 more rows
+</pre>
 </subsubsection>
 
 <subsubsection xml:id="subsubsec-left-join">
@@ -770,6 +944,22 @@
       as_tibble(left)
     </input>
   </program>
+<pre>
+## # A tibble: 418 × 4
+##    ArtistId Name                 AlbumId Title                                
+##       <int> <chr>                  <int> <chr>                                
+##  1        1 AC/DC                      1 For Those About To Rock We Salute You
+##  2        1 AC/DC                      4 Let There Be Rock                    
+##  3        2 Accept                     2 Balls to the Wall                    
+##  4        2 Accept                     3 Restless and Wild                    
+##  5        3 Aerosmith                  5 Big Ones                             
+##  6        4 Alanis Morissette          6 Jagged Little Pill                   
+##  7        5 Alice In Chains            7 Facelift                             
+##  8        6 Antônio Carlos Jobim       8 Warner 25 Anos                       
+##  9        6 Antônio Carlos Jobim      34 Chill: Brazil (Disc 2)               
+## 10        7 Apocalyptica               9 Plays Metallica By Four Cellos       
+## # … with 408 more rows
+</pre>
 
 </subsubsection>
 
@@ -799,6 +989,22 @@
       as_tibble(right)
     </input>
   </program>
+<pre>
+## # A tibble: 347 × 4
+##    ArtistId Name                 AlbumId Title                                
+##       <int> <chr>                  <int> <chr>                                
+##  1        1 AC/DC                      1 For Those About To Rock We Salute You
+##  2        1 AC/DC                      4 Let There Be Rock                    
+##  3        2 Accept                     2 Balls to the Wall                    
+##  4        2 Accept                     3 Restless and Wild                    
+##  5        3 Aerosmith                  5 Big Ones                             
+##  6        4 Alanis Morissette          6 Jagged Little Pill                   
+##  7        5 Alice In Chains            7 Facelift                             
+##  8        6 Antônio Carlos Jobim       8 Warner 25 Anos                       
+##  9        6 Antônio Carlos Jobim      34 Chill: Brazil (Disc 2)               
+## 10        7 Apocalyptica               9 Plays Metallica By Four Cellos       
+## # … with 337 more rows
+</pre>
 
   <p>While the output may look similar to the output from <c>left_join()</c>, you'll note that there are a different number of rows due to how the join was done. The fact that 347 rows are present with the right join and 418 were present after the left join suggests that there are artists in the artists table without albums in the albums table.</p>
 </subsubsection>
@@ -828,7 +1034,22 @@
       as_tibble(full)
     </input>
   </program>
-
+<pre>
+## # A tibble: 418 × 4
+##    ArtistId Name                 AlbumId Title                                
+##       <int> <chr>                  <int> <chr>                                
+##  1        1 AC/DC                      1 For Those About To Rock We Salute You
+##  2        1 AC/DC                      4 Let There Be Rock                    
+##  3        2 Accept                     2 Balls to the Wall                    
+##  4        2 Accept                     3 Restless and Wild                    
+##  5        3 Aerosmith                  5 Big Ones                             
+##  6        4 Alanis Morissette          6 Jagged Little Pill                   
+##  7        5 Alice In Chains            7 Facelift                             
+##  8        6 Antônio Carlos Jobim       8 Warner 25 Anos                       
+##  9        6 Antônio Carlos Jobim      34 Chill: Brazil (Disc 2)               
+## 10        7 Apocalyptica               9 Plays Metallica By Four Cellos       
+## # … with 408 more rows
+</pre>
 </subsubsection>
 
 <subsubsection xml:id="subsubsec-mutating-joins-summary">
@@ -918,29 +1139,26 @@
   <p>To enable SelectorGadget using Google Chrome:</p>
   <ol>
     <li><p>Click <url href="https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb">here</url> to open up the SelectorGadget Chrome Extension</p></li>
-    <li><p>Click "ADD TO CHROME"</p></li>
-  </ol>
+    <li><p>Click "ADD TO CHROME"</p>
   <figure xml:id="fig-add-to-chrome">
     <image source="images/gslides/068.png"/>
     <caption>ADD TO CHROME</caption>
   </figure>
 
-  <ol>
-    <li><p>Click "Add extension" </p></li>
-  </ol>
+  </li>
+    <li><p>Click "Add extension" </p>
   <figure xml:id="fig-add-extension">
     <image source="images/gslides/069.png"/>
     <caption>Add extension</caption>
   </figure>
 
-  <ol>
+  </li>
     <li><p>SelectorGadget's icon will now be visible to the right of the web address bar within Google Chrome. You will click on this to use SelectorGadget in the example below.</p></li>
-  </ol>
   <figure xml:id="fig-selectorgadget-icon">
     <image source="images/gslides/070.png"/>
     <caption>SelectorGadget icon</caption>
   </figure>
-
+  </ol>
 </subsection>
 
 <subsection xml:id="subsec-web-scraping-example">
@@ -988,6 +1206,9 @@
         html_text() 
     </input>
   </program>
+<pre>
+## [1] "rvest"        "httr"         "dbplyr"       "jsonlite"     "googlesheets"
+</pre>
 
   <p>With just a few lines of code we have the information we were looking for!</p>
 </subsubsection>
@@ -1077,6 +1298,10 @@
       names(api_response)
     </input>
   </program>
+<pre>
+##  [1] "url"         "status_code" "headers"     "all_headers" "cookies"    
+##  [6] "content"     "date"        "times"       "request"     "handle"
+</pre>
 
   <figure xml:id="fig-httr-response">
     <image source="images/gslides/076.png"/>
@@ -1090,7 +1315,9 @@
       api_response$status_code
     </input>
   </program>
-
+<pre>
+## [1] 200
+</pre>
   <p>But, to be honest, we aren't really interested in just knowing the request worked. We actually want to see what information is contained on our GitHub account.</p>
   <p>To do so we'll take advantage of <c>httr</c>'s <c>content()</c> function, which as its name suggests, extracts the contents from an API request.</p>
   <program language="r">
@@ -1115,6 +1342,19 @@
         bind_rows()
     </input>
   </program>
+<pre>
+## # A tibble: 8 × 2
+##   repo                             address                                      
+##   <chr>                            <chr>                                        
+## 1 cbds                             https://github.com/JaneEverydayDoe/cbds      
+## 2 first_project                    https://github.com/JaneEverydayDoe/first_pro…
+## 3 gcd                              https://github.com/JaneEverydayDoe/gcd       
+## 4 hello-world                      https://github.com/JaneEverydayDoe/hello-wor…
+## 5 janeeverydaydoe.github.com       https://github.com/JaneEverydayDoe/janeevery…
+## 6 my_first_project                 https://github.com/JaneEverydayDoe/my_first_…
+## 7 newproject                       https://github.com/JaneEverydayDoe/newproject
+## 8 Temporary_add_to_version_control https://github.com/JaneEverydayDoe/Temporary…
+</pre>
 
   <figure xml:id="fig-output-from-api-request">
     <image source="images/gslides/078.png"/>
@@ -1212,6 +1452,14 @@
       # use read_xpt() to read SAS transport files (version 5 and 8)
     </input>
   </program>
+<pre>
+## # A tibble: 3 × 3
+##   Name             Age Occupation  
+##   <chr>          <dbl> <chr>       
+## 1 Woody             40 Sherriff    
+## 2 Buzz Lightyear    34 Space Ranger
+## 3 Andy              NA Toy Owner
+</pre>
 
   <p>We can also write the data frame to SPSS format.</p>
   <program language="r">
@@ -1224,6 +1472,14 @@
       # use read_por() to read older .por files
     </input>
   </program>
+<pre>
+## # A tibble: 3 × 3
+##   Name             Age Occupation  
+##   <chr>          <dbl> <chr>       
+## 1 Woody             40 Sherriff    
+## 2 Buzz Lightyear    34 Space Ranger
+## 3 Andy              NA Toy Owner
+</pre>
 
   <p>Stata format is also supported.</p>
   <program language="r">
@@ -1235,6 +1491,14 @@
       dta_mydf
     </input>
   </program>
+<pre>
+## # A tibble: 3 × 3
+##   Name             Age Occupation  
+##   <chr>          <dbl> <chr>       
+## 1 Woody             40 Sherriff    
+## 2 Buzz Lightyear    34 Space Ranger
+## 3 Andy              NA Toy Owner
+</pre>
 
   <p>When exporting and importing to and from all foreign statistical formats it's important to realize that the conversion will generally be less than perfect. For simple data frames with numerical data, the conversion should work well. However, when there are a lot of missing data, or different types of data that perhaps a given statistical software package may not recognize, it's always important to check the output to make sure it contains all of the information that you expected.</p>
 </subsection>
@@ -1408,6 +1672,15 @@
       read_lines(file = 'https://raw.githubusercontent.com/opencasestudies/ocs-healthexpenditure/master/data/KFF/healthcare-coverage.csv', n_max = 7)
     </input>
   </program>
+<pre>
+## [1] "\"Title: Health Insurance Coverage of the Total Population | The Henry J. Kaiser Family Foundation\""                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+## [2] "\"Timeframe: 2013 - 2016\""                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+## [3] "\"Location\",\"2013__Employer\",\"2013__Non-Group\",\"2013__Medicaid\",\"2013__Medicare\",\"2013__Other Public\",\"2013__Uninsured\",\"2013__Total\",\"2014__Employer\",\"2014__Non-Group\",\"2014__Medicaid\",\"2014__Medicare\",\"2014__Other Public\",\"2014__Uninsured\",\"2014__Total\",\"2015__Employer\",\"2015__Non-Group\",\"2015__Medicaid\",\"2015__Medicare\",\"2015__Other Public\",\"2015__Uninsured\",\"2015__Total\",\"2016__Employer\",\"2016__Non-Group\",\"2016__Medicaid\",\"2016__Medicare\",\"2016__Other Public\",\"2016__Uninsured\",\"2016__Total\""
+## [4] "\"United States\",\"155696900\",\"13816000\",\"54919100\",\"40876300\",\"6295400\",\"41795100\",\"313401200\",\"154347500\",\"19313000\",\"61650400\",\"41896500\",\"5985000\",\"32967500\",\"316159900\",\"155965800\",\"21816500\",\"62384500\",\"43308400\",\"6422300\",\"28965900\",\"318868500\",\"157381500\",\"21884400\",\"62303400\",\"44550200\",\"6192200\",\"28051900\",\"320372000\""                                                                                                                                                                           
+## [5] "\"Alabama\",\"2126500\",\"174200\",\"869700\",\"783000\",\"85600\",\"724800\",\"4763900\",\"2202800\",\"288900\",\"891900\",\"718400\",\"143900\",\"522200\",\"4768000\",\"2218000\",\"291500\",\"911400\",\"719100\",\"174600\",\"519400\",\"4833900\",\"2263800\",\"262400\",\"997000\",\"761200\",\"128800\",\"420800\",\"4834100\""                                                                                                                                                                                                                                      
+## [6] "\"Alaska\",\"364900\",\"24000\",\"95000\",\"55200\",\"60600\",\"102200\",\"702000\",\"345300\",\"26800\",\"130100\",\"55300\",\"37300\",\"100800\",\"695700\",\"355700\",\"22300\",\"128100\",\"60900\",\"47700\",\"90500\",\"705300\",\"324400\",\"20300\",\"145400\",\"68200\",\"55600\",\"96900\",\"710800\""                                                                                                                                                                                                                                                             
+## [7] "\"Arizona\",\"2883800\",\"170800\",\"1346100\",\"842000\",\"N/A\",\"1223000\",\"6603100\",\"2835200\",\"333500\",\"1639400\",\"911100\",\"N/A\",\"827100\",\"6657200\",\"2766500\",\"278400\",\"1711500\",\"949000\",\"189300\",\"844800\",\"6739500\",\"3010700\",\"377000\",\"1468400\",\"1028000\",\"172500\",\"833700\",\"6890200\""
+</pre>
 
   <p>Looks like we don't need the first two lines, so we'll read in the data, starting with the third line of the file:</p>
   <program language="r">
@@ -1418,6 +1691,38 @@
       coverage
     </input>
   </program>
+<pre>
+## Warning: 26 parsing failures.
+## row col   expected    actual                                                                                                              file
+##  53  -- 29 columns 1 columns 'https://raw.githubusercontent.com/opencasestudies/ocs-healthexpenditure/master/data/KFF/healthcare-coverage.csv'
+##  54  -- 29 columns 1 columns 'https://raw.githubusercontent.com/opencasestudies/ocs-healthexpenditure/master/data/KFF/healthcare-coverage.csv'
+##  55  -- 29 columns 1 columns 'https://raw.githubusercontent.com/opencasestudies/ocs-healthexpenditure/master/data/KFF/healthcare-coverage.csv'
+##  56  -- 29 columns 1 columns 'https://raw.githubusercontent.com/opencasestudies/ocs-healthexpenditure/master/data/KFF/healthcare-coverage.csv'
+##  57  -- 29 columns 1 columns 'https://raw.githubusercontent.com/opencasestudies/ocs-healthexpenditure/master/data/KFF/healthcare-coverage.csv'
+## ... ... .......... ......... .................................................................................................................
+## See problems(...) for more details.
+
+## # A tibble: 78 × 29
+##    Location  `2013__Employer` `2013__Non-Grou… `2013__Medicaid` `2013__Medicare`
+##    <chr>                <dbl>            <dbl>            <dbl>            <dbl>
+##  1 United S…        155696900         13816000         54919100         40876300
+##  2 Alabama            2126500           174200           869700           783000
+##  3 Alaska              364900            24000            95000            55200
+##  4 Arizona            2883800           170800          1346100           842000
+##  5 Arkansas           1128800           155600           600800           515200
+##  6 Californ…         17747300          1986400          8344800          3828500
+##  7 Colorado           2852500           426300           697300           549700
+##  8 Connecti…          2030500           126800           532000           475300
+##  9 Delaware            473700            25100           192700           141300
+## 10 District…           324300            30400           174900            59900
+## # … with 68 more rows, and 24 more variables: 2013__Other Public <chr>,
+## #   2013__Uninsured <dbl>, 2013__Total <dbl>, 2014__Employer <dbl>,
+## #   2014__Non-Group <dbl>, 2014__Medicaid <dbl>, 2014__Medicare <dbl>,
+## #   2014__Other Public <chr>, 2014__Uninsured <dbl>, 2014__Total <dbl>,
+## #   2015__Employer <dbl>, 2015__Non-Group <dbl>, 2015__Medicaid <dbl>,
+## #   2015__Medicare <dbl>, 2015__Other Public <chr>, 2015__Uninsured <dbl>,
+## #   2015__Total <dbl>, 2016__Employer <dbl>, 2016__Non-Group <dbl>, …
+</pre>
 
   <p>So, the first few lines of the dataset appear to store information for each state (observation) in the rows and different variables in the columns. What about the final few lines of the file?</p>
   <program language="r">
@@ -1425,6 +1730,29 @@
       tail(coverage, n = 30)
     </input>
   </program>
+
+<pre>
+## # A tibble: 30 × 29
+##    Location  `2013__Employer` `2013__Non-Grou… `2013__Medicaid` `2013__Medicare`
+##    <chr>                <dbl>            <dbl>            <dbl>            <dbl>
+##  1 "Washing…          3541600           309000          1026800           879000
+##  2 "West Vi…           841300            42600           382500           329400
+##  3 "Wiscons…          3154500           225300           907600           812900
+##  4 "Wyoming"           305900            19500            74200            65400
+##  5 "Notes"                 NA               NA               NA               NA
+##  6 "The maj…               NA               NA               NA               NA
+##  7  <NA>                   NA               NA               NA               NA
+##  8 "In this…               NA               NA               NA               NA
+##  9  <NA>                   NA               NA               NA               NA
+## 10 "Data ex…               NA               NA               NA               NA
+## # … with 20 more rows, and 24 more variables: 2013__Other Public <chr>,
+## #   2013__Uninsured <dbl>, 2013__Total <dbl>, 2014__Employer <dbl>,
+## #   2014__Non-Group <dbl>, 2014__Medicaid <dbl>, 2014__Medicare <dbl>,
+## #   2014__Other Public <chr>, 2014__Uninsured <dbl>, 2014__Total <dbl>,
+## #   2015__Employer <dbl>, 2015__Non-Group <dbl>, 2015__Medicaid <dbl>,
+## #   2015__Medicare <dbl>, 2015__Other Public <chr>, 2015__Uninsured <dbl>,
+## #   2015__Total <dbl>, 2016__Employer <dbl>, 2016__Non-Group <dbl>, …
+</pre>
 
   <p>Looks like there's a lot of missing information there at the end of the file due the "Notes" observation. Seems as though Notes were added to the file that are not the actual data. We'll want to only include rows before the value of "Notes" for the <c>Location</c> variable at the end of the file. Using <c>n_max</c> and the <c>==</c> operator, we can specify that we want all the lines up to and including where the Location variable "is equal to" "Notes". Using <c>-1</c> we can also remove the last line, which will be the line that contains "Notes".</p>
   <program language="r">
@@ -1437,6 +1765,24 @@
       tail(coverage)
     </input>
   </program>
+<pre>
+## # A tibble: 6 × 29
+##   Location      `2013__Employer` `2013__Non-Grou… `2013__Medicaid` `2013__Medicare`
+##   <chr>                    <dbl>            <dbl>            <dbl>            <dbl>
+## 1 Vermont                 317700            26200           123400            96600
+## 2 Virginia               4661600           364800           773200           968000
+## 3 Washington             3541600           309000          1026800           879000
+## 4 West Virginia           841300            42600           382500           329400
+## 5 Wisconsin              3154500           225300           907600           812900
+## 6 Wyoming                 305900            19500            74200            65400
+## # … with 24 more variables: 2013__Other Public <chr>, 2013__Uninsured <dbl>,
+## #   2013__Total <dbl>, 2014__Employer <dbl>, 2014__Non-Group <dbl>,
+## #   2014__Medicaid <dbl>, 2014__Medicare <dbl>, 2014__Other Public <chr>,
+## #   2014__Uninsured <dbl>, 2014__Total <dbl>, 2015__Employer <dbl>,
+## #   2015__Non-Group <dbl>, 2015__Medicaid <dbl>, 2015__Medicare <dbl>,
+## #   2015__Other Public <chr>, 2015__Uninsured <dbl>, 2015__Total <dbl>,
+## #   2016__Employer <dbl>, 2016__Non-Group <dbl>, 2016__Medicaid <dbl>, …
+</pre>
 
   <p>Looks much better now! We can then use the <c>glimpse()</c> function of the <c>dplyr</c> package to get a sense of what types of information are stored in our dataset.</p>
   <program language="r">
@@ -1444,6 +1790,39 @@
       glimpse(coverage)
     </input>
   </program>
+<pre>
+## Rows: 52
+## Columns: 29
+## $ Location             <chr> "United States", "Alabama", "Alaska", "Arizona", …
+## $ `2013__Employer`     <dbl> 155696900, 2126500, 364900, 2883800, 1128800, 177…
+## $ `2013__Non-Group`    <dbl> 13816000, 174200, 24000, 170800, 155600, 1986400,…
+## $ `2013__Medicaid`     <dbl> 54919100, 869700, 95000, 1346100, 600800, 8344800…
+## $ `2013__Medicare`     <dbl> 40876300, 783000, 55200, 842000, 515200, 3828500,…
+## $ `2013__Other Public` <chr> "6295400", "85600", "60600", "N/A", "67600", "675…
+## $ `2013__Uninsured`    <dbl> 41795100, 724800, 102200, 1223000, 436800, 559410…
+## $ `2013__Total`        <dbl> 313401200, 4763900, 702000, 6603100, 2904800, 381…
+## $ `2014__Employer`     <dbl> 154347500, 2202800, 345300, 2835200, 1176500, 177…
+## $ `2014__Non-Group`    <dbl> 19313000, 288900, 26800, 333500, 231700, 2778800,…
+## $ `2014__Medicaid`     <dbl> 61650400, 891900, 130100, 1639400, 639200, 961880…
+## $ `2014__Medicare`     <dbl> 41896500, 718400, 55300, 911100, 479400, 4049000,…
+## $ `2014__Other Public` <chr> "5985000", "143900", "37300", "N/A", "82000", "63…
+## $ `2014__Uninsured`    <dbl> 32967500, 522200, 100800, 827100, 287200, 3916700…
+## $ `2014__Total`        <dbl> 316159900, 4768000, 695700, 6657200, 2896000, 387…
+## $ `2015__Employer`     <dbl> 155965800, 2218000, 355700, 2766500, 1293700, 177…
+## $ `2015__Non-Group`    <dbl> 21816500, 291500, 22300, 278400, 200200, 3444200,…
+## $ `2015__Medicaid`     <dbl> 62384500, 911400, 128100, 1711500, 641400, 101381…
+## $ `2015__Medicare`     <dbl> 43308400, 719100, 60900, 949000, 484500, 4080100,…
+## $ `2015__Other Public` <chr> "6422300", "174600", "47700", "189300", "63700", …
+## $ `2015__Uninsured`    <dbl> 28965900, 519400, 90500, 844800, 268400, 2980600,…
+## $ `2015__Total`        <dbl> 318868500, 4833900, 705300, 6739500, 2953000, 391…
+## $ `2016__Employer`     <dbl> 157381500, 2263800, 324400, 3010700, 1290900, 181…
+## $ `2016__Non-Group`    <dbl> 21884400, 262400, 20300, 377000, 252900, 3195400,…
+## $ `2016__Medicaid`     <dbl> 62303400, 997000, 145400, 1468400, 618600, 985380…
+## $ `2016__Medicare`     <dbl> 44550200, 761200, 68200, 1028000, 490000, 4436000…
+## $ `2016__Other Public` <chr> "6192200", "128800", "55600", "172500", "67500", …
+## $ `2016__Uninsured`    <dbl> 28051900, 420800, 96900, 833700, 225500, 3030800,…
+## $ `2016__Total`        <dbl> 320372000, 4834100, 710800, 6890200, 2945300, 391…
+</pre>
 
   <p>This gives an us output with all the variables listed on the far left. Thus essentially the data is rotated from the way it would be shown if we used <c>head()</c> instead of <c>glimpse()</c>. The first few observations for each variable are shown for each variable with a comma separating each observation.</p>
   <p>Looks like we have a whole bunch of numeric variables (indicated by &lt;dbl&gt;), but a few that appear like they <em>should</em> be numeric, but are actually strings (indicated by &lt;chr&gt;). We'll keep this in mind for when we wrangle the data!</p>
@@ -1465,6 +1844,24 @@
       tail(spending)
     </input>
   </program>
+<pre>
+## # A tibble: 6 × 25
+##   Location      `1991__Total He… `1992__Total He… `1993__Total He… `1994__Total He…
+##   <chr>                    <dbl>            <dbl>            <dbl>            <dbl>
+## 1 Vermont                   1330             1421             1522             1625
+## 2 Virginia                 14829            15599            16634            17637
+## 3 Washington               12674            13859            14523            15303
+## 4 West Virginia             4672             5159             5550             5891
+## 5 Wisconsin                12694            13669            14636            15532
+## 6 Wyoming                   1023             1067             1171             1265
+## # … with 20 more variables: 1995__Total Health Spending <dbl>,
+## #   1996__Total Health Spending <dbl>, 1997__Total Health Spending <dbl>,
+## #   1998__Total Health Spending <dbl>, 1999__Total Health Spending <dbl>,
+## #   2000__Total Health Spending <dbl>, 2001__Total Health Spending <dbl>,
+## #   2002__Total Health Spending <dbl>, 2003__Total Health Spending <dbl>,
+## #   2004__Total Health Spending <dbl>, 2005__Total Health Spending <dbl>,
+## #   2006__Total Health Spending <dbl>, 2007__Total Health Spending <dbl>, …
+</pre>
 
   <p>Recall from the introduction, that in data science workflows, we perform multiple steps in evaluating data. To keep this process tidy and reproducible, it is often helpful to save our data in a raw state and in processed states to allow for easy comparison. So let's save our case study 1 data to use in later sections of the course.</p>
   <p>We can use the <c>here</c> package described in the introduction to help us make this process easier. Recall that the <c>here</c> package allows us to quickly reference the directory in which the .Rproj file is located.</p>
@@ -1505,6 +1902,25 @@
       census
     </input>
   </program>
+<pre>
+## # A tibble: 236,844 × 19
+##    SUMLEV REGION DIVISION STATE NAME      SEX ORIGIN  RACE   AGE CENSUS2010POP
+##    <chr>   <dbl>    <dbl> <chr> <chr>   <dbl>  <dbl> <dbl> <dbl>         <dbl>
+##  1 040         3        6 01    Alabama     0      0     1     0         37991
+##  2 040         3        6 01    Alabama     0      0     1     1         38150
+##  3 040         3        6 01    Alabama     0      0     1     2         39738
+##  4 040         3        6 01    Alabama     0      0     1     3         39827
+##  5 040         3        6 01    Alabama     0      0     1     4         39353
+##  6 040         3        6 01    Alabama     0      0     1     5         39520
+##  7 040         3        6 01    Alabama     0      0     1     6         39813
+##  8 040         3        6 01    Alabama     0      0     1     7         39695
+##  9 040         3        6 01    Alabama     0      0     1     8         40012
+## 10 040         3        6 01    Alabama     0      0     1     9         42073
+## # … with 236,834 more rows, and 9 more variables: ESTIMATESBASE2010 <dbl>,
+## #   POPESTIMATE2010 <dbl>, POPESTIMATE2011 <dbl>, POPESTIMATE2012 <dbl>,
+## #   POPESTIMATE2013 <dbl>, POPESTIMATE2014 <dbl>, POPESTIMATE2015 <dbl>,
+## #   POPESTIMATE2016 <dbl>, POPESTIMATE2017 <dbl>
+</pre>
 
 </subsubsection>
 
@@ -1531,12 +1947,50 @@
       # read in suicide data
       suicide_all &lt;- read_csv("https://raw.githubusercontent.com/opencasestudies/ocs-police-shootings-firearm-legislation/master/data/suicide_all.csv")
       suicide_all
-      
+    </input>
+  </program>
+<pre>
+## # A tibble: 51 × 12
+##    Sex        Race      State       Ethnicity `Age Group` `First Year` `Last Year`
+##    <chr>      <chr>     <chr>       <chr>     <chr>              <dbl>       <dbl>
+##  1 Both Sexes All Races Alabama     Both      All Ages            2015        2016
+##  2 Both Sexes All Races Alaska      Both      All Ages            2015        2016
+##  3 Both Sexes All Races Arizona     Both      All Ages            2015        2016
+##  4 Both Sexes All Races Arkansas    Both      All Ages            2015        2016
+##  5 Both Sexes All Races California  Both      All Ages            2015        2016
+##  6 Both Sexes All Races Colorado    Both      All Ages            2015        2016
+##  7 Both Sexes All Races Connecticut Both      All Ages            2015        2016
+##  8 Both Sexes All Races Delaware    Both      All Ages            2015        2016
+##  9 Both Sexes All Races Florida     Both      All Ages            2015        2016
+## 10 Both Sexes All Races Georgia     Both      All Ages            2015        2016
+## # … with 41 more rows, and 5 more variables: Cause of Death <chr>,
+## #   Deaths <dbl>, Population <dbl>, Crude Rate <dbl>, Age-Adjusted Rate <chr>
+</pre>
+
+  <program language="r">
+    <input>
       # read in firearm suicide data
       suicide_firearm &lt;- read_csv("https://raw.githubusercontent.com/opencasestudies/ocs-police-shootings-firearm-legislation/master/data/suicide_firearm.csv")
       suicide_firearm
     </input>
   </program>
+<pre>
+## # A tibble: 51 × 12
+##    Sex        Race      State       Ethnicity `Age Group` `First Year` `Last Year`
+##    <chr>      <chr>     <chr>       <chr>     <chr>              <dbl>       <dbl>
+##  1 Both Sexes All Races Alabama     Both      All Ages            2015        2016
+##  2 Both Sexes All Races Alaska      Both      All Ages            2015        2016
+##  3 Both Sexes All Races Arizona     Both      All Ages            2015        2016
+##  4 Both Sexes All Races Arkansas    Both      All Ages            2015        2016
+##  5 Both Sexes All Races California  Both      All Ages            2015        2016
+##  6 Both Sexes All Races Colorado    Both      All Ages            2015        2016
+##  7 Both Sexes All Races Connecticut Both      All Ages            2015        2016
+##  8 Both Sexes All Races Delaware    Both      All Ages            2015        2016
+##  9 Both Sexes All Races Florida     Both      All Ages            2015        2016
+## 10 Both Sexes All Races Georgia     Both      All Ages            2015        2016
+## # … with 41 more rows, and 5 more variables: Cause of Death <chr>,
+## #   Deaths <dbl>, Population <dbl>, Crude Rate <dbl>, Age-Adjusted Rate <chr>
+</pre>
 
 </subsubsection>
 
@@ -1559,6 +2013,36 @@
       brady
     </input>
   </program>
+<pre>
+## Response [https://raw.githubusercontent.com/opencasestudies/ocs-police-shootings-firearm-legislation/master/data/Brady-State-Scorecard-2015.xlsx]
+##   Date: 2021-09-02 14:01
+##   Status: 200
+##   Content-Type: application/octet-stream
+##   Size: 66.2 kB
+## <ON DISK>  /var/folders/6h/jgypt4153dq7_4nl6g04qtqh0000gn/T//RtmpgTqYzy/file34ed59c09d07.xlsx
+</pre>
+<pre>
+## # A tibble: 116 × 54
+##    `States can recei… `Category Point… `Sub Category P… Points AL    AK    AR   
+##    <chr>                         <dbl>            <dbl>  <dbl> <chr> <chr> <chr>
+##  1 TOTAL STATE POINTS               NA               NA     NA -18   -30   -24  
+##  2 CATEGORY 1:  KEEP…               50               NA     NA <NA>  <NA>  <NA> 
+##  3 BACKGROUND CHECKS…               NA               25     NA AL    AK    AR   
+##  4 Background Checks…               NA               NA     25 <NA>  <NA>  <NA> 
+##  5 Background Checks…               NA               NA     20 <NA>  <NA>  <NA> 
+##  6 Background Checks…               NA               NA      5 <NA>  <NA>  <NA> 
+##  7 Verifiy Legal Pur…               NA               NA     20 <NA>  <NA>  <NA> 
+##  8 TOTAL                            NA               NA     NA 0     0     0    
+##  9 <NA>                             NA               NA     NA <NA>  <NA>  <NA> 
+## 10 OTHER LAWS TO STO…               NA               12     NA AL    AK    AR   
+## # … with 106 more rows, and 47 more variables: AZ <chr>, CA <chr>, CO <chr>,
+## #   CT <chr>, DE <chr>, FL <chr>, GA <chr>, HI <chr>, ID <chr>, IL <chr>,
+## #   IN <chr>, IA <chr>, KS <chr>, KY <chr>, LA <chr>, MA <chr>, MD <chr>,
+## #   ME <chr>, MI <chr>, MN <chr>, MO <chr>, MT <chr>, MS <chr>, NC <chr>,
+## #   ND <chr>, NE <chr>, NH <chr>, NJ <chr>, NM <chr>, NV <chr>, NY <chr>,
+## #   OK <chr>, OH <chr>, OR <chr>, PA <chr>, RI <chr>, SC <chr>, SD <chr>,
+## #   TN <chr>, TX <chr>, UT <chr>, VA <chr>, VT <chr>, WA <chr>, WI <chr>, ...
+</pre>
 
 </subsubsection>
 
@@ -1579,6 +2063,42 @@
       crime
     </input>
   </program>
+<pre>
+## Response [https://raw.githubusercontent.com/opencasestudies/ocs-police-shootings-firearm-legislation/master/data/table_5_crime_in_the_united_states_by_state_2015.xls]
+##   Date: 2021-09-02 14:01
+##   Status: 200
+##   Content-Type: application/octet-stream
+##   Size: 98.3 kB
+## <ON DISK>  /var/folders/6h/jgypt4153dq7_4nl6g04qtqh0000gn/T//RtmpgTqYzy/file34ed618fb492.xls
+</pre>
+<pre>
+## # A tibble: 510 × 14
+##    State   Area       ...3     Population  `Violent\ncrime… `Murder and \nnonne…
+##    <chr>   <chr>      <chr>    <chr>                  <dbl>                <dbl>
+##  1 ALABAMA Metropoli… <NA>     3708033                   NA                   NA
+##  2 <NA>    <NA>       Area ac… 0.97099999…            18122                  283
+##  3 <NA>    <NA>       Estimat… 1                      18500                  287
+##  4 <NA>    Cities ou… <NA>     522241                    NA                   NA
+##  5 <NA>    <NA>       Area ac… 0.97399999…             3178                   32
+##  6 <NA>    <NA>       Estimat… 1                       3240                   33
+##  7 <NA>    Nonmetrop… <NA>     628705                    NA                   NA
+##  8 <NA>    <NA>       Area ac… 0.99399999…             1205                   28
+##  9 <NA>    <NA>       Estimat… 1                       1212                   28
+## 10 <NA>    State Tot… <NA>     4858979                22952                  348
+## # … with 500 more rows, and 8 more variables: Rape
+## (revised
+## definition)2 <dbl>,
+## #   Rape
+## (legacy
+## definition)3 <dbl>, Robbery <dbl>, Aggravated 
+## assault <dbl>,
+## #   Property 
+## crime <dbl>, Burglary <dbl>, Larceny-
+## theft <dbl>,
+## #   Motor 
+## vehicle 
+## theft <dbl>
+</pre>
 
   <p>Note, however, there are slight differences in the code used here, relative to the Brady data. We have to use <c>skip = 3</c> to skip the first three lines of this file. <em>Also</em>, this file has the extension <c>.xls</c> rather than <c>.xlsx</c>, which we specify within the <c>fileext</c> argument.</p>
 </subsubsection>
@@ -1600,6 +2120,37 @@
       land
     </input>
   </program>
+
+<pre>
+## Response [https://raw.githubusercontent.com/opencasestudies/ocs-police-shootings-firearm-legislation/master/data/LND01.xls]
+##   Date: 2021-09-02 14:01
+##   Status: 200
+##   Content-Type: application/octet-stream
+##   Size: 1.57 MB
+## <ON DISK>  /var/folders/6h/jgypt4153dq7_4nl6g04qtqh0000gn/T//RtmpgTqYzy/file34ed6135133.xls
+</pre>
+<pre>
+## # A tibble: 3,198 × 34
+##    Areaname      STCOU LND010190F LND010190D LND010190N1 LND010190N2 LND010200F
+##    <chr>         <chr>      <dbl>      <dbl> <chr>       <chr>            <dbl>
+##  1 UNITED STATES 00000          0   3787425. 0000        0000                 0
+##  2 ALABAMA       01000          0     52423. 0000        0000                 0
+##  3 Autauga, AL   01001          0       604. 0000        0000                 0
+##  4 Baldwin, AL   01003          0      2027. 0000        0000                 0
+##  5 Barbour, AL   01005          0       905. 0000        0000                 0
+##  6 Bibb, AL      01007          0       626. 0000        0000                 0
+##  7 Blount, AL    01009          0       651. 0000        0000                 0
+##  8 Bullock, AL   01011          0       626. 0000        0000                 0
+##  9 Butler, AL    01013          0       778. 0000        0000                 0
+## 10 Calhoun, AL   01015          0       612. 0000        0000                 0
+## # … with 3,188 more rows, and 27 more variables: LND010200D <dbl>,
+## #   LND010200N1 <chr>, LND010200N2 <chr>, LND110180F <dbl>, LND110180D <dbl>,
+## #   LND110180N1 <chr>, LND110180N2 <chr>, LND110190F <dbl>, LND110190D <dbl>,
+## #   LND110190N1 <chr>, LND110190N2 <chr>, LND110200F <dbl>, LND110200D <dbl>,
+## #   LND110200N1 <chr>, LND110200N2 <chr>, LND110210F <dbl>, LND110210D <dbl>,
+## #   LND110210N1 <chr>, LND110210N2 <chr>, LND210190F <dbl>, LND210190D <dbl>,
+## #   LND210190N1 <chr>, LND210190N2 <chr>, LND210200F <dbl>, LND210200D <dbl>, …
+</pre>
 
 </subsubsection>
 
@@ -1626,6 +2177,22 @@
       unemployment
     </input>
   </program>
+  <pre>
+## # A tibble: 54 × 3
+##    State           `2015rate` Rank 
+##    <chr>           <chr>      <chr>
+##  1 "United States" "5.3"      ""   
+##  2 ""              ""         ""   
+##  3 "North Dakota"  "2.8"      "1"  
+##  4 "Nebraska"      "3.0"      "2"  
+##  5 "South Dakota"  "3.1"      "3"  
+##  6 "New Hampshire" "3.4"      "4"  
+##  7 "Hawaii"        "3.6"      "5"  
+##  8 "Utah"          "3.6"      "5"  
+##  9 "Vermont"       "3.6"      "5"  
+## 10 "Minnesota"     "3.7"      "8"  
+## # … with 44 more rows
+</pre>
 
   <p>Then we get the values from each column of the data table. The <c>html_nodes()</c> function acts as a CSS selector. The "table" class returns two tables from the webpage and we specify that we want the second table. From the object <c>out</c> we select the first in the list and store this as a tibble.</p>
   <p>Now that we have gathered all the raw data we will need for our second case study, let's save it using the <c>here</c> package:</p>
