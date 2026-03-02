@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<section xml:id="about-the-authors">
+  <title>About the Authors</title>
+
+  <p>
+    <alert>Carrie Wright</alert> is a Research Associate in the Department of
+    Biostatistics at the Johns Hopkins Bloomberg School of Public Health. She is
+    a faculty member of the Johns Hopkins Data Science Lab, where her work focuses
+    on making data science and bioinformatics more approachable to a variety of
+    audiences. She is also a faculty member of the
+    <url href="https://www.opencasestudies.org/">open case studies project</url>
+    and a co-founder of the
+    <url href="http://research.libd.org/rstatsclub/">LIBD rstats club</url>, a
+    community designed to encourage others to learn more about R programming and
+    statistics. Carrie can be found on Twitter at
+    <url href="https://twitter.com/mirnas22">mirnas22</url> and on GitHub under
+    the user name
+    <url href="https://github.com/carriewright11">carriewright11</url>.
+  </p>
+
+  <p>
+    <alert>Shannon E. Ellis</alert> is an Assistant Teaching Professor of
+    <url href="http://www.cogsci.ucsd.edu">Cognitive Science</url> at the
+    <url href="https://ucsd.edu">University of California San Diego</url>. She
+    teaches data science to thousands of undergraduates each year and is a
+    developer of the
+    <url href="https://www.clouddatascience.org">Cloud-Based Data Science</url>
+    Course Set on <url href="https://leanpub.com/universities/set/jhu/cloud-based-data-science">Leanpub</url>.
+    Shannon can be found on Twitter at
+    <url href="https://twitter.com/Shannon_E_Ellis">Shannon_E_Ellis</url> and on
+    GitHub under the user name
+    <url href="https://github.com/shanellis">ShanEllis</url>.
+  </p>
+
+  <p>
+    <alert>Stephanie C. Hicks</alert> is an Assistant Professor of
+    <url href="https://www.jhsph.edu/departments/biostatistics">Biostatistics</url>
+    at the
+    <url href="https://www.jhsph.edu">Johns Hopkins Bloomberg School of Public Health</url>.
+    She is also a faculty member of the
+    <url href="http://jhudatascience.org">Johns Hopkins Data Science Lab</url>,
+    co-host of
+    <url href="https://twitter.com/CorrespondAuth">The Corresponding Author</url>
+    podcast and co-founder of
+    <url href="https://rladies-baltimore.github.io">R-Ladies Baltimore</url>.
+    Stephanie can be found on Twitter and GitHub under the user name
+    <url href="https://twitter.com/stephaniehicks">stephaniehicks</url>.
+  </p>
+
+  <p>
+    <alert>Roger D. Peng</alert> is a Professor of Biostatistics at the Johns
+    Hopkins Bloomberg School of Public Health. He is also a Co-Founder of the
+    <url href="http://www.coursera.org/specialization/jhudatascience/1">Johns Hopkins Data Science Specialization</url>,
+    which has enrolled over 5 million students, the
+    <url href="https://www.coursera.org/specializations/executive-data-science">Johns Hopkins Executive Data Science Specialization</url>,
+    the <url href="http://simplystatistics.org/">Simply Statistics blog</url>
+    where he writes about statistics and data science for the general public,
+    and the
+    <url href="https://soundcloud.com/nssd-podcast">Not So Standard Deviations</url>
+    podcast. Roger can be found on Twitter and GitHub under the user name
+    <url href="https://twitter.com/rdpeng">rdpeng</url>.
+  </p>
+
+</section>
