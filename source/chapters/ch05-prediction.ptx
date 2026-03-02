@@ -636,6 +636,12 @@ dplyr::select_if(is.numeric) %&gt;%
   chart.Correlation()
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/073.png">
+    <description>073</description>
+  </image>
+  <caption>073</caption>
+</figure>
 <program language="r">
   <input>
 library(GGally)
@@ -649,6 +655,12 @@ dplyr::select_if(is.numeric) %&gt;%
 ##   method from   
 ##   +.gg   ggplot2
 </pre>
+<figure>
+  <image source="images/ghimage/074.png">
+    <description>074</description>
+  </image>
+  <caption>074</caption>
+</figure>
 <program language="r">
   <input>
 library(GGally)
@@ -657,6 +669,12 @@ dplyr::select_if(is.numeric) %&gt;%
     ggpairs()
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/075.png">
+    <description>075</description>
+  </image>
+  <caption>075</caption>
+</figure>
 <p>
 We can see from these plots that the <c>awake</c> variable and the <c>sleep_total</c> variable are perfectly correlated. This becomes important for choosing what to include in models when we try to perform prediction or inference analyses.
 </p>
@@ -675,6 +693,12 @@ ggplot(df, aes(x = bodywt, y = brainwt)) +
 
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/076.png">
+    <description>076</description>
+  </image>
+  <caption>076</caption>
+</figure>
 <p>
 Clearly, including the elephant data points makes it hard to look at the other data points, it is possible that these points are driving the positive correlation that we get when we use all the data. Here is a plot of the relationship between these to variables excluding the elephant data and the very low body weight organisms:
 </p>
@@ -694,6 +718,12 @@ cor.test(pull(df %&gt;% filter(bodywt&lt;2000 &amp; bodywt &gt;1),bodywt),
 
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/077.png">
+    <description>077</description>
+  </image>
+  <caption>077</caption>
+</figure>
 <pre>
 ## `geom_smooth()` using formula = 'y ~ x'
 ## 
@@ -734,6 +764,12 @@ We can also see it in our histogram of this variable:
 hist(pull(df, brainwt))
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/078.png">
+    <description>078</description>
+  </image>
+  <caption>078</caption>
+</figure>
 <p>
 Let's see which organism this is:
 </p>
@@ -769,6 +805,12 @@ cor.test(pull(df %&gt;% filter(bodywt&lt;2000 &amp; bodywt &gt;1 &amp; brainwt&l
          pull(df %&gt;%filter(bodywt&lt;2000 &amp; bodywt &gt;1 &amp; brainwt&lt;1),brainwt))
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/079.png">
+    <description>079</description>
+  </image>
+  <caption>079</caption>
+</figure>
 <p>
 We can see from these plots that the <c>brainwt</c> variable seems to have a relationship (correlation value = 0.79)  with <c>bodywt</c> and it increases with the <c>bodywt</c> variable, however this relationship is less strong when humans are included (correlation value = 0.46). This information would be important to keep in mind when trying to model this data to make inference or predictions about the animals included.
 </p>
@@ -1174,6 +1216,12 @@ trees %&gt;%
   geom_point(aes(Girth, Height))
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/080.png">
+    <description>080</description>
+  </image>
+  <caption>080</caption>
+</figure>
 <p>
 From the looks of this plot, the relationship looks approximately linear, but to visually make this a little easier, we'll add a line of best first to the plot.
 </p>
@@ -1188,6 +1236,12 @@ trees %&gt;%
 <pre>
 ## `geom_smooth()` using formula = 'y ~ x'
 </pre>
+<figure>
+  <image source="images/ghimage/081.png">
+    <description>081</description>
+  </image>
+  <caption>081</caption>
+</figure>
 <p>
 On this graph, the relationship looks approximately linear and the variance (distance from points to the line) is constant across the data. Given this, it's appropriate to use linear regression for these data.
 </p>
@@ -1218,6 +1272,12 @@ par(mfrow = c(2, 2))
 plot(fit)
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/082.png">
+    <description>082</description>
+  </image>
+  <caption>082</caption>
+</figure>
 <p>
 This generates four plots:
 </p>
@@ -1252,6 +1312,12 @@ ggplot(fit, aes(fit$residuals)) +
   geom_histogram(bins = 5)
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/083.png">
+    <description>083</description>
+  </image>
+  <caption>083</caption>
+</figure>
 <p>
 The QQ Plot and the histogram of the residuals will always give the same answer. Here, we see that with our limited sample size, we have fairly good Normally distributed residuals; and, the points do not fall wildly far from the dotted line.
 </p>
@@ -1427,6 +1493,12 @@ ggplot(mtcars, aes(wt, mpg)) +
   geom_point()
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/084.png">
+    <description>084</description>
+  </image>
+  <caption>084</caption>
+</figure>
 <p>
 From the scatterplot, the relationship looks approximately linear and the variance looks constant. Thus, we could model this using linear regression:
 </p>
@@ -1458,6 +1530,12 @@ ggplot(mtcars, aes(wt, mpg)) +
   facet_wrap(~vs)
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/085.png">
+    <description>085</description>
+  </image>
+  <caption>085</caption>
+</figure>
 <p>
 From this plot, we can see that V-shaped engines (<c>vs</c>= 0), tend to be heavier and get fewer miles per gallon while straight engines (<c>vs</c> = 1) tend to weigh less and get more miles per gallon. Importantly, however, we see that a car that weighs 3000 points (<c>wt</c> = 3) and has a V-Shaped engine (<c>vs</c> = 0) gets fewer miles per gallon than a car of the same weight with a straight engine (<c>vs</c> = 1), suggesting that simply modeling a linear relationship between weight and mpg is not appropriate.
 </p>
@@ -1562,6 +1640,12 @@ ggplot(as.data.frame(soda_ounces))+
   geom_histogram(aes(soda_ounces), bins = 10)
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/086.png">
+    <description>086</description>
+  </image>
+  <caption>086</caption>
+</figure>
 <p>
 Here, we see that the data are approximately normally distributed.
 </p>
@@ -1802,6 +1886,12 @@ bootstrap_means %&gt;%
   visualize()
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/087.png">
+    <description>087</description>
+  </image>
+  <caption>087</caption>
+</figure>
 </subsection>
 </section>
 <section xml:id="sec-prediction-modeling">
@@ -2930,6 +3020,12 @@ wf_fitted_values %&gt;%
 <pre>
 ## `geom_smooth()` using formula = 'y ~ x'
 </pre>
+<figure>
+  <image source="images/ghimage/088.png">
+    <description>088</description>
+  </image>
+  <caption>088</caption>
+</figure>
 <p>
 We can see that overall our model predicted the sepal length fairly well, as the predicted values are fairly close to the true values. We can also see that the predictions were similar to the truth for the full range of true sepal length values.
 </p>
@@ -4113,6 +4209,12 @@ corrplot::corrplot(PM_cor, tl.cex = 0.5)
 <pre>
 ## corrplot 0.95 loaded
 </pre>
+<figure>
+  <image source="images/ghimage/089.png">
+    <description>089</description>
+  </image>
+  <caption>089</caption>
+</figure>
 <p>
 We can see that the development variables (<c>imp</c>) variables are correlated with each other as we might expect. We also see that the road density variables seem to be correlated with each other, and the emission variables seem to be correlated with each other.
 </p>
@@ -4885,6 +4987,12 @@ wf_fitted_values %&gt;%
   ylab("predicted outcome values")
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/090.png">
+    <description>090</description>
+  </image>
+  <caption>090</caption>
+</figure>
 <p>
 OK, so our range of the predicted outcome values appears to be smaller than the real values. We could probably do a bit better.
 </p>
@@ -5225,6 +5333,12 @@ RF_wflow_fit %&gt;%
 
   </input>
 </program>
+<figure>
+  <image source="images/ghimage/091.png">
+    <description>091</description>
+  </image>
+  <caption>091</caption>
+</figure>
 <p>
 Interesting! In the previous model the CMAQ values and the state where the monitor was located were also the top two most important, however predictors about education levels of the communities where the monitor was located was among the top most important. Now we see that population density and proximity to sources of emissions and roads are among the top ten.
 </p>
@@ -5568,6 +5682,12 @@ test_predictions %&gt;%
 <pre>
 ## `geom_smooth()` using formula = 'y ~ x'
 </pre>
+<figure>
+  <image source="images/ghimage/092.png">
+    <description>092</description>
+  </image>
+  <caption>092</caption>
+</figure>
 <p>
 Great!
 </p>
