@@ -7,22 +7,9 @@
   <book xml:id="tidyversecourse">
     <title>Tidyverse Skills for Data Science</title>
 
-    <frontmatter xml:id="frontmatter">
-      <titlepage>
-        <author>
-          <personname>Carrie Wright</personname>
-        </author>
-        <author>
-          <personname>Shannon E. Ellis</personname>
-        </author>
-        <author>
-          <personname>Stephanie C. Hicks</personname>
-        </author>
-        <author>
-          <personname>Roger D. Peng</personname>
-        </author>
-      </titlepage>
-    </frontmatter>
+    <!-- First a frontmatter for prefaces and such. Maybe comment  -->
+    <!-- out for now and write this when the book is more complete -->
+    <xi:include href="./meta_frontmatter.ptx" />
 
     <xi:include href="chapters/ch01-intro.ptx" />
     <xi:include href="chapters/ch02-get-data.ptx" />
