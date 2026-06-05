@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<frontmatter xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="meta-front">
-  <bibinfo>
-    <author>
-      <personname>NAME</personname>
-      <website>
-      </website>
-    </author>
-    <author>
-      <personname>NAME</personname>
-      <website>
-      </website>
-    </author>
-    <date>
-      <today/>
-    </date>
-  </bibinfo>
 
-  <titlepage>
-    <titlepage-items/>
-  </titlepage>
+<frontmatter xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="meta-front">
+    <frontmatter xml:id="frontmatter">
+      <titlepage>
+        <author>
+          <personname>Carrie Wright</personname>
+        </author>
+        <author>
+          <personname>Shannon E. Ellis</personname>
+        </author>
+        <author>
+          <personname>Stephanie C. Hicks</personname>
+        </author>
+        <author>
+          <personname>Roger D. Peng</personname>
+        </author>
+      </titlepage>
 
 <preface xml:id="preface">
   <title>Preface</title>
