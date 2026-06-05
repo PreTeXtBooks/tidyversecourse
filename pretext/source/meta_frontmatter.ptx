@@ -50,7 +50,6 @@
       The original GitHub repository for the book source is at
       <url href="https://github.com/jhudsl/tidyversecourse">github.com/jhudsl/tidyversecourse</url>.
     </p>
-    </p>
 
     <p>
       This PreTeXt edition was prepared by
@@ -69,18 +68,6 @@
       Attribution-NonCommercial 3.0 License</url>.
     </p>
   </preface>
-
-  <p>
-    This book was originally written using R Markdown and
-    <url href="https://bookdown.org/">bookdown</url>. This version has been
-    converted to <url href="https://pretextbook.org/">PreTeXt</url>, a
-    markup language for authoring books and articles with a focus on
-    accessibility and multiple output formats. If you encounter any issues
-    with this PreTeXt version, please open an issue on the
-    <url href="https://github.com/PreTeXtBooks/tidyversecourse">GitHub
-    repository</url>.
-  </p>
-</preface>
 
   <attribution>
     <line>Carrie Wright, Shannon E. Ellis, Stephanie C. Hicks, and Roger D. Peng</line>
