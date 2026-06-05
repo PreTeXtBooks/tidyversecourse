@@ -1,47 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<frontmatter xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="meta-front">
-    <frontmatter xml:id="frontmatter">
-      <titlepage>
-        <author>
-          <personname>Carrie Wright</personname>
-        </author>
-        <author>
-          <personname>Shannon E. Ellis</personname>
-        </author>
-        <author>
-          <personname>Stephanie C. Hicks</personname>
-        </author>
-        <author>
-          <personname>Roger D. Peng</personname>
-        </author>
-      </titlepage>
+<frontmatter xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="frontmatter">
+  <titlepage>
+    <author>
+      <personname>Carrie Wright</personname>
+    </author>
+    <author>
+      <personname>Shannon E. Ellis</personname>
+    </author>
+    <author>
+      <personname>Stephanie C. Hicks</personname>
+    </author>
+    <author>
+      <personname>Roger D. Peng</personname>
+    </author>
+  </titlepage>
 
-<preface xml:id="preface">
-  <title>Preface</title>
+  <preface xml:id="preface">
+    <title>Preface</title>
+    <p>
+      This book demonstrates how to use the Tidyverse collection of packages for
+      doing data science in R. The <url href="https://www.tidyverse.org/">Tidyverse</url>
+      is an opinionated collection of R packages designed for data science. All
+      packages share an underlying design philosophy, grammar, and data structures.
+    </p>
+    <p>
+      In this book we cover the simple idea of <q>tidy data</q> and how this idea
+      serves to organize data for analysis and modeling. We cover the data science
+      project life cycle and the ecosystem of Tidyverse R packages that can be
+      used at each step: importing data, tidying data, exploring and visualizing
+      data, and building prediction models. We assume familiarity with the R
+      programming language. If you are not yet familiar with R, we suggest you
+      first complete <url href="https://www.coursera.org/learn/r-programming">R
+      Programming</url> before returning to complete this book.
+    </p>
+  </preface>
 
-  <p>
-    This book demonstrates how to use the Tidyverse collection of packages for
-    doing data science in R. The <url href="https://www.tidyverse.org/">Tidyverse</url>
-    is an opinionated collection of R packages designed for data science. All
-    packages share an underlying design philosophy, grammar, and data structures.
-  </p>
-
-  <p>
-    In this book we cover the simple idea of <q>tidy data</q> and how this idea
-    serves to organize data for analysis and modeling. We cover the data science
-    project life cycle and the ecosystem of Tidyverse R packages that can be
-    used at each step: importing data, tidying data, exploring and visualizing
-    data, and building prediction models. We assume familiarity with the R
-    programming language. If you are not yet familiar with R, we suggest you
-    first complete <url href="https://www.coursera.org/learn/r-programming">R
-    Programming</url> before returning to complete this book.
-  </p>
-</preface>
-
-<preface xml:id="preface-ptx-version">
+  <preface xml:id="preface-ptx-version">
     <title>Note on This PreTeXt Edition</title>
-
     <p>
       This is a <url href="https://pretextbook.org/" visual="pretextbook.org">PreTeXt</url>
       conversion of <em>Tidyverse Skills for Data Science</em>, originally written by
@@ -50,18 +46,15 @@
       The original GitHub repository for the book source is at
       <url href="https://github.com/jhudsl/tidyversecourse">github.com/jhudsl/tidyversecourse</url>.
     </p>
-
     <p>
       This PreTeXt edition was prepared by
       <url href="https://github.com/PreTeXtBooks/tidyversecourse">the PreTeXtBooks project</url>
       to make the content available in the PreTeXt format, enabling accessible and structured
       output in HTML, PDF, and other formats. All prose, code examples, figures, and mathematical content are intended to be 
-  faithful reproductions of the original work, though occasional typographical errors 
-  may have been introduced in the conversion process. Report any issues to our
-  <url href = "https://github.com/PreTeXtBooks/tidyversecourse/issues">GitHub Issues Page.</url>
-
+      faithful reproductions of the original work, though occasional typographical errors 
+      may have been introduced in the conversion process. Report any issues to our
+      <url href="https://github.com/PreTeXtBooks/tidyversecourse/issues">GitHub Issues Page.</url>
     </p>
-
     <p>
       The original work is licensed under a
       <url href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons
