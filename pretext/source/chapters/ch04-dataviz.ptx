@@ -2621,7 +2621,7 @@ mtcars %>%
 </input>
 </program>
 <figure>
-  <image source="images/dataviz-unnamed-chunk-90-1.gif">
+  <image source="images/dataviz-unnamed-chunk-90-1.png">
     <description>Animated boxplot of cylinders vs mpg transitioning between gear levels using transition_manual</description>
   </image>
   <caption>Animated boxplot using <c>transition_manual()</c>: transitioning by gear</caption>
@@ -2648,7 +2648,7 @@ anim
 </input>
 </program>
 <figure>
-  <image source="images/dataviz-unnamed-chunk-91-1.gif">
+  <image source="images/dataviz-unnamed-chunk-91-1.png">
     <description>Animated boxplot of cylinders vs mpg using transition_states by gear</description>
   </image>
   <caption>Animated boxplot using <c>transition_states()</c>: transitioning by gear</caption>
@@ -2670,7 +2670,7 @@ anim
 </input>
 </program>
 <figure>
-  <image source="images/dataviz-unnamed-chunk-92-1.gif">
+  <image source="images/dataviz-unnamed-chunk-92-1.png">
     <description>Animated boxplot with title label showing the current gear level</description>
   </image>
   <caption>Animated boxplot with gear label in title</caption>
@@ -2692,7 +2692,7 @@ anim
 </input>
 </program>
 <figure>
-  <image source="images/dataviz-unnamed-chunk-93-1.gif">
+  <image source="images/dataviz-unnamed-chunk-93-1.png">
     <description>Animated boxplot with cubic-in-out easing for a smoother start and end</description>
   </image>
   <caption>Animated boxplot with <c>ease_aes('cubic-in-out')</c></caption>
@@ -2716,7 +2716,7 @@ anim
 </input>
 </program>
 <figure>
-  <image source="images/dataviz-unnamed-chunk-94-1.gif">
+  <image source="images/dataviz-unnamed-chunk-94-1.png">
     <description>Animated boxplot with fade-in entrance and shrink exit transitions</description>
   </image>
   <caption>Animated boxplot with <c>enter_fade()</c> and <c>exit_shrink()</c></caption>
@@ -2760,7 +2760,7 @@ scat
 </input>
 </program>
 <figure>
-  <image source="images/dataviz-unnamed-chunk-96-1.gif">
+  <image source="images/dataviz-unnamed-chunk-96-1.png">
     <description>Animated scatterplot of quarter-mile time vs mpg transitioning by gear with gear label in title</description>
   </image>
   <caption>Animated scatterplot using <c>transition_states()</c>: transitioning by gear</caption>
@@ -2782,7 +2782,7 @@ scat +
 </input>
 </program>
 <figure>
-  <image source="images/dataviz-unnamed-chunk-97-1.gif">
+  <image source="images/dataviz-unnamed-chunk-97-1.png">
     <description>Animated scatterplot with view_step allowing axes to adjust between gear levels</description>
   </image>
   <caption>Animated scatterplot with <c>view_step()</c>: adjusting positional scales by gear</caption>
@@ -2814,7 +2814,7 @@ gap
 </input>
 </program>
 <figure>
-  <image source="images/dataviz-unnamed-chunk-98-1.gif">
+  <image source="images/dataviz-unnamed-chunk-98-1.png">
     <description>Animated scatterplot of GDP per capita vs life expectancy using the gapminder dataset, animated over time by year and faceted by continent</description>
   </image>
   <caption>Animated gapminder plot: GDP per capita vs life expectancy over time</caption>
@@ -2837,7 +2837,7 @@ gap +
 </input>
 </program>
 <figure>
-  <image source="images/dataviz-unnamed-chunk-99-1.gif">
+  <image source="images/dataviz-unnamed-chunk-99-1.png">
     <description>Animated gapminder scatterplot with shadow trail showing historical data points from previous frames</description>
   </image>
   <caption>Animated gapminder plot with <c>shadow_trail()</c>: showing data trail over time</caption>

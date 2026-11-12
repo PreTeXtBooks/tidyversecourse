@@ -579,7 +579,7 @@ dplyr::filter(df, bodywt == 6654)
 ##   name    genus vore  order conservation sleep_total sleep_rem sleep_cycle awake
 ##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
 ## 1 Africa… Loxo… herbi Prob… vu                   3.3        NA          NA  20.7
-## # ℹ 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+## # i 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
 </pre>
 <p>
 Ah! looks like it is an elephant, that makes sense.
@@ -603,7 +603,7 @@ dplyr::filter(df, bodywt &gt; 2000)
 ##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
 ## 1 Asian … Elep… herbi Prob… en                   3.9        NA          NA  20.1
 ## 2 Africa… Loxo… herbi Prob… vu                   3.3        NA          NA  20.7
-## # ℹ 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+## # i 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
 </pre>
 <p>
 Looks like both data points are for elephants.
@@ -787,7 +787,7 @@ df %&gt;%
 ## 1 Asian … Elep… herbi Prob… en                   3.9      NA          NA    20.1
 ## 2 Human   Homo  omni  Prim… &lt;NA&gt;                 8         1.9         1.5  16  
 ## 3 Africa… Loxo… herbi Prob… vu                   3.3      NA          NA    20.7
-## # ℹ 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
+## # i 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;
 </pre>
 <p>
 It is humans! Let's see what the plot looks like without humans:
@@ -1790,7 +1790,7 @@ soda_ounces
 ##  8  12.0
 ##  9  12.0
 ## 10  12.0
-## # ℹ 90 more rows
+## # i 90 more rows
 </pre>
 <p>
 Now we will use the <c>specify()</c> function of the <c>infer</c> package to indicate that the <c>value</c> variable is our response variable that will be used in our hypothesis. This is as you might expect more important when we have multiple variables in our data. Then we can specify our null hypothesis with the <c>hypothesize()</c> function.
@@ -2673,7 +2673,7 @@ glimpse(baked_test_pm)
 ##   "Cochise", "Coconino", "Mohave", "Arkansas", "Crittenden", "Garland",
 ##   "Phillips", "Pope", "Calaveras", "Humboldt", "Inyo", "Merced", "Monterey",
 ##   "San Benito", …, "Laramie", and "Sublette".
-## ℹ Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()`
+## i Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()`
 ##   to handle unseen values.
 ## Rows: 292
 ## Columns: 37
@@ -2718,7 +2718,7 @@ glimpse(baked_test_pm)
 ##   "Cochise", "Coconino", "Mohave", "Arkansas", "Crittenden", "Garland",
 ##   "Phillips", "Pope", "Calaveras", "Humboldt", "Inyo", "Merced", "Monterey",
 ##   "San Benito", …, "Laramie", and "Sublette".
-## ℹ Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()`
+## i Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()`
 ##   to handle unseen values.
 ## Rows: 292
 ## Columns: 38
@@ -2866,16 +2866,16 @@ iris_reg_wflow
   </input>
 </program>
 <pre>
-## ══ Workflow ════════════════════════════════════════════════════════════════════
+## == Workflow ====================================================================
 ## Preprocessor: Recipe
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────
+## -- Preprocessor ----------------------------------------------------------------
 ## 1 Recipe Step
 ## 
 ## • step_dummy()
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────
+## -- Model -----------------------------------------------------------------------
 ## Linear Regression Model Specification (regression)
 ## 
 ## Computational engine: lm
@@ -2893,16 +2893,16 @@ iris_reg_wflow_fit
   </input>
 </program>
 <pre>
-## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## == Workflow [trained] ==========================================================
 ## Preprocessor: Recipe
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────
+## -- Preprocessor ----------------------------------------------------------------
 ## 1 Recipe Step
 ## 
 ## • step_dummy()
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────
+## -- Model -----------------------------------------------------------------------
 ## 
 ## Call:
 ## stats::lm(formula = ..y ~ ., data = data)
@@ -2938,7 +2938,7 @@ predict(iris_reg_wflow_fit, new_data = training_iris)
 </program>
 <pre>
 FALSE Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.
-FALSE ℹ Please use `extract_fit_parsnip()` instead.
+FALSE i Please use `extract_fit_parsnip()` instead.
 FALSE This warning is displayed once every 8 hours.
 FALSE Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 FALSE generated.
@@ -3343,14 +3343,14 @@ iris_cat_wflow
   </input>
 </program>
 <pre>
-## ══ Workflow ════════════════════════════════════════════════════════════════════
+## == Workflow ====================================================================
 ## Preprocessor: Recipe
 ## Model: decision_tree()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────
+## -- Preprocessor ----------------------------------------------------------------
 ## 0 Recipe Steps
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────
+## -- Model -----------------------------------------------------------------------
 ## Decision Tree Model Specification (classification)
 ## 
 ## Computational engine: rpart
@@ -3374,14 +3374,14 @@ wf_fit_cat &lt;- iris_cat_wflow_fit %&gt;%
   </input>
 </program>
 <pre>
-## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## == Workflow [trained] ==========================================================
 ## Preprocessor: Recipe
 ## Model: decision_tree()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────
+## -- Preprocessor ----------------------------------------------------------------
 ## 0 Recipe Steps
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────
+## -- Model -----------------------------------------------------------------------
 ## n= 100 
 ## 
 ## node), split, n, loss, yval, (yprob)
@@ -3521,8 +3521,8 @@ resample_fit &lt;- tune::fit_resamples(iris_cat_wflow, vfold_iris)
 ##   - Warning(s) x1: ! There are new levels in `county`: "Oconee", "Cobb", "Vigo", "Ka...
 ##   - Warning(s) x1: ! There are new levels in `county`: "Stark", "St. Lucie", "Ashlan...
 ##   - Warning(s) x1: ! There are new levels in `county`: "Yuma", "Flathead", "Grafton"...
-##   - Warning(s) x1: ! There are new levels in `state`: "Maine" and "North Dakota". ℹ ...
-##   - Warning(s) x1: ! There are new levels in `state`: "Nevada". ℹ Consider using ste...
+##   - Warning(s) x1: ! There are new levels in `state`: "Maine" and "North Dakota". i ...
+##   - Warning(s) x1: ! There are new levels in `state`: "Nevada". i Consider using ste...
 ##   - Warning(s) x1: the standard deviation is zero, The correlation matrix has missin...
 ##   - Warning(s) x1: the standard deviation is zero, The correlation matrix has missin...
 ##   - Warning(s) x3: the standard deviation is zero, The correlation matrix has missin...
@@ -4175,7 +4175,7 @@ pm %&gt;%
 ##  8 District Of Columbia
 ##  9 Florida             
 ## 10 Georgia             
-## # ℹ 39 more rows
+## # i 39 more rows
 </pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-evaluate-correlation">
@@ -4236,7 +4236,7 @@ pm_split
   </input>
 </program>
 <pre>
-## ── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──
+## -- Attaching packages -------------------------------------- tidymodels 1.3.0 --
 ## &lt;Training/Testing/Total&gt;
 ## &lt;584/292/876&gt;
 </pre>
@@ -4600,8 +4600,8 @@ pm %&gt;%
 ##  8 1073.1005 12.4  1073   33.3 -87.0 Alabama Jeffer… Not … 10.2  35111 166239542
 ##  9 1073.1009 11.1  1073   33.5 -87.3 Alabama Jeffer… Not …  8.16 35444 385566685
 ## 10 1073.101  13.1  1073   33.5 -86.5 Alabama Jeffer… In a…  9.30 35094 148994881
-## # ℹ 866 more rows
-## # ℹ 39 more variables: zcta_pop &lt;dbl&gt;, imp_a500 &lt;dbl&gt;, imp_a1000 &lt;dbl&gt;,
+## # i 866 more rows
+## # i 39 more variables: zcta_pop &lt;dbl&gt;, imp_a500 &lt;dbl&gt;, imp_a1000 &lt;dbl&gt;,
 ## #   imp_a5000 &lt;dbl&gt;, imp_a10000 &lt;dbl&gt;, imp_a15000 &lt;dbl&gt;, county_area &lt;dbl&gt;,
 ## #   county_pop &lt;dbl&gt;, log_dist_to_prisec &lt;dbl&gt;, log_pri_length_5000 &lt;dbl&gt;,
 ## #   log_pri_length_10000 &lt;dbl&gt;, log_pri_length_15000 &lt;dbl&gt;,
@@ -4747,18 +4747,18 @@ PM_wflow
   </input>
 </program>
 <pre>
-## ══ Workflow ════════════════════════════════════════════════════════════════════
+## == Workflow ====================================================================
 ## Preprocessor: Recipe
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────
+## -- Preprocessor ----------------------------------------------------------------
 ## 3 Recipe Steps
 ## 
 ## • step_dummy()
 ## • step_corr()
 ## • step_nzv()
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────
+## -- Model -----------------------------------------------------------------------
 ## Linear Regression Model Specification (regression)
 ## 
 ## Computational engine: lm
@@ -4778,18 +4778,18 @@ PM_wflow_fit
 <pre>
 ## Warning in stats::cor(x, use = use, method = method): the standard deviation is
 ## zero
-## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## == Workflow [trained] ==========================================================
 ## Preprocessor: Recipe
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────
+## -- Preprocessor ----------------------------------------------------------------
 ## 3 Recipe Steps
 ## 
 ## • step_dummy()
 ## • step_corr()
 ## • step_nzv()
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────
+## -- Model -----------------------------------------------------------------------
 ## 
 ## Call:
 ## stats::lm(formula = ..y ~ ., data = data)
@@ -4869,7 +4869,7 @@ wflowoutput &lt;- PM_wflow_fit %&gt;%
 ##  8 imp_a15000  -3.07e- 3  1.16e- 2    -0.263 0.792        
 ##  9 county_area -2.32e-11  1.97e-11    -1.18  0.238        
 ## 10 county_pop  -7.58e- 8  9.29e- 8    -0.815 0.415        
-## # ℹ 26 more rows
+## # i 26 more rows
 </pre>
 <p>
 We have fit our model on our training data, which means we have created a model to predict values of air pollution based on the predictors that we have included. Yay!
@@ -4969,7 +4969,7 @@ values_pred_train
 ##  8 10.3   6.98 6065  Riverside        6065.5001 
 ##  9  8.74  6.61 44003 Kent             44003.0002
 ## 10 10.0  11.6  37111 McDowell         37111.0004
-## # ℹ 574 more rows
+## # i 574 more rows
 </pre>
 </subsubsection>
 <subsubsection xml:id="subsubsec-visualizing-model-performance">
@@ -5260,11 +5260,11 @@ RF_wflow
   </input>
 </program>
 <pre>
-## ══ Workflow ════════════════════════════════════════════════════════════════════
+## == Workflow ====================================================================
 ## Preprocessor: Recipe
 ## Model: rand_forest()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────
+## -- Preprocessor ----------------------------------------------------------------
 ## 6 Recipe Steps
 ## 
 ## • step_novel()
@@ -5274,7 +5274,7 @@ RF_wflow
 ## • step_corr()
 ## • step_nzv()
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────
+## -- Model -----------------------------------------------------------------------
 ## Random Forest Model Specification (regression)
 ## 
 ## Main Arguments:
@@ -5292,11 +5292,11 @@ RF_wflow_fit &lt;- parsnip::fit(RF_wflow, data = train_pm)
   </input>
 </program>
 <pre>
-## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## == Workflow [trained] ==========================================================
 ## Preprocessor: Recipe
 ## Model: rand_forest()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────
+## -- Preprocessor ----------------------------------------------------------------
 ## 6 Recipe Steps
 ## 
 ## • step_novel()
@@ -5306,7 +5306,7 @@ RF_wflow_fit &lt;- parsnip::fit(RF_wflow, data = train_pm)
 ## • step_corr()
 ## • step_nzv()
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────
+## -- Model -----------------------------------------------------------------------
 ## 
 ## Call:
 ##  randomForest(x = maybe_data_frame(x), y = y, mtry = min_cols(~10,      x), nodesize = min_rows(~4, x)) 
@@ -5439,11 +5439,11 @@ RF_tune_wflow
   </input>
 </program>
 <pre>
-## ══ Workflow ════════════════════════════════════════════════════════════════════
+## == Workflow ====================================================================
 ## Preprocessor: Recipe
 ## Model: rand_forest()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────
+## -- Preprocessor ----------------------------------------------------------------
 ## 6 Recipe Steps
 ## 
 ## • step_novel()
@@ -5453,7 +5453,7 @@ RF_tune_wflow
 ## • step_corr()
 ## • step_nzv()
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────
+## -- Model -----------------------------------------------------------------------
 ## Random Forest Model Specification (regression)
 ## 
 ## Main Arguments:
