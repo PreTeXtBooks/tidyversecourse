@@ -1,0 +1,83 @@
+name: Test PreTeXt PDF Build
+
+on:
+  push:
+  pull_request:
+
+# Cancel in-progress runs for the same ref when new commits are pushed
+concurrency:
+  group: pdf-build-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PreTeXt CLI
+        run: |
+          pip install -r pretext/requirements.txt
+
+      - name: Install TeX Live and fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-xetex texlive-latex-extra texlive-fonts-recommended \
+            texlive-fonts-extra texlive-science texlive-plain-generic \
+            texlive-lang-european fonts-dejavu fonts-inconsolata \
+            fonts-noto-core fonts-noto-mono fontconfig imagemagick
+
+      - name: Generate LaTeX source
+        run: |
+          cd pretext
+          pretext build print-latex
+
+      - name: Compile PDF with XeLaTeX
+        run: |
+          cd pretext/output/print-latex
+          # Two passes resolve cross-references; any LaTeX error fails the job.
+          for pass in 1 2; do
+            xelatex -interaction=nonstopmode -file-line-error main.tex > "xelatex-pass$pass.out" 2>&1 \
+              || { echo "::error::XeLaTeX failed on pass $pass"; grep -n -A5 -E '^(.*:[0-9]+:|!) ' main.log | head -80; exit 1; }
+          done
+          if grep -qE '^(!|.*:[0-9]+: )' main.log; then
+            echo "::error::LaTeX errors found in main.log"
+            grep -n -E '^(!|.*:[0-9]+: )' main.log
+            exit 1
+          fi
+          if grep -q 'Missing character' main.log; then
+            echo "::error::LaTeX reported missing glyphs (Missing character)"
+            grep 'Missing character' main.log | sort | uniq -c
+            exit 1
+          fi
+          test -s main.pdf
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-pdf
+          path: pretext/output/print-latex/main.pdf
+          if-no-files-found: error
+
+      - name: Upload LaTeX log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: latex-logs
+          path: |
+            pretext/output/print-latex/main.log
+            pretext/output/print-latex/main.tex
+            pretext/output/print-latex/xelatex-pass*.out
+            pretext/logs/
+          if-no-files-found: ignore
